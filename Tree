@@ -1,0 +1,59 @@
+tourist-guide-app/
+├── backend/                    
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/
+│   │   │   │   ├── AuthController.php
+│   │   │   │   ├── TouristController.php
+│   │   │   │   ├── AdminController.php
+│   │   │   │   ├── HotelController.php
+│   │   │   │   └── ReservationController.php
+│   │   │   └── Middleware/
+│   │   ├── Models/
+│   │   │   ├── User.php
+│   │   │   ├── Attraction.php
+│   │   │   ├── Review.php
+│   │   │   ├── Reservation.php
+│   │   │   ├── Transport.php
+│   │   │   └── Hotel.php
+│   ├── routes/
+│   │   └── api.php
+│   ├── database/
+│   │   ├── migrations/
+│   │   │   ├── create_users_table.php
+│   │   │   ├── create_attractions_table.php
+│   │   │   ├── create_reservations_table.php
+│   │   │   ├── create_reviews_table.php
+│   │   │   └── create_transports_table.php
+│   │   └── seeders/
+│   │       └── DatabaseSeeder.php
+│   ├── .env
+│   ├── Dockerfile
+│   └── composer.json
+
+├── frontend/                   
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Map.jsx
+│   │   │   ├── ReservationForm.jsx
+│   │   │   └── ReviewForm.jsx
+│   │   ├── pages/
+│   │   │   ├── HomePage.jsx
+│   │   │   ├── AttractionsPage.jsx
+│   │   │   ├── ReservationPage.jsx
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   └── ProfilePage.jsx
+│   │   ├── services/
+│   │   │   ├── api.js
+│   │   │   └── auth.js
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── .env
+│   ├── Dockerfile
+│   └── package.json
+
+├── docker-compose.yml
+└── README.md
