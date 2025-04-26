@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('guides', function (Blueprint $table) {
-            $table->id("guid_id");
+            $table->id("guide_id");
             $table->string("carte_nationale");
             $table->string("license_guide");
             $table->string("full_name");

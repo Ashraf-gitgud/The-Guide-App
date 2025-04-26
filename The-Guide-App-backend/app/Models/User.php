@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -16,10 +17,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    use HasApiTokens, Notifiable;
+
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
+        'profile',
     ];
 
     /**
@@ -40,8 +48,32 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function driver()
+    {
+        return $this->hasOne(Driver::class, 'user_id');
+    }
+
+    public function tourist()
+    {
+        return $this->hasOne(Tourist::class, 'user_id');
+    }
+
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class, 'user_id');
+    }
+
+    public function restaurant()
+    {
+        return $this->hasOne(Restaurant::class, 'user_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'user_id');
     }
 }
