@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttractionsController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get("/attractions", [AttractionsController::class, 'index']);
+Route::get("/attractions/{id}", [AttractionsController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
     Route::get('/admin/pending-accounts', [AdminController::class, 'pendingAccounts']);
