@@ -1,0 +1,38 @@
+.hero {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.heroContent {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  transform: translate(-10%, -20%);
+}
+
+.heroTitle {
+  font-size: 4rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.heroText {
+  font-size: 1.75rem;
+  color: white;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .heroText {
+    font-size: 1.2rem;
+  }
+}
