@@ -1,0 +1,134 @@
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, #002343 0%, #003d6a 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navBrand a {
+  color: #fff;
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+.navBrand a:hover {
+  color: #aad8ff;
+}
+
+.navMenu {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navLink {
+  color: #fff;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.navLink:hover,
+.navLink:focus {
+  background-color: rgba(170, 216, 255, 0.15);
+  color: #aad8ff;
+  outline: none;
+}
+
+.navIcon, 
+.navIcon::before, 
+.navIcon::after {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+
+
+.navToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  position: relative;
+}
+
+.navIcon {
+  position: relative;
+  width: 26px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.navIcon::before,
+.navIcon::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, top 0.3s ease;
+}
+
+.navIcon::before {
+  top: -8px;
+}
+
+.navIcon::after {
+  top: 8px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navMenu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #002343;
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
+    border-radius: 0 0 8px 8px;
+  }
+
+  .navMenuOpen {
+    display: flex;
+  }
+
+  .navToggle {
+    display: block;
+  }
+
+  .navLink {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 0;
+  }
+}
