@@ -489,7 +489,7 @@ class AttractionSeeder extends Seeder
                 'description' => 'Open highland area offering views over the north.',
                 'location' => 'Near Tetouan, Morocco',
                 'category' => 'Nature',
-                'image' => 'https://imgs.search.brave.com/jSdS0OiIry4fKFr51PORWmChI4lwVxBEKg68P51CMQs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9oYXBw/eXRyaXAubWEvd3At/Y29udGVudC91cGxv/YWRzLzIwMjMvMDQv/amViZWwtbGFieWFk/LWphYmFsLWxhYmlh/ZC1qYWJlbC1sYWJ5/YWQtZmFoc3MtbGFt/aGFyLWZhaGVzcy1s/ZW1oZXItaGFwcHl0/cmlwLXJhbmRvbm5l/ZS12b3lhZ2Utb3Jn/YW5pc2UtYXUtbWFy/b2MtdGV0b3Vhbi1i/ZWx5b3VuZWNoLSVE/OCVBQyVEOCVBOCVE/OSU4NC0lRDglQTcl/RDklODQlRDglQTMl/RDglQTglRDklOEEl/RDglQjYtJUQ5JTgx/JUQ4JUFEJUQ4JUI1/LSVEOCVBNyVEOSU4/NCVEOSU4NSVEOSU4/NyVEOCVCMS1sYWMt/c21pci1iYXJyYWdl/LXNtaXIuanBn',
+                'image' => 'https://atc.ma/images/evenements/Fahs_Lmher.webp',
                 'city' => 'Tetouan',
                 'social_hours' => '24/7',
             ],
