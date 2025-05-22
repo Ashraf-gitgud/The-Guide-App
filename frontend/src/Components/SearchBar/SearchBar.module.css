@@ -2,6 +2,7 @@
   max-width: 900px;
   margin: 2rem auto;
   transform: scale(1.3);
+  translate: 0% 100%;
 }
 
 .searchForm {
