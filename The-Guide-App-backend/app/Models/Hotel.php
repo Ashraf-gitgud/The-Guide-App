@@ -19,6 +19,11 @@ class Hotel extends Model
         'hotel_rating',
         'rating',
         'status',
+        'position',
         'user_id',
     ];
+/*     protected $casts = [
+        'position' => 'array',
+    ]; */
+
 }

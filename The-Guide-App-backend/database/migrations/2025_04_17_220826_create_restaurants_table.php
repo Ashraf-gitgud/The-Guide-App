@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string("restaurant_rating");
             $table->string("rating");
             $table->string("status")->default("pending");
+            $table->json("position")->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();
         });

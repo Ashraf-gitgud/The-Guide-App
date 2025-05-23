@@ -5,9 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('attractions', function (Blueprint $table) {
@@ -16,13 +13,13 @@ return new class extends Migration {
             $table->text('description');
             $table->string('location');
             $table->string('category')->nullable();
-            $table->string('image', '500')->nullable();
+            $table->string('image', 500)->nullable();
             $table->string('city');
             $table->string('social_hours');
+            $table->json('position')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

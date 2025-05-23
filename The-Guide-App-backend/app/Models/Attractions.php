@@ -16,6 +16,7 @@ class Attractions extends Model
         'category',
         'image',
         'city',
+        'position',
         'social_hours',
     ];
 }

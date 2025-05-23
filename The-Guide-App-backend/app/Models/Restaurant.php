@@ -19,6 +19,8 @@ class Restaurant extends Model
         'restaurant_rating',
         'rating',
         'status',
+        'position',
         'user_id',
     ];
+
 }
