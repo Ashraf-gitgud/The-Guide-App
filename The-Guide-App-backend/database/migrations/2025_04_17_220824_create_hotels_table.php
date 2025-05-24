@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string("adress");
             $table->string("hotel_rating");
             $table->string("rating");
+            $table->json("position")->nullable();
             $table->string("status")->default("pending");
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();

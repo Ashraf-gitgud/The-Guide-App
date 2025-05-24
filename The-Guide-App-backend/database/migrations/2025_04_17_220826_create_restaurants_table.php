@@ -12,12 +12,13 @@ return new class extends Migration {
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id("restaurant_id");
-            $table->string("name");
+            $table->string("restaurant_name");
             $table->string("email")->unique();
             $table->string("phone_number");
             $table->string("adress");
             $table->string("restaurant_rating");
             $table->string("rating");
+            $table->json("position")->nullable();
             $table->string("status")->default("pending");
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();

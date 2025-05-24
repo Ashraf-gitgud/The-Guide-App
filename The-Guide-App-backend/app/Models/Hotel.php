@@ -18,7 +18,13 @@ class Hotel extends Model
         'adress',
         'hotel_rating',
         'rating',
+        'position',
         'status',
         'user_id',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

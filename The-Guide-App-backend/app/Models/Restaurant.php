@@ -18,7 +18,14 @@ class Restaurant extends Model
         'adress',
         'restaurant_rating',
         'rating',
+        'position',
         'status',
         'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

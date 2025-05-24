@@ -40,6 +40,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function getAuthIdentifierName()
+    {
+        return 'user_id';
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->user_id;
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -52,24 +62,29 @@ class User extends Authenticatable
         ];
     }
 
-    public function driver()
-    {
-        return $this->hasOne(Driver::class, 'user_id');
-    }
-
     public function tourist()
     {
         return $this->hasOne(Tourist::class, 'user_id');
     }
 
+    public function driver()
+    {
+        return $this->hasOne(Driver::class);
+    }
+
     public function hotel()
     {
-        return $this->hasOne(Hotel::class, 'user_id');
+        return $this->hasOne(Hotel::class);
     }
 
     public function restaurant()
     {
-        return $this->hasOne(Restaurant::class, 'user_id');
+        return $this->hasOne(Restaurant::class);
+    }
+
+    public function guide()
+    {
+        return $this->hasOne(Guide::class);
     }
 
     public function reviews()
