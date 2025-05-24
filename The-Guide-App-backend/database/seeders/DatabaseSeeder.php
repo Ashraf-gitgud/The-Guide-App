@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\Guide_ReservationFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,20 +12,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         $this->call([
+            AdminSeeder::class,
             DriverSeeder::class,
             GuideSeeder::class,
             HotelSeeder::class,
             RestaurantSeeder::class,
             ReviewsSeeder::class,
-            AdminSeeder::class,
+            TouristSeeder::class,
+        ]);
+
+        $this->call([
+            Hotel_ReservationSeeder::class,
+            Restaurant_ReservationSeeder::class,
+            Guide_ReservationSeeder::class,
+            Driver_ReservationSeeder::class
+        ]);
+
+        $this->call([
             AttractionSeeder::class,
         ]);
     }

@@ -11,9 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id("review_id");
-            $table->string("text");
-            $table->foreignId('tourist_id')->constrained('tourists')->onDelete('cascade')->onUpdate('cascade');
+            $table->id("review_id");// polymorphic (Attraction, Hotel, etc.)
+            $table->unsignedBigInteger('reviewable_id');
+            $table->tinyInteger('rating');  
+            $table->string("comment");     
+            $table->foreignId('user_id', 'user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

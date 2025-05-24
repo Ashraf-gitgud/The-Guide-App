@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Reviews extends Model
+class HotelReservation extends Model
 {
     use HasFactory, Notifiable;
-    protected $primaryKey = 'review_id';
+    protected $table = 'hotel_reservations';
 
     protected $fillable = [
-        'rating', 'comment', 'user_id', 'reviewable_type', 'reviewable_id'
+        'start_date', 'end_date', 'room_type', 'people_number', 'status', 'user_id', 'hotel_id'
     ];
 
     public function user()
@@ -20,8 +20,8 @@ class Reviews extends Model
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
-    public function reviewable()
+    public function hotel()
     {
-        return $this->morphTo('reviewable', 'reviewable_type', 'reviewable_id');
+        return $this->belongsTo(Hotel::class, 'hotel_id', 'hotel_id');
     }
 }
