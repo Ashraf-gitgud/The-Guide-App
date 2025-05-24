@@ -1,4 +1,3 @@
-
 .nav {
   display: flex;
   justify-content: space-between;
@@ -13,40 +12,87 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.navBrand a {
-  color: #fff;
-  font-size: 1.7rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  transition: color 0.3s ease;
+.navBrand {
+  display: block;
+  padding-bottom: 10px;
+  height: 40px;
 }
-.navBrand a:hover {
-  color: #aad8ff;
+
+.navBrand img {
+  scale: 1.0;
+  height: 140%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+  object-fit: contain;
 }
 
 .navMenu {
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem; /* Slightly reduced from 1.2rem to accommodate dividers */
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   align-items: center;
+}
+
+/* New style for dividers */
+.navDivider {
+  width: 1px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 0.2rem; /* Small margin for spacing */
+}
+
+.navSignUp {
+  margin-left: 490px; /* Slightly reduced from 500px to maintain layout */
+  background-color: rgba(250, 250, 250, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.navSignUp .navLink::after {
+  content: none;
 }
 
 .navLink {
   color: #fff;
   font-weight: 600;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  font-size: Large;
   text-decoration: none;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  position: relative;
+  transition: color 0.25s ease;
 }
-.navLink:hover,
+
+.navLink.active {
+  color: #aad8ff;
+}
+
+.navLink.active::after {
+  width: 100%;
+}
+
+.navLink:hover, 
 .navLink:focus {
-  background-color: rgba(170, 216, 255, 0.15);
   color: #aad8ff;
   outline: none;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #aad8ff;
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after, 
+.navLink:focus::after {
+  width: 100%;
 }
 
 .navIcon, 
@@ -60,8 +106,6 @@
   position: absolute;
   transition: all 0.3s ease;
 }
-
-
 
 .navToggle {
   display: none;
@@ -83,7 +127,7 @@
   transition: background-color 0.3s ease;
 }
 
-.navIcon::before,
+.navIcon::before, 
 .navIcon::after {
   content: '';
   position: absolute;
@@ -117,6 +161,14 @@
     border-radius: 0 0 8px 8px;
   }
 
+  .navBrand {
+    height: 30px;
+  }
+
+  .navBrand img {
+    max-width: 150px;
+  }
+
   .navMenuOpen {
     display: flex;
   }
@@ -130,5 +182,20 @@
     width: 100%;
     text-align: center;
     border-radius: 0;
+  }
+
+  .navSignUp {
+    margin-left: 0;
+  }
+
+  .navLink::after {
+    display: none;
+  }
+
+  /* Mobile style for dividers */
+  .navDivider {
+    width: 80%;
+    height: 1px;
+    margin: 0.5rem auto;
   }
 }
