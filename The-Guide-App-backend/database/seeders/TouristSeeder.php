@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tourist;
 use Illuminate\Database\Seeder;
 
 class TouristSeeder extends Seeder
@@ -12,6 +12,7 @@ class TouristSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Tourist::factory()->count(210)->create();
+        
     }
 }

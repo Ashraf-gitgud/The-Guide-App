@@ -3,17 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admin extends Model
 {
     use HasFactory, Notifiable;
     protected $primaryKey = 'admin_id';
+
     protected $fillable = [
-        'full_name',
-        'email',
-        'phone_number',
-        'user_id',
+        'full_name', 'phone_number', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

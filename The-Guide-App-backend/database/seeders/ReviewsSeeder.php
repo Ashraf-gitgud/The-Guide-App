@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Reviews;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Reviews;
 
 class ReviewsSeeder extends Seeder
 {
@@ -13,21 +13,7 @@ class ReviewsSeeder extends Seeder
      */
     public function run(): void
     {
-        Reviews::create([
-            'text' => 'nice service',
-            'tourist_id' => '1',
-        ]);
-        Reviews::create([
-            'text' => 'tbarlah 3likom wsf',
-            'tourist_id' => '2',
-        ]);
-        Reviews::create([
-            'text' => '9lawi',
-            'tourist_id' => '1',
-        ]);
-        Reviews::create([
-            'text' => 'srbay wjho ki zb',
-            'tourist_id' => '2',
-        ]);
+        Reviews::factory()->count(75)->create();
+        
     }
 }
