@@ -19,7 +19,6 @@ class TouristFactory extends Factory
         return [
             'full_name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
-            'adress' => fake()->address(),
             'tourist_rating' => json_encode(['rating' => fake()->randomFloat(1, 1, 5)]),
             'user_id' => \App\Models\User::factory()->state([
                 'role' => 'tourist'

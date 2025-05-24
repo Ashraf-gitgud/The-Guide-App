@@ -19,7 +19,6 @@ class AdminFactory extends Factory
         return [
             'full_name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
-            'adress' => fake()->address(),
             'user_id' => \App\Models\User::factory()->state([
                 'role' => 'admin'
             ]),
