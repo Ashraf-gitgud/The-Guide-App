@@ -10,13 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('hotel__reservations', function (Blueprint $table) {
+        Schema::create('hotel_reservations', function (Blueprint $table) {
             $table->id();
             $table->string("room_type");
-            $table->string("people_number");
-            $table->string("date");
-            $table->string("period");
-            $table->string("author");
+            $table->integer("people_number");
+            $table->date("start_date");
+            $table->date("end_date");
+            $table->enum("status", ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->foreignId("hotel_id")->constrained('hotels', 'hotel_id')->onDelete('cascade')->onUpdate("cascade");
+            $table->foreignId("user_id")->constrained('users', 'user_id')->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('hotel__reservations');
+        Schema::dropIfExists('hotel_reservations');
     }
 };

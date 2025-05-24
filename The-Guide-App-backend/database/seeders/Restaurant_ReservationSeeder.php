@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Hotel;
+use App\Models\RestaurantReservation;
 use Illuminate\Database\Seeder;
 
-class HotelSeeder extends Seeder
+class Restaurant_ReservationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Hotel::factory()->count(20)->create();
+        RestaurantReservation::factory()->count(90)->create();
         
     }
 }

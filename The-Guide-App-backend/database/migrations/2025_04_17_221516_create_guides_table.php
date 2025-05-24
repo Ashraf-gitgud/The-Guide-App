@@ -15,11 +15,9 @@ return new class extends Migration {
             $table->string("carte_nationale");
             $table->string("license_guide");
             $table->string("full_name");
-            $table->string("email")->unique();
             $table->string("phone_number");
             $table->string("rating");
-            $table->string("status")->default("pending");
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
+            $table->foreignId('user_id', 'user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();
         });
     }
