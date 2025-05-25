@@ -18,12 +18,14 @@ class Hotel extends Model
         'adress',
         'hotel_rating',
         'rating',
+        'position',
         'status',
         'position',
         'user_id',
     ];
-/*     protected $casts = [
-        'position' => 'array',
-    ]; */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

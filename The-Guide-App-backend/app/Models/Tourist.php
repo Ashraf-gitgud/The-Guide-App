@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tourist extends Model
 {
@@ -16,5 +17,11 @@ class Tourist extends Model
         'phone_number',
         "user_id"
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }
