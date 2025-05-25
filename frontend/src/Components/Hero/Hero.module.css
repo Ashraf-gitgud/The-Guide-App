@@ -11,14 +11,15 @@
 .heroContent {
   position: absolute;
   top: 15%;
-  left: 10%;
+  left: 9%;
   transform: translate(-10%, -20%);
 }
 
 .heroTitle {
   font-size: 4rem;
   color: white;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; 
+  margin-top: 60px;
 }
 
 .heroText {

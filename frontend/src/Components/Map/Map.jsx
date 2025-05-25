@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Link } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
 import L from 'leaflet';
@@ -8,23 +9,23 @@ import axios from 'axios';
 // Define custom icons using absolute paths from public/images/markers
 const hotelIcon = L.icon({
   iconUrl: '/images/markers/bed.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38],
+  iconSize: [32, 32], // Reduced size
+  iconAnchor: [14, 28], // Adjusted anchor (half of iconSize width, full height)
+  popupAnchor: [0, -28], // Adjusted popup anchor
 });
 
 const restaurantIcon = L.icon({
   iconUrl: '/images/markers/fork.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38],
+  iconSize: [32, 32],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28],
 });
 
 const attractionIcon = L.icon({
   iconUrl: '/images/markers/location.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38],
+  iconSize: [32, 32],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28],
 });
 
 // Fix for default marker icon

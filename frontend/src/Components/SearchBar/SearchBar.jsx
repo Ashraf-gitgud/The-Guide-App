@@ -14,19 +14,40 @@ const SearchBar = ({ onSelectLocation, isMapSearch = false }) => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const [hotelsRes, restaurantsRes, attractionsRes] = await Promise.all([
+        const [hotelsRes, restaurantsRes, attractionsRes, usersRes] = await Promise.all([
           axios.get('http://127.0.0.1:8000/api/hotels'),
           axios.get('http://127.0.0.1:8000/api/restaurants'),
           axios.get('http://127.0.0.1:8000/api/attractions'),
+          axios.get('http://127.0.0.1:8000/api/users'),
         ]);
 
-        const hotels = hotelsRes.data.map(hotel => ({ ...hotel, type: 'hotel' }));
-        const restaurants = restaurantsRes.data.map(restaurant => ({ ...restaurant, type: 'restaurant' }));
-        const attractions = attractionsRes.data.map(attraction => ({ ...attraction, type: 'attraction' }));
+        const userProfileMap = usersRes.data.reduce((map, user) => {
+          const imageUrl = user.profile && !user.profile.startsWith('http')
+            ? `http://127.0.0.1:8000/${user.profile}`
+            : user.profile || '/placeholder-image.jpg';
+          map[user.user_id] = imageUrl;
+          return map;
+        }, {});
+
+        const hotels = hotelsRes.data.map(hotel => ({
+          ...hotel,
+          type: 'hotel',
+          image: userProfileMap[hotel.user_id] || '/placeholder-image.jpg',
+        }));
+        const restaurants = restaurantsRes.data.map(restaurant => ({
+          ...restaurant,
+          type: 'restaurant',
+          image: userProfileMap[restaurant.user_id] || '/placeholder-image.jpg',
+        }));
+        const attractions = attractionsRes.data.map(attraction => ({
+          ...attraction,
+          type: 'attraction',
+          image: attraction.image || '/placeholder-image.jpg',
+        }));
 
         setLocations([...hotels, ...restaurants, ...attractions]);
       } catch (error) {
-        console.error('Error fetching locations: ', error);
+        console.error('Error fetching locations:', error);
       }
     };
 
@@ -44,7 +65,7 @@ const SearchBar = ({ onSelectLocation, isMapSearch = false }) => {
     if (query) {
       const filtered = locations
         .filter(loc => 
-          loc.name.toLowerCase().includes(query.toLowerCase()) &&
+          loc.name && loc.name.toLowerCase().includes(query.toLowerCase()) &&
           (activeFilter === 'all' || loc.type === activeFilter)
         )
         .slice(0, 3);
@@ -53,7 +74,6 @@ const SearchBar = ({ onSelectLocation, isMapSearch = false }) => {
       setSuggestions([]);
     }
   };
-
 
   return (
     <div className={`${styles.searchContainer} ${isMapSearch ? styles.mapSearch : ''}`}>
@@ -76,10 +96,15 @@ const SearchBar = ({ onSelectLocation, isMapSearch = false }) => {
               key={`${loc.type}-${loc.id}`}
               className={styles.suggestionItem}
             >
-              <Link to="/map" className={styles.suggestionLink}>
-                <img src={loc.image || '/placeholder-image.jpg'} alt={loc.name} className={styles.suggestionThumbnail} />
+              <Link to={`/${loc.type}s/${loc.id}`} className={styles.suggestionLink}>
+                <img
+                  src={loc.image || '/placeholder-image.jpg'}
+                  alt={loc.name || 'Location'}
+                  className={styles.suggestionThumbnail}
+                  onError={(e) => { e.target.src = '/placeholder-image.jpg'; }}
+                />
                 <div className={styles.suggestionText}>
-                  <span className={styles.suggestionName}>{loc.name}</span>
+                  <span className={styles.suggestionName}>{loc.name || 'Unknown'}</span>
                 </div>
               </Link>
             </li>

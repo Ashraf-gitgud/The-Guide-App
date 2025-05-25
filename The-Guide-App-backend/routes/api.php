@@ -8,6 +8,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileCompletionController;
+use App\Http\Controllers\UserController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,6 +22,8 @@ Route::get("/guides", [GuideController::class, 'index']);
 Route::get("/guides/{id}", [GuideController::class, 'show']);
 Route::get("/drivers", [DriverController::class, 'index']);
 Route::get("/drivers/{id}", [DriverController::class, 'show']);
+Route::get("/users", [UserController::class, 'index']);
+Route::get("/users/{id}", [UserController::class, 'show']);
 
 Route::get("/hotels", [HotelController::class, 'index']);
 Route::get("/restaurants", [RestaurantController::class, 'index']);

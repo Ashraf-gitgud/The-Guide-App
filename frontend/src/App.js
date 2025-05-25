@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './Pages/Homepage/Homepage';
 import Attractiondetails from './Pages/Attractiondetails/Attractiondetails';
 import Nav from './Components/Nav/Navbar';
+import Footer from './Components/Footer/Footer';
 import Map from './Components/Map/Map';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
@@ -20,6 +21,7 @@ return (
       <Route path="/attractions" element={<Attractions/>} />
       <Route path="/attractions/:id" element={<Attractiondetails/>} />
     </Routes>
+    <Footer />
   </BrowserRouter>
 );
 }

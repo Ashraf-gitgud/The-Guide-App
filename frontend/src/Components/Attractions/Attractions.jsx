@@ -31,7 +31,7 @@ const Attractions = () => {
   return (
     <section className={styles.attractionsSection}>
       <header className={styles.attractionsHeader}>
-        <h2 className={styles.attractionsTitle}>Adventure Awaits</h2>
+        <h2 className={styles.attractionsTitle}>Adventure Awaits!</h2>
         <p className={styles.attractionsSubtitle}>Unveil the extraordinary in every corner</p>
       </header>
       <div className={styles.attractionsGrid}>
