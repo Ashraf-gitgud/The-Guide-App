@@ -22,10 +22,22 @@ const Attractionspage = () => {
     return (
         <div className="page-container">
             {/* Hero Section */}
-            {/* ... (keep the existing hero section) ... */}
+            <div className="header">
+                <div className="hero-content">
+                    <h1>Discover Morocco's Hidden Gems</h1>
+                    <p>Explore the most breathtaking attractions in every corner of the North — from ancient kasbahs to stunning waterfalls.</p>
+                </div>
+            </div>
             
             {/* Crown Jewels Section */}
-            {/* ... (keep the existing crown jewels section) ... */}
+            <div className="crown-jewels-section">
+                <div className="section-inner">
+                    <h1 className="section-title">Northern Morocco's Crown Jewels</h1>
+                    <h2 className="section-subtitle">To travel is to live</h2>
+                    <p className="section-description">Must-visit destinations in Morocco's magical north that will steal your heart</p>
+                    <div className="divider-line"></div>
+                </div>
+            </div>
 
             {/* Attractions Grid */}
             <div className="attractions-container">
