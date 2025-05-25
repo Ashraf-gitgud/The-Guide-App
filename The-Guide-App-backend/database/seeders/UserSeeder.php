@@ -18,6 +18,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create 10 hotel users using factory
+        User::factory()->count(11)->state([
+            'role' => 'hotel'
+        ])->create();
+
+        // Create 10 restaurant users using factory
+        User::factory()->count(11)->state([
+            'role' => 'restaurant'
+        ])->create();
+
         // Create users for tourists that don't have one
         Tourist::whereNull('user_id')->each(function ($tourist) {
             $user = User::factory()->state([
