@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string("rating");
             $table->json("position")->nullable();
             $table->string("status")->default("pending");
-            $table->json("position")->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();
         });
