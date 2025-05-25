@@ -74,7 +74,7 @@ class ProfileCompletionController extends Controller
 
         try {
             $baseData = [
-                'user_id' => $user->user_id, // Using user_id consistently
+                'user_id' => $user->user_id,
                 'status' => 'pending'
             ];
 
@@ -96,8 +96,10 @@ class ProfileCompletionController extends Controller
                         'phone_number' => 'required|string',
                         'adress' => 'required|string',
                         'hotel_rating' => 'required|numeric|min:1|max:5',
-                        'rating' => 'nullable|numeric|min:1|max:5'
+                        'rating' => 'nullable|numeric|min:1|max:5',
+                        'position' => 'nullable|json'
                     ]);
+                    $validatedData['name'] = $user->name;
                     $validatedData['email'] = $user->email;
                     Hotel::create(array_merge($validatedData, $baseData));
                     break;
@@ -107,8 +109,10 @@ class ProfileCompletionController extends Controller
                         'phone_number' => 'required|string',
                         'adress' => 'required|string',
                         'restaurant_rating' => 'required|numeric|min:1|max:5',
-                        'rating' => 'nullable|numeric|min:1|max:5'
+                        'rating' => 'nullable|numeric|min:1|max:5',
+                        'position' => 'nullable|json'
                     ]);
+                    $validatedData['name'] = $user->name;
                     $validatedData['email'] = $user->email;
                     Restaurant::create(array_merge($validatedData, $baseData));
                     break;
