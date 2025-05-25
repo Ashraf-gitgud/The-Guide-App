@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Driver;
 use App\Models\Guide;
 use App\Models\Hotel;
@@ -69,6 +70,23 @@ class AdminController extends Controller
         $review->delete();
 
         return response()->json(['message' => 'Review deleted successfully']);
+    }
+
+    public function dashboardData()
+    {
+        $totalUsers = User::count();
+        $totalReviews = Reviews::count();
+
+        return response()->json([
+            'total_users' => $totalUsers,
+            'total_reviews' => $totalReviews,
+            'pending_accounts' => [
+                'guides' => Guide::where('status', 'pending')->get(),
+                'drivers' => Driver::where('status', 'pending')->get(),
+                'hotels' => Hotel::where('status', 'pending')->get(),
+                'restaurants' => Restaurant::where('status', 'pending')->get(),
+            ],
+        ]);
     }
 
 }

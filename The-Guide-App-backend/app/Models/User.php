@@ -67,25 +67,28 @@ class User extends Authenticatable
         return $this->hasOne(Tourist::class, 'user_id');
     }
 
+    // app/Models/User.php
+
+    public function guide()
+    {
+        return $this->hasOne(Guide::class, 'user_id', 'user_id');
+    }
+
     public function driver()
     {
-        return $this->hasOne(Driver::class);
+        return $this->hasOne(Driver::class, 'user_id', 'user_id');
     }
 
     public function hotel()
     {
-        return $this->hasOne(Hotel::class);
+        return $this->hasOne(Hotel::class, 'user_id', 'user_id');
     }
 
     public function restaurant()
     {
-        return $this->hasOne(Restaurant::class);
+        return $this->hasOne(Restaurant::class, 'user_id', 'user_id');
     }
 
-    public function guide()
-    {
-        return $this->hasOne(Guide::class);
-    }
 
     public function reviews()
     {
