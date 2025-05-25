@@ -12,8 +12,15 @@ class Guide extends Model
     protected $primaryKey = 'guide_id';
 
     protected $fillable = [
-        'full_name', 'phone_number', 'rating', 'user_id', 'carte_nationale', 'license_guide', 'status'
-    ];
+        'carte_nationale',
+        'license_guide',
+        'full_name',
+        'email',
+        'phone_number',
+        'rating',
+        'status',
+        'user_id',
+];
 
     public function user()
     {

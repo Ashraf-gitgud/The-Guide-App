@@ -42,7 +42,6 @@ class GuideReservationController extends Controller
     {
         try {
             $data = $request->validate([
-                'user_id' => 'required|exists:users,user_id',
                 'guide_id' => 'required|exists:guides,guide_id',
                 'people_number' => 'required|integer',
                 'start_date' => 'required|date',
@@ -51,6 +50,27 @@ class GuideReservationController extends Controller
                 'location' => 'required|string',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
+
+            // Set the user_id from the authenticated user
+            $data['user_id'] = $request->user()->user_id;
+
+            // Check for existing reservation with same properties
+            $existingReservation = GuideReservation::where([
+                'user_id' => $data['user_id'],
+                'guide_id' => $data['guide_id'],
+                'time' => $data['date'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'location' => $data['location'],
+                'people_number' => $data['people_number']
+            ])->first();
+
+            if ($existingReservation) {
+                return response()->json([
+                    'message' => 'A reservation with these details already exists',
+                    'reservation' => $existingReservation->load(['driver', 'user'])
+                ], 409);
+            }
 
             $reservation = GuideReservation::create($data);
             

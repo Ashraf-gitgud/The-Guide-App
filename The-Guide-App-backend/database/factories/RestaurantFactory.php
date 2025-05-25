@@ -18,12 +18,16 @@ class RestaurantFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'email' => fake()->unique()->companyEmail(),
             'phone_number' => fake()->phoneNumber(),
             'adress' => fake()->address(),
             'restaurant_rating' => fake()->randomFloat(1, 1, 5),
             'rating' => fake()->randomFloat(1, 1, 5),
-            'status' => fake()->randomElement(['active', 'inactive']),
-            'position' => fake()->latitude() . ',' . fake()->longitude(),
+            'status' => fake()->randomElement(['pending', 'active', 'inactive']),
+            'position' => json_encode([
+                'latitude' => fake()->latitude(),
+                'longitude' => fake()->longitude()
+            ]),
             'user_id' => \App\Models\User::factory()->state([
                 'role' => 'restaurant'
             ]),

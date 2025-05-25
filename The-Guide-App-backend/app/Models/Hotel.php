@@ -13,8 +13,15 @@ class Hotel extends Model
     protected $primaryKey = 'hotel_id';
 
     protected $fillable = [
-        'name', 'phone_number', 'adress', 'hotel_rating', 'rating', 'status', 'position' ,'user_id'
-    ];  
+        'name',
+        'email',
+        'phone_number',
+        'adress',
+        'hotel_rating',
+        'rating',
+        'position',
+        'status',
+    ];
 
     public function reviews()
     {

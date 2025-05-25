@@ -42,13 +42,31 @@ class RestaurantReservationController extends Controller
     {
         try {
             $data = $request->validate([
-                'user_id' => 'required|exists:users,user_id',
                 'restaurant_id' => 'required|exists:restaurants,restaurant_id',
                 'people_number' => 'required|integer|min:1',
                 'date' => 'required|date',
                 'time' => 'required|date_format:H:i',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
+
+            // Set the user_id from the authenticated user
+            $data['user_id'] = $request->user()->user_id;
+
+            // Check for existing reservation with same properties
+            $existingReservation = RestaurantReservation::where([
+                'user_id' => $data['user_id'],
+                'restaurant_id' => $data['driver_id'],
+                'date' => $data['date'],
+                'time' => $data['time'],
+                'people_number' => $data['people_number']
+            ])->first();
+
+            if ($existingReservation) {
+                return response()->json([
+                    'message' => 'A reservation with these details already exists',
+                    'reservation' => $existingReservation->load(['driver', 'user'])
+                ], 409);
+            }
 
             $reservation = RestaurantReservation::create($data);
             

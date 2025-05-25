@@ -20,10 +20,10 @@ class DriverFactory extends Factory
             'full_name' => fake()->name(),
             'phone_number' => fake()->phoneNumber(),
             'rating' => fake()->randomFloat(1, 1, 5),
-            'adress' => fake()->address(),
+            'email' => fake()->unique()->safeEmail(),
             'carte_nationale' => fake()->unique()->numerify('CN########'),
             'driver_license' => fake()->unique()->numerify('DL########'),
-            'status' => fake()->randomElement(['active', 'inactive']),
+            'status' => fake()->randomElement(['pending', 'active', 'inactive']),
             'user_id' => \App\Models\User::factory()->state([
                 'role' => 'driver'
             ]),

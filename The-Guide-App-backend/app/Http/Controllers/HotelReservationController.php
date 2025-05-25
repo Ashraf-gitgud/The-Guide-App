@@ -42,7 +42,6 @@ class HotelReservationController extends Controller
     {
         try {
             $data = $request->validate([
-                'user_id' => 'required|exists:users,user_id',
                 'hotel_id' => 'required|exists:hotels,hotel_id',
                 'people_number' => 'required|integer',
                 'room_type' => 'required|in:single,double,twin,connecting,triple,deluxe,junior suite,standard',
@@ -50,6 +49,26 @@ class HotelReservationController extends Controller
                 'end_date' => 'required|date|after:start_date',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
+
+            // Set the user_id from the authenticated user
+            $data['user_id'] = $request->user()->user_id;
+
+            // Check for existing reservation with same properties
+            $existingReservation = HotelReservation::where([
+                'user_id' => $data['user_id'],
+                'hotel_id' => $data['hotel_id'],
+                'room_type' => $data['room_type'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'people_number' => $data['people_number']
+            ])->first();
+
+            if ($existingReservation) {
+                return response()->json([
+                    'message' => 'A reservation with these details already exists',
+                    'reservation' => $existingReservation->load(['driver', 'user'])
+                ], 409);
+            }
 
             $reservation = HotelReservation::create($data);
             

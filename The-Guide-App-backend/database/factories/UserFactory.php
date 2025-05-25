@@ -23,11 +23,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'role' => 'guest',  // Using a valid ENUM value as default
+            'name' => fake()->name(),
+            'role' => fake()->randomElement(['tourist', 'guide', 'driver', 'hotel', 'restaurant', 'admin']),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'profile' => fake()->imageUrl(640, 480, 'people'),
-            'email_verified_at' => now(),
             'remember_token' => fake()->uuid()
         ];
     }

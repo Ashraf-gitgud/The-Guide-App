@@ -29,14 +29,15 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
 });
 
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-
-Route::apiResources([
-    'reviews' => ReviewsController::class,
-    'hotel_reservations' => HotelReservationController::class,
-    'restaurant_reservations' => RestaurantReservationController::class,
-    'driver_reservations' => DriverReservationController::class,
-    'guide_reservations' => GuideReservationController::class,
-]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResources([
+        'reviews' => ReviewsController::class,
+        'hotel_reservations' => HotelReservationController::class,
+        'restaurant_reservations' => RestaurantReservationController::class,
+        'driver_reservations' => DriverReservationController::class,
+        'guide_reservations' => GuideReservationController::class,
+    ]);
+});
 
 // Notification routes
 Route::middleware('auth:sanctum')->group(function () {

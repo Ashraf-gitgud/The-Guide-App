@@ -12,7 +12,15 @@ class RestaurantReservation extends Model
     protected $table = 'restaurant_reservations';
 
     protected $fillable = [
-        'date', 'time' , 'people_number', 'status', 'user_id', 'restaurant_id'
+        'name',
+        'email',
+        'phone_number',
+        'adress',
+        'restaurant_rating',
+        'rating',
+        'position',
+        'status',
+        'user_id',
     ];
 
     public function user()

@@ -12,8 +12,15 @@ class Driver extends Model
     protected $primaryKey = 'driver_id';
 
     protected $fillable = [
-        'phone_number', 'adress', 'rating', 'user_id', 'full_name', 'carte_nationale','driver_license','status'
-    ];
+        'carte_nationale',
+        'driver_license',
+        'full_name',
+        'email',
+        'phone_number',
+        'rating',
+        'status',
+        'user_id',
+];
 
     public function reviews()
     {

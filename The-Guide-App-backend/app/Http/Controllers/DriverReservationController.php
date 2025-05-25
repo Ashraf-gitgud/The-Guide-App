@@ -43,7 +43,6 @@ class DriverReservationController extends Controller
     {
         try {
             $data = $request->validate([
-                'user_id' => 'required|exists:users,user_id',
                 'driver_id' => 'required|exists:drivers,driver_id',
                 'date' => 'required|date|after_or_equal:today',
                 'time' => 'required|date_format:H:i',
@@ -52,6 +51,9 @@ class DriverReservationController extends Controller
                 'people_number' => 'required|integer|min:1',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
+            
+            // Set the user_id from the authenticated user
+            $data['user_id'] = $request->user()->user_id;
 
             // Check for existing reservation with same properties
             $existingReservation = DriverReservation::where([

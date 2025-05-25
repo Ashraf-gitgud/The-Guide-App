@@ -10,30 +10,37 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|confirmed',
-            'role' => 'required|in:tourist,guide,transporter,hotel,restaurant',
-            'profile' => 'required|string'
-        ]);
-
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-            'role' => $fields['role'],
-            'profile' => $fields['profile'],
-        ]);
-
-        $token = $user->createToken('apptoken')->plainTextToken;
-
-        return response()->json([
-            'message' => 'User registered successfully',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user
-        ]);
+        try { 
+            $fields = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|email|unique:users,email',
+                'password' => 'required|string|confirmed',
+                'role' => 'required|in:tourist,guide,transporter,hotel,restaurant',
+                'profile' => 'required|string'
+            ]);
+    
+            $user = User::create([
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password']),
+                'role' => $fields['role'],
+                'profile' => $fields['profile'],
+            ]);
+    
+            $token = $user->createToken('apptoken')->plainTextToken;
+    
+            return response()->json([
+                'message' => 'User registered successfully',
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error registering',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function login(Request $request)
