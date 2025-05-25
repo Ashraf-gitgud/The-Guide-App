@@ -1,0 +1,102 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0a192f; /* Very dark blue */
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-form {
+    background-color: rgba(10, 25, 47, 0.9);
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(100, 149, 237, 0.2);
+}
+
+.form-title {
+    color: #64ffda; /* Teal accent color */
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.form-subtitle {
+    color: #ccd6f6; /* Light blue-gray */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #64ffda; /* Teal outline */
+    border-radius: 4px;
+    background-color: transparent;
+    color: #e6f1ff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Add this to include padding in width calculation */
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #1e90ff; /* Lighter blue when focused */
+    box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+}
+
+.form-input::placeholder {
+    color: #8892b0; /* Muted blue-gray */
+}
+
+.form-button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #64ffda;
+    border: 1px solid #64ffda;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-sizing: border-box; /* Add this to include padding in width calculation */
+}
+
+.form-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: #8892b0;
+    font-size: 14px;
+}
+
+.form-link {
+    color: #64ffda;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.form-link:hover {
+    color: #1e90ff;
+    text-decoration: underline;
+}
+
+.form-divider {
+    color: #8892b0;
+    margin: 0 5px;
+}

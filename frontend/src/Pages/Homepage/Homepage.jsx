@@ -1,7 +1,7 @@
-import Hero from '../Hero/Hero'
-import Slideshow from '../Slideshow/Slideshow'
+import Hero from '../../Components/Hero/Hero'
+import Slideshow from '../../Components/Slideshow/Slideshow'
 import styles from './Homepage.module.css'
-import Attractions from '../Attractions/Attractions'
+import Attractions from '../../Components/Attractions/Attractions'
 
 
 function Homepage(){

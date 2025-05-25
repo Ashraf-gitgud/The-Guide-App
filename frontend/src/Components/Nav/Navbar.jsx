@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Nav.module.css';
+import Register from "../../Pages/Register";
+import Login from "../../Pages/Login";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);

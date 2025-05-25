@@ -142,7 +142,7 @@
 
 
 .seeMoreButton {
-  background-color: #007bff;
+  background-color: #002343;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -151,7 +151,10 @@
   transition: background-color 0.3s ease;
   font-size: 0.9rem;
   align-self: flex-end;
+  text-decoration: none;
+
 }
+
 
 .seeMoreButton:hover {
   background-color: #0056b3;
