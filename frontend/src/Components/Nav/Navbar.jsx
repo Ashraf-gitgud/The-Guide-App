@@ -15,6 +15,7 @@ const Nav = () => {
           </NavLink>
         </div>
         <ul className={`${styles.navMenu} ${isOpen ? styles.navMenuOpen : ''}`}>
+          <li><NavLink to="/" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-home"></i> Home</NavLink></li>
           <li><NavLink to="/map" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-map-marked-alt"></i> Map</NavLink></li>
           <li><NavLink to="/about" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-info-circle"></i> About</NavLink></li>
           <li><NavLink to="/contact" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-envelope"></i> Contact</NavLink></li>
