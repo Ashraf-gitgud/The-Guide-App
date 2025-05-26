@@ -20,9 +20,7 @@ const HotelReservationList = () => {
                     'Authorization': `Bearer ${$token}`
                 }
             });
-            // Handle object response
             if (response.data && typeof response.data === 'object') {
-                // Convert object to array if needed
                 const reservationsArray = Object.values(response.data);
                 setReservations(reservationsArray[0]);
             } else {
@@ -31,7 +29,6 @@ const HotelReservationList = () => {
             setLoading(false);
         } catch (err) {
             console.error('Error fetching reservations:', err);
-            // Handle 404 as a valid case (no reservations found)
             if (err.response?.status === 404) {
                 setReservations([]);
                 setError(null);
@@ -58,8 +55,18 @@ const HotelReservationList = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
-    
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    if (loading) return (
+        <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Loading reservations...</p>
+        </div>
+    );
+
     return (
         <div className="reservation-list">
             <div className="reservation-header">
@@ -84,13 +91,29 @@ const HotelReservationList = () => {
                         <div 
                             key={reservation.id || `reservation-${index}`} 
                             className="reservation-card"
+                            data-status={reservation.status}
                         >
                             <h3>{reservation.hotel?.name || 'Hotel Name'}</h3>
-                            <p>Room Type: {reservation.room_type}</p>
-                            <p>People: {reservation.people_number}</p>
-                            <p>Check-in: {new Date(reservation.start_date).toLocaleDateString()}</p>
-                            <p>Check-out: {new Date(reservation.end_date).toLocaleDateString()}</p>
-                            <p>Status: <span className={`status ${reservation.status}`}>{reservation.status}</span></p>
+                            <div className="reservation-details">
+                                <p>
+                                    <strong>Room Type:</strong> {reservation.room_type}
+                                </p>
+                                <p>
+                                    <strong>People:</strong> {reservation.people_number}
+                                </p>
+                                <p>
+                                    <strong>Check-in:</strong> {formatDate(reservation.start_date)}
+                                </p>
+                                <p>
+                                    <strong>Check-out:</strong> {formatDate(reservation.end_date)}
+                                </p>
+                                <p>
+                                    <strong>Status:</strong>{' '}
+                                    <span className={`status ${reservation.status}`}>
+                                        {reservation.status}
+                                    </span>
+                                </p>
+                            </div>
                             
                             <div className="reservation-actions">
                                 <Link 

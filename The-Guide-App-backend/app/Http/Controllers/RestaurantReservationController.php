@@ -203,4 +203,36 @@ class RestaurantReservationController extends Controller
             ], 500);
         }
     }
+
+    public function getUserReservations($user_id)
+    {
+        try {
+            $reservations = RestaurantReservation::with(['restaurant', 'user'])
+                ->where('user_id', $user_id)
+                ->get();
+            
+            if ($reservations->isEmpty()) {
+                return response()->json([
+                    'message' => 'No restaurant reservations found for this user',
+                    'debug_info' => [
+                        'user_id' => $user_id,
+                        'count' => 0
+                    ]
+                ], 404);
+            }
+
+            return response()->json([
+                'reservations' => $reservations,
+                'debug_info' => [
+                    'user_id' => $user_id,
+                    'count' => $reservations->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving user restaurant reservations',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -221,4 +221,36 @@ class DriverReservationController extends Controller
             ], 500);
         }
     }
+
+    public function getUserReservations($user_id)
+    {
+        try {
+            $reservations = DriverReservation::with(['driver', 'user'])
+                ->where('user_id', $user_id)
+                ->get();
+            
+            if ($reservations->isEmpty()) {
+                return response()->json([
+                    'message' => 'No reservations found for this user',
+                    'debug_info' => [
+                        'user_id' => $user_id,
+                        'count' => 0
+                    ]
+                ], 404);
+            }
+
+            return response()->json([
+                'reservations' => $reservations,
+                'debug_info' => [
+                    'user_id' => $user_id,
+                    'count' => $reservations->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving user reservations',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 } 

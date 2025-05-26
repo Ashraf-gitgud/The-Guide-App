@@ -37,6 +37,12 @@ Route::middleware('auth:sanctum')->group(function () {
         'driver_reservations' => DriverReservationController::class,
         'guide_reservations' => GuideReservationController::class,
     ]);
+    
+    // Get user's reservations
+    Route::get('/driver-reservations/user/{user_id}', [DriverReservationController::class, 'getUserReservations']);
+    Route::get('/hotel-reservations/user/{user_id}', [HotelReservationController::class, 'getUserReservations']);
+    Route::get('/restaurant-reservations/user/{user_id}', [RestaurantReservationController::class, 'getUserReservations']);
+    Route::get('/guide-reservations/user/{user_id}', [GuideReservationController::class, 'getUserReservations']);
 });
 
 // Notification routes
