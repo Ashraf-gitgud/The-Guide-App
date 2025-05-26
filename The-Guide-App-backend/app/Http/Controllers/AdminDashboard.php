@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{User, Driver, Hotel, Restaurant, Guide, Reviews};
+use Illuminate\Container\Attributes\DB;
 
 class AdminDashboard extends Controller
 {

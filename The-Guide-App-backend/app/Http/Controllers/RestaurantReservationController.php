@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use App\Models\RestaurantReservation;
 use App\Notifications\NewRestaurantReservation;
 use Illuminate\Http\Request;
@@ -200,6 +201,51 @@ class RestaurantReservationController extends Controller
                 'message' => 'Error deleting reservation',
                 'error' => $e->getMessage(),
                 'id' => $id
+            ], 500);
+        }
+    }
+
+    public function getUserReservations($restaurant_id)
+    {
+        try {
+            // Get restaurant information
+            $restaurant = Restaurant::find($restaurant_id);
+            
+            if (!$restaurant) {
+                return response()->json([
+                    'message' => 'restaurant not found',
+                    'debug_info' => [
+                        'restaurant_id' => $restaurant_id
+                    ]
+                ], 404);
+            }
+
+            $reservations = RestaurantReservation::with(['user'])
+                ->where('restaurant_id', $restaurant_id)
+                ->get();
+            
+            if ($reservations->isEmpty()) {
+                return response()->json([
+                    'message' => 'No restaurant reservations found for this restaurant',
+                    'debug_info' => [
+                        'restaurant_id' => $restaurant,
+                        'count' => 0
+                    ]
+                ], 404);
+            }
+
+            return response()->json([
+                'restaurant' => $restaurant,
+                'reservations' => $reservations,
+                'debug_info' => [
+                    'restaurant_id' => $restaurant_id,
+                    'count' => $reservations->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving restaurant reservations',
+                'error' => $e->getMessage()
             ], 500);
         }
     }

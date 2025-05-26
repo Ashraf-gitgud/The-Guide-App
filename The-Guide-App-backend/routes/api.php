@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\{
     AuthController,
@@ -10,6 +11,7 @@ use App\Http\Controllers\{
     RestaurantController,
     GuideController,
     DriverController,
+    GetUserReservationController,
     ProfileCompletionController,
     UserController
 };
@@ -56,7 +58,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/complete-registration', [ProfileCompletionController::class, 'showForm']);
     Route::post('/complete-registration', [ProfileCompletionController::class, 'submitForm']);
-    Route::get('/me', fn() => auth()->user());
+    Route::get('/me', function(Request $request) {
+        return response()->json($request->user());
+    });
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -67,6 +71,14 @@ Route::middleware('auth:sanctum')->group(function () {
         'driver_reservations' => DriverReservationController::class,
         'guide_reservations' => GuideReservationController::class,
     ]);
+    
+    // Get user's reservations
+    Route::get('/reservations/user/{user_id}', [GetUserReservationController::class, 'GetUserReservation']);
+    Route::get('/reservations/driver/{driver_id}', [DriverReservationController::class, 'getDriverReservations']);
+    Route::get('/reservations/hotel/{hotel_id}', [HotelReservationController::class, 'getHotelReservations']);
+    Route::get('/reservations/restaurant/{restaurant_id}', [RestaurantReservationController::class, 'getUserReservations']);
+    Route::get('/reservations/guide/{guide_id}', [GuideReservationController::class, 'getGuideReservations']);
+    
 });
 
 // Notification routes

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use App\Models\DriverReservation;
 use App\Notifications\NewDriverReservation;
 use Illuminate\Http\Request;
@@ -218,6 +219,50 @@ class DriverReservationController extends Controller
                 'message' => 'Error deleting reservation',
                 'error' => $e->getMessage(),
                 'id' => $id
+            ], 500);
+        }
+    }
+
+    public function getDriverReservations($driver_id)
+    {
+        try {
+            // Get driver information
+            $driver = Driver::find($driver_id);
+            
+            if (!$driver) {
+                return response()->json([
+                    'message' => 'driver not found',
+                    'debug_info' => [
+                        'driver_id' => $driver_id
+                    ]
+                ], 404);
+            }
+            $reservations = DriverReservation::with(['user'])
+                ->where('driver_id', $driver_id)
+                ->get();
+            
+            if ($reservations->isEmpty()) {
+                return response()->json([
+                    'message' => 'No reservations found for this driver',
+                    'debug_info' => [
+                        'driver_id' => $driver,
+                        'count' => 0
+                    ]
+                ], 404);
+            }
+
+            return response()->json([
+                'driver' => $driver,
+                'reservations' => $reservations,
+                'debug_info' => [
+                    'driver_id' => $driver_id,
+                    'count' => $reservations->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving driver reservations',
+                'error' => $e->getMessage()
             ], 500);
         }
     }

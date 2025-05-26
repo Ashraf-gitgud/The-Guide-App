@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guide;
 use App\Models\GuideReservation;
 use App\Notifications\NewGuideReservation;
 use Illuminate\Http\Request;
@@ -208,4 +209,52 @@ class GuideReservationController extends Controller
             ], 500);
         }
     }
+
+
+
+
+    
+    public function getGuideReservations($guide_id)
+    {
+        try {
+            // Get guide information
+            $guide = Guide::find($guide_id);
+            
+            if (!$guide) {
+                return response()->json([
+                    'message' => 'guide not found',
+                    'debug_info' => [
+                        'user_id' => $guide_id
+                    ]
+                ], 404);
+            }
+            $reservations = GuideReservation::with(['user'])
+                ->where('guide_id', $guide_id)
+                ->get();
+            
+            if ($reservations->isEmpty()) {
+                return response()->json([
+                    'message' => 'No guide reservations found for this guide',
+                    'debug_info' => [
+                        'guide_id' => $guide,
+                        'count' => 0
+                    ]
+                ], 404);
+            }
+            return response()->json([
+                'guide' => $guide,
+                'reservations' => $reservations,
+                'debug_info' => [
+                    'guide_id' => $guide_id,
+                    'count' => $reservations->count()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving guide reservations',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
