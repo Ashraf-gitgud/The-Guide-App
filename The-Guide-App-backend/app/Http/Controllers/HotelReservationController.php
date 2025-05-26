@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\HotelReservation;
 use App\Notifications\NewHotelReservation;
 use Illuminate\Http\Request;
@@ -208,33 +209,46 @@ class HotelReservationController extends Controller
         }
     }
 
-    public function getUserReservations($user_id)
+    public function getHotelReservations($hotel_id)
     {
         try {
-            $reservations = HotelReservation::with(['hotel', 'user'])
-                ->where('user_id', $user_id)
+            // Get hotel information
+            $hotel = Hotel::find($hotel_id);
+            
+            if (!$hotel) {
+                return response()->json([
+                    'message' => 'hotel not found',
+                    'debug_info' => [
+                        'hotel_id' => $hotel_id
+                    ]
+                ], 404);
+            }
+
+            $reservations = HotelReservation::with(['user'])
+                ->where('hotel_id', $hotel_id)
                 ->get();
             
             if ($reservations->isEmpty()) {
                 return response()->json([
-                    'message' => 'No hotel reservations found for this user',
+                    'message' => 'No hotel reservations found for this hotel',
                     'debug_info' => [
-                        'user_id' => $user_id,
+                        'hotel_id' => $hotel,
                         'count' => 0
                     ]
                 ], 404);
             }
 
             return response()->json([
+                'hotel' => $hotel,
                 'reservations' => $reservations,
                 'debug_info' => [
-                    'user_id' => $user_id,
+                    'hotel_id' => $hotel_id,
                     'count' => $reservations->count()
                 ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error retrieving user hotel reservations',
+                'message' => 'Error retrieving hotel reservations',
                 'error' => $e->getMessage()
             ], 500);
         }

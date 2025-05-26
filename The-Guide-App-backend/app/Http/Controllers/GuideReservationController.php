@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guide;
 use App\Models\GuideReservation;
 use App\Notifications\NewGuideReservation;
 use Illuminate\Http\Request;
@@ -209,39 +210,51 @@ class GuideReservationController extends Controller
         }
     }
 
-}
 
 
-    public function getUserReservations($user_id)
+
+    
+    public function getGuideReservations($guide_id)
     {
         try {
-            $reservations = GuideReservation::with(['guide', 'user'])
-                ->where('user_id', $user_id)
+            // Get guide information
+            $guide = Guide::find($guide_id);
+            
+            if (!$guide) {
+                return response()->json([
+                    'message' => 'guide not found',
+                    'debug_info' => [
+                        'user_id' => $guide_id
+                    ]
+                ], 404);
+            }
+            $reservations = GuideReservation::with(['user'])
+                ->where('guide_id', $guide_id)
                 ->get();
             
             if ($reservations->isEmpty()) {
                 return response()->json([
-                    'message' => 'No guide reservations found for this user',
+                    'message' => 'No guide reservations found for this guide',
                     'debug_info' => [
-                        'user_id' => $user_id,
+                        'guide_id' => $guide,
                         'count' => 0
                     ]
                 ], 404);
             }
-
             return response()->json([
+                'guide' => $guide,
                 'reservations' => $reservations,
                 'debug_info' => [
-                    'user_id' => $user_id,
+                    'guide_id' => $guide_id,
                     'count' => $reservations->count()
                 ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error retrieving user guide reservations',
+                'message' => 'Error retrieving guide reservations',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-} 
 
+}
