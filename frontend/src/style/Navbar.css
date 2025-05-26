@@ -1,0 +1,25 @@
+/* Navbar.css */
+.navbar {
+    padding: 1rem 2rem;
+    font-weight: 500;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+  }
+  
+  .navbar a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .navbar-dark {
+    background-color: #0b132b;
+    color: white;
+  }
+  
+  .navbar-light {
+    background-color: #f0f8ff;
+    color: #1a1a1a;
+  }
+  

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import styles from './Attractions.module.css';
 
 const Attractions = () => {
@@ -22,16 +23,15 @@ const Attractions = () => {
     fetchItems();
   }, []);
 
-
   const getRandomItems = (array, count) => {
     const shuffled = array.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
 
- return (
+  return (
     <section className={styles.attractionsSection}>
       <header className={styles.attractionsHeader}>
-        <h2 className={styles.attractionsTitle}>Adventure Awaits</h2>
+        <h2 className={styles.attractionsTitle}>Adventure Awaits!</h2>
         <p className={styles.attractionsSubtitle}>Unveil the extraordinary in every corner</p>
       </header>
       <div className={styles.attractionsGrid}>
@@ -41,9 +41,9 @@ const Attractions = () => {
       </div>
       <div className={styles.dividerContainer}>
         <div className={styles.dividerLine}></div>
-        <a href="#" className={styles.discoverMore}>
+        <Link to="/attractions" className={styles.discoverMore}>
           Discover More ({totalAttractions})
-        </a>
+        </Link>
       </div>
     </section>
   );
@@ -67,7 +67,6 @@ const ItemCard = ({ item, index }) => {
         <h3 className={styles.itemName}>{item.name}</h3>
       </div>
 
-      {/* Always render the expanded card, toggle visibility with class */}
       <div
         className={`
           ${styles.expandedCard} 
@@ -83,14 +82,14 @@ const ItemCard = ({ item, index }) => {
           </h3>
           <div className={styles.descriptionWrapper}>
             <p className={styles.description}>{item.description}</p>
-            <button className={styles.seeMoreButton}>See More</button>
+            <Link to={`/attractions/${item.id}`} className={styles.seeMoreButton}>
+              See More
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-
 
 export default Attractions;

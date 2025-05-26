@@ -34,6 +34,8 @@ Route::get("/guides", [GuideController::class, 'index']);
 Route::get("/guides/{id}", [GuideController::class, 'show']);
 Route::get("/drivers", [DriverController::class, 'index']);
 Route::get("/drivers/{id}", [DriverController::class, 'show']);
+Route::get("/users", [UserController::class, 'index']);
+Route::get("/users/{id}", [UserController::class, 'show']);
 
 
 // Admin protected routes

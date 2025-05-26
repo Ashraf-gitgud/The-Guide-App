@@ -1,0 +1,91 @@
+.doubleCarouselContainer {
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.carouselSection {
+  margin-bottom: 40px;
+}
+
+.carouselTitle {
+  font-size: 42px; /* Increased font size */
+  margin-bottom: 20px;
+  color: white; /* Changed to white */
+  text-align: center; /* Centered */
+  font-weight: bold; /* Optional: makes title bolder */
+}
+
+.card {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.cardName {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.seeMoreButton {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+
+.seeMoreButton:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.starRating {
+  margin-bottom: 10px;
+}
+
+.star {
+  font-size: 28px;
+  margin-right: 2px;
+  color: gold;
+  text-shadow: 0 0 1px white;
+}
+
+
+/* Override react-slick default styles */
+:global(.slick-prev),
+:global(.slick-next) {
+  z-index: 1;
+}
+
+:global(.slick-prev) {
+  left: 8px;
+}
+
+:global(.slick-next) {
+  right: 16px;
+}
+
+:global(.slick-prev:before),
+:global(.slick-next:before) {
+  font-size: 32px; /* Increased arrow size */
+}
+
+:global(.slick-dots li button:before) {
+  font-size: 12px; /* Slightly larger dots */
+  color: white; /* White dots */
+}
+
+:global(.slick-dots li.slick-active button:before) {
+  color: white; /* Active dot color */
+}
