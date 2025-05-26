@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     GuideController,
     DriverController,
     ProfileCompletionController,
+    UserController
 };
 
 use App\Http\Controllers\ReviewsController;
