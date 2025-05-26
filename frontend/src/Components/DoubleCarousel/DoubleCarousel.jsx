@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './DoubleCarousel.module.css';
+import { Link } from 'react-router-dom';
 
 const DoubleCarousel = () => {
   const [hotels, setHotels] = useState([]);
@@ -86,7 +87,9 @@ const DoubleCarousel = () => {
                 style={{backgroundImage: `url(${getProfileImage(restaurant.user_id)})`}}
               >
                 <h3 className={styles.cardName}>{restaurant.name}</h3>
+                <Link to={`/restaurants/${restaurant.restaurant_id}`} >
                 <button className={styles.seeMoreButton}>See more</button>
+                </Link>
               </div>
             </div>
           ))}
@@ -106,7 +109,9 @@ const DoubleCarousel = () => {
                 <div className={styles.starRating}>
                   {renderStars(parseInt(hotel.hotel_rating))}
                 </div>
+                <Link to={`/hotels/${hotel.hotel_id}`} >
                 <button className={styles.seeMoreButton}>See more</button>
+                </Link>
               </div>
             </div>
           ))}

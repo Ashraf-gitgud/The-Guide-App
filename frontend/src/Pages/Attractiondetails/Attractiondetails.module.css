@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
 body {
   background-color: #002343;
   margin: 0;
@@ -8,9 +10,9 @@ body {
   display: flex;
   max-width: 1200px;
   margin: 40px auto;
-  background: linear-gradient(to right, #002343, #1c345c);
+  background: #04213b;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px #002343;
   overflow: hidden;
 }
 
@@ -36,7 +38,7 @@ body {
   text-align: center;
   font-size: 24px;
   font-weight: 500;
-  color: #a3bffa;
+  color: white;
   margin-top: 60px;
 }
 
@@ -45,10 +47,14 @@ body {
 }
 
 .title {
+  text-align: center;
   font-size: 36px;
   font-weight: 700;
-  color: #ffffff;
-  padding-bottom: 12px;
+  color: #002343;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 2px solid #f5f7fa;
   margin-bottom: 15px;
   text-transform: capitalize;
 }
@@ -57,6 +63,7 @@ body {
   font-size: 20px;
   line-height: 1.8;
   margin-bottom: 24px;
+  color: #e0e6ef;
 }
 
 .infoGrid {
@@ -70,22 +77,27 @@ body {
 .infoItem {
   font-size: 16px;
   padding: 12px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #fff;
   border-radius: 8px;
   margin-top: 10px;
+  color: #333;
+  border: 1px solid #e0e6ef;
 }
 
 .position {
   font-size: 16px;
   padding: 12px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #fff;
   border-radius: 8px;
   margin-bottom: 24px;
+  color: #333;
+  border: 1px solid #e0e6ef;
 }
 
 .buttonContainer {
   display: flex;
   gap: 24px;
+  margin-left: 6px;
 }
 
 .bookButton, .rideButton {
@@ -100,25 +112,24 @@ body {
 }
 
 .bookButton {
-  background-color: #1e90ff; /* Dodger Blue */
-  color: #ffffff;
+  background-color: white;
+  color: #002343;
 }
 
 .bookButton:hover {
-  background-color: #187bcd;
+  background-color: #e0e6ef;
   transform: translateY(-2px);
 }
 
 .rideButton {
-  background-color: #00b894; /* Teal */
-  color: #ffffff;
+  background-color: white;
+  color: #002343;
 }
 
 .rideButton:hover {
-  background-color: #009874;
+  background-color: #e0e6ef;
   transform: translateY(-2px);
 }
-
 
 @media (max-width: 768px) {
   .container {
