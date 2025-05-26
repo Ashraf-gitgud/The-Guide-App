@@ -1,0 +1,186 @@
+.attractionsSection {
+  background-color: rgb(0, 35, 67);
+  padding: 1px 30px;
+}
+
+.attractionsHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.attractionsTitle {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.attractionsSubtitle {
+  font-size: 1.2rem;
+  color: #c0c0c0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.attractionsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+
+
+.itemCardWrapper {
+  position: relative;
+}
+
+.itemCard {
+  width: 100%;
+  scale: 0.95;
+  padding-bottom: 100%; /* Create a square aspect ratio */
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.itemName {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.expandedCard {
+  position: absolute;
+  top: -40%;
+  left: 0;
+  width: 150%;
+  height: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  overflow: hidden;
+  transition: transform 0.3s ease, opacity 0.5s;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.expandedCardVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 999;
+}
+
+
+.itemCardWrapper:hover .expandedCard {
+  opacity: 1;
+  transform: translateY(-30px);
+}
+
+.expandRight {
+  left: 0;
+}
+
+.expandLeft {
+  left: auto;
+  right: 0;
+}
+
+.expandedImage {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+}
+
+.expandedContent {
+  padding: 10px;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandedContent h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+
+.expandedContent p {
+  font-size: 0.9rem;
+  margin: 5px 0;
+  overflow: wrap ;
+}
+
+.descriptionWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.description {
+  font-size: 0.9rem;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* single line */
+  flex: 1;
+  margin-right: 10px;
+}
+
+
+.seeMoreButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  align-self: flex-end;
+}
+
+.seeMoreButton:hover {
+  background-color: #0056b3;
+}
+
+.dividerContainer {
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.dividerLine {
+  flex-grow: 1;
+  height: 1px;
+  background-color: white;
+  margin-right: 10px;
+}
+
+.discoverMore {
+  white-space: nowrap;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.discoverMore:hover {
+  opacity: 0.8;
+}

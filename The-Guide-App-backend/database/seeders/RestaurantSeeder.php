@@ -114,7 +114,7 @@ class RestaurantSeeder extends Seeder
             'adress' => '1 Rue Kashla, Kasbah, Tangier 90000, Morocco',
             'restaurant_rating' => '4',
             'rating' => '4.3',
-            'position' => json_encode([35.7890288591531, -5.814541233278868]),
+            'position' => json_encode([35.78896793832755, -5.8144983179234595]),
             'user_id' => $user1->user_id,
         ]);
 

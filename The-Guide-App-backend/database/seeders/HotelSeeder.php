@@ -114,7 +114,7 @@ class HotelSeeder extends Seeder
             'adress' => '85 Rue de la Liberté, Tangier 90000, Morocco',
             'hotel_rating' => '4',
             'rating' => '4.3',
-            'position' => json_encode([35.78211084359769, -5.812539404443347]),
+            'position' => json_encode([35.782136954782345, -5.812603777458666]),
             'user_id' => $user1->user_id,
         ]);
 

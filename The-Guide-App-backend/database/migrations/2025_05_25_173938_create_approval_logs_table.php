@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('agent__reservations', function (Blueprint $table) {
+        Schema::create('approval_logs', function (Blueprint $table) {
             $table->id();
-            $table->string("place");
-            $table->string("agent_name");
-            $table->string("agent_type");
-            $table->string("author");
+            $table->foreignId('admin_id')->constrained('users');
+            $table->string('type');
+            $table->string('action');
+            $table->unsignedBigInteger('target_id');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('agent__reservations');
+        Schema::dropIfExists('approval_logs');
     }
 };

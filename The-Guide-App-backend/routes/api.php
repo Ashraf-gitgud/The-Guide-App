@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\{
     AuthController,
     AdminController,
@@ -10,8 +11,15 @@ use App\Http\Controllers\{
     GuideController,
     DriverController,
     ProfileCompletionController,
-    AdminDashboard
 };
+
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\HotelReservationController;
+use App\Http\Controllers\RestaurantReservationController;
+use App\Http\Controllers\DriverReservationController;
+use App\Http\Controllers\GuideReservationController;
+use App\Http\Controllers\NotificationController;
+
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,6 +34,7 @@ Route::get("/guides", [GuideController::class, 'index']);
 Route::get("/guides/{id}", [GuideController::class, 'show']);
 Route::get("/drivers", [DriverController::class, 'index']);
 Route::get("/drivers/{id}", [DriverController::class, 'show']);
+
 
 // Admin protected routes
 Route::middleware(['auth:sanctum', 'isAdmin'])->prefix('admin')->group(function () {
@@ -46,3 +55,60 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/complete-registration', [ProfileCompletionController::class, 'submitForm']);
     Route::get('/me', fn() => auth()->user());
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResources([
+        'reviews' => ReviewsController::class,
+        'hotel_reservations' => HotelReservationController::class,
+        'restaurant_reservations' => RestaurantReservationController::class,
+        'driver_reservations' => DriverReservationController::class,
+        'guide_reservations' => GuideReservationController::class,
+    ]);
+});
+
+// Notification routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+});
+
+// Test notification routes
+Route::middleware('auth:sanctum')->group(function () {
+    // Test hotel notification
+    Route::get('/test-notification', function () {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $hotel = $user->hotel;
+
+        if (!$hotel) {
+            return response()->json(['message' => 'No hotel found for this user'], 404);
+        }
+
+        $reservation = \App\Models\HotelReservation::first();
+        if (!$reservation) {
+            return response()->json(['message' => 'No hotel reservation found'], 404);
+        }
+
+        $hotel->notify(new \App\Notifications\NewHotelReservation($reservation));
+        return response()->json(['message' => 'Test notification sent']);
+    });
+
+    // Test driver notification
+    Route::get('/test-driver-notification', function () {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $driver = $user->driver;
+
+        if (!$driver) {
+            return response()->json(['message' => 'No driver found for this user'], 404);
+        }
+
+        $reservation = \App\Models\DriverReservation::first();
+        if (!$reservation) {
+            return response()->json(['message' => 'No driver reservation found'], 404);
+        }
+
+        $driver->notify(new \App\Notifications\NewDriverReservation($reservation));
+        return response()->json(['message' => 'Test driver notification sent']);
+    });
+});
+

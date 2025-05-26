@@ -10,11 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('restaurant__reservations', function (Blueprint $table) {
+        Schema::create('restaurant_reservations', function (Blueprint $table) {
             $table->id();
-            $table->string("people_number");
-            $table->string("date");
-            $table->string("author");
+            $table->integer("people_number");
+            $table->date("date");
+            $table->time("time");
+            $table->enum("status", ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->foreignId("restaurant_id")->constrained('restaurants', 'restaurant_id')->onDelete('cascade')->onUpdate("cascade");
+            $table->foreignId("user_id")->constrained('users', 'user_id')->onDelete('cascade')->onUpdate("cascade");
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurant__reservations');
+        Schema::dropIfExists('restaurant_reservations');
     }
 };
