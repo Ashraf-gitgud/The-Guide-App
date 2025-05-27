@@ -10,29 +10,33 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Attractions from './Pages/Attractionspage'
 import Hotelpage from './Pages/Hotelpage/Hotelpage'
+import About from './Pages/About/About'
+import Contact from './Pages/Contact/Contact'
 import Restaurantpage from './Pages/Restaurantpage/Restaurantpage'
 import './App.css';
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/map" element={<Map/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
-          <Route path="/attractions" element={<Attractions/>} />
-          <Route path="/attractions/:id" element={<Attractiondetails/>} />
-          <Route path="/hotels/:id" element={<Hotelpage/>} />
-          <Route path="/restaurants/:id" element={<Restaurantpage/>} />
-          <Route path="/reservations/hotel" element={<HotelReservationList />} />
-          <Route path="/reservations/hotel/:hotel_id/new" element={<HotelReservationForm />} />
-          <Route path="/reservations/hotel/:id/edit" element={<HotelReservationForm />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-  );
+return (
+  <BrowserRouter>
+    <Nav />
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/map" element={<Map/>} />
+      <Route path="/about" element={<About/>} />
+      <Route path="/contact" element={<Contact/>} />
+      <Route path="/login" element={<Login/>} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/attractions" element={<Attractions/>} />
+      <Route path="/attractions/:id" element={<Attractiondetails/>} />
+      <Route path="/hotels/:id" element={<Hotelpage/>} />
+      <Route path="/restaurants/:id" element={<Restaurantpage/>} />
+      <Route path="/reservations/hotel" element={<HotelReservationList />} />
+      <Route path="/reservations/hotel/new" element={<HotelReservationForm />} />
+      <Route path="/reservations/hotel/:id/edit" element={<HotelReservationForm />} />
+    </Routes>
+    <Footer />
+  </BrowserRouter>
+);
 }
 
 export default App;
