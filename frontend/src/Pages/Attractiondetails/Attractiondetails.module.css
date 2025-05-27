@@ -112,6 +112,7 @@ body {
 }
 
 .bookButton {
+  text-decoration: none;
   background-color: white;
   color: #002343;
 }
@@ -122,6 +123,7 @@ body {
 }
 
 .rideButton {
+  text-decoration: none;
   background-color: white;
   color: #002343;
 }

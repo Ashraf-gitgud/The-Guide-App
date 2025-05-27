@@ -90,10 +90,13 @@ const RestaurantReservationForm = () => {
         try {
             if (isEditMode) {
                 await axiosInstance.put(`/restaurant_reservations/${id}`, formData);
+                alert('Restaurant reservation updated successfully!');
             } else {
                 await axiosInstance.post('/restaurant_reservations', formData);
+                alert('Restaurant reservation created successfully!');
+                navigate('/');
             }
-            navigate('/reservations/restaurant');
+            
         } catch (err) {
             if (err.response?.status === 422) {
                 console.log(err)

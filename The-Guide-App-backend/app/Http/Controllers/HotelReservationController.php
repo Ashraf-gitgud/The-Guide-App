@@ -44,9 +44,9 @@ class HotelReservationController extends Controller
         try {
             $data = $request->validate([
                 'hotel_id' => 'required|exists:hotels,hotel_id',
-                'people_number' => 'required|integer',
+                'people_number' => 'required|integer|min:1|max:5',
                 'room_type' => 'required|in:single,double,twin,connecting,triple,deluxe,junior suite,standard',
-                'start_date' => 'required|date',
+                'start_date' => 'required|date|after_or_equal:today',
                 'end_date' => 'required|date|after:start_date',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
@@ -146,9 +146,9 @@ class HotelReservationController extends Controller
             }
             
             $data = $request->validate([
-                'people_number' => 'sometimes|required|integer',
+                'people_number' => 'sometimes|required|integer|min:1|max:5',
                 'room_type' => 'sometimes|required|in:single,double,twin,connecting,triple,deluxe,junior suite,standard',
-                'start_date' => 'sometimes|required|date',
+                'start_date' => 'sometimes|required|date|after_or_equal:today',
                 'end_date' => 'sometimes|required|date|after:start_date',
                 'status' => 'sometimes|required|in:pending,confirmed,cancelled'
             ]);

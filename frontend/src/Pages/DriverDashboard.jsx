@@ -20,7 +20,7 @@ const DriverDashboard = () => {
       setDriver(res.data.driver);
       setReservations(res.data.reservations);
     } catch (err) {
-      console.error(err);
+      console.log(err);
       alert("Failed to load dashboard");
     } finally {
       setLoading(false);
