@@ -20,12 +20,14 @@
   color: white;
   margin-bottom: 0.5rem; 
   margin-top: 60px;
+  text-shadow: 1px 1px 4px black;
 }
 
 .heroText {
   font-size: 1.75rem;
   color: white;
   max-width: 600px;
+  text-shadow: 1px 1px 4px black;
 }
 
 @media (max-width: 768px) {

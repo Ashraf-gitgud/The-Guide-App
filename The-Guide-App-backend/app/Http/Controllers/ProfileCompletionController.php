@@ -7,6 +7,7 @@ use App\Models\Driver;
 use App\Models\Guide;
 use App\Models\Hotel;
 use App\Models\Restaurant;
+use App\Models\Tourist;
 use Illuminate\Support\Facades\Log;
 
 class ProfileCompletionController extends Controller
@@ -33,6 +34,8 @@ class ProfileCompletionController extends Controller
                 return view('complete-registration.restaurant');
             case 'guide':
                 return view('complete-registration.guide');
+            case 'tourist':
+                return view('complete-registration.tourist');
             default:
                 return response()->json([
                     'error' => "Role '{$user->role}' not supported",
@@ -79,14 +82,23 @@ class ProfileCompletionController extends Controller
             ];
 
             switch ($user->role) {
+                case 'tourist':
+                    $validatedData = $request->validate([
+                        'phone_number' => 'required|string',
+                    ]);
+                    $validatedData['full_name'] = $user->name;
+                    $validatedData['email'] = $user->email;
+                    Tourist::create(array_merge($validatedData, $baseData));
+                    break;
+
                 case 'transporter':
                     $validatedData = $request->validate([
                         'carte_nationale' => 'required|string',
                         'driver_license' => 'required|string',
-                        'full_name' => 'required|string',
                         'phone_number' => 'required|string',
                         'rating' => 'nullable|numeric|min:1|max:5'
                     ]);
+                    $validatedData['full_name'] = $user->name;
                     $validatedData['email'] = $user->email;
                     Driver::create(array_merge($validatedData, $baseData));
                     break;
@@ -121,10 +133,10 @@ class ProfileCompletionController extends Controller
                     $validatedData = $request->validate([
                         'carte_nationale' => 'required|string',
                         'license_guide' => 'required|string',
-                        'full_name' => 'required|string',
                         'phone_number' => 'required|string',
                         'rating' => 'nullable|numeric|min:1|max:5'
                     ]);
+                    $validatedData['full_name'] = $user->name;
                     $validatedData['email'] = $user->email;
                     Guide::create(array_merge($validatedData, $baseData));
                     break;

@@ -96,7 +96,7 @@ const SearchBar = ({ onSelectLocation, isMapSearch = false }) => {
               key={`${loc.type}-${loc.id}`}
               className={styles.suggestionItem}
             >
-              <Link to={`/${loc.type}s/${loc.id}`} className={styles.suggestionLink}>
+              <Link to={`/${loc.type}s/${Object.values(loc)[0]}`} className={styles.suggestionLink}>
                 <img
                   src={loc.image || '/placeholder-image.jpg'}
                   alt={loc.name || 'Location'}
