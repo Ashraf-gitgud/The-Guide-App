@@ -22,6 +22,10 @@ use App\Http\Controllers\RestaurantReservationController;
 use App\Http\Controllers\DriverReservationController;
 use App\Http\Controllers\GuideReservationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RestaurantDashboardController;
+use App\Http\Controllers\HotelDashboardController;
+use App\Http\Controllers\DriverDashboardController;
+use App\Http\Controllers\GuideDashboardController;
 
 
 // Public routes
@@ -58,10 +62,36 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/complete-registration', [ProfileCompletionController::class, 'showForm']);
     Route::post('/complete-registration', [ProfileCompletionController::class, 'submitForm']);
-    Route::get('/me', function(Request $request) {
+    Route::get('/me', function (Request $request) {
         return response()->json($request->user());
     });
 });
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/restaurant/dashboard', [RestaurantDashboardController::class, 'index']);
+    Route::post('/restaurant/reservations/{id}/accept', [RestaurantDashboardController::class, 'acceptReservation']);
+    Route::delete('/restaurant/reservations/{id}', [RestaurantDashboardController::class, 'deleteReservation']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/hotel/dashboard', [HotelDashboardController::class, 'index']);
+    Route::post('/hotel/reservations/{id}/accept', [HotelDashboardController::class, 'acceptReservation']);
+    Route::delete('/hotel/reservations/{id}', [HotelDashboardController::class, 'deleteReservation']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/driver/reservations', [DriverDashboardController::class, 'index']);
+    Route::post('/driver/reservations/{id}/accept', [DriverDashboardController::class, 'acceptReservation']);
+    Route::delete('/driver/reservations/{id}', [DriverDashboardController::class, 'deleteReservation']);
+});
+
+Route::middleware(['auth:sanctum'])->prefix('guide')->group(function () {
+    Route::get('/dashboard', [GuideDashboardController::class, 'index']);
+    Route::post('/reservations/{id}/accept', [GuideDashboardController::class, 'acceptReservation']);
+    Route::delete('/reservations/{id}', [GuideDashboardController::class, 'deleteReservation']);
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResources([
@@ -71,14 +101,14 @@ Route::middleware('auth:sanctum')->group(function () {
         'driver_reservations' => DriverReservationController::class,
         'guide_reservations' => GuideReservationController::class,
     ]);
-    
+
     // Get user's reservations
     Route::get('/reservations/user/{user_id}', [GetUserReservationController::class, 'GetUserReservation']);
     Route::get('/reservations/driver/{driver_id}', [DriverReservationController::class, 'getDriverReservations']);
     Route::get('/reservations/hotel/{hotel_id}', [HotelReservationController::class, 'getHotelReservations']);
     Route::get('/reservations/restaurant/{restaurant_id}', [RestaurantReservationController::class, 'getUserReservations']);
     Route::get('/reservations/guide/{guide_id}', [GuideReservationController::class, 'getGuideReservations']);
-    
+
 });
 
 // Notification routes
