@@ -23,6 +23,7 @@ import "./App.css";
 import RestaurantReservationForm from "./Components/Reservations/Restaurant/RestaurantReservationForm";
 import GuideReservationForm from "./Components/Reservations/Guide/GuideReservationForm";
 import DriverReservationForm from "./Components/Reservations/Driver/DriverReservationForm";
+import TouristDashboard from "./Pages/Dashboard/TouristDashboard";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/reservations/guide/:id/edit" element={<GuideReservationForm />} />
         <Route path="/reservations/driver/new" element={<DriverReservationForm />} />
         <Route path="/reservations/driver/:id/edit" element={<DriverReservationForm />} />
+        <Route path="/tourist" element={<TouristDashboard />} />
       </Routes>
       <Footer />
     </BrowserRouter>
