@@ -44,8 +44,8 @@ class GuideReservationController extends Controller
         try {
             $data = $request->validate([
                 'guide_id' => 'required|exists:guides,guide_id',
-                'people_number' => 'required|integer',
-                'start_date' => 'required|date',
+                'people_number' => 'required|integer|min:1|max:27',
+                'start_date' => 'required|date|after_or_equal:today',
                 'end_date' => 'required|date|after:start_date',
                 'time' => 'required|date_format:H:i',
                 'location' => 'required|string',
@@ -148,8 +148,8 @@ class GuideReservationController extends Controller
             }
 
             $data = $request->validate([
-                'people_number' => 'sometimes|required|integer',
-                'start_date' => 'sometimes|required|date',
+                'people_number' => 'sometimes|required|integer|min:1|max:27',
+                'start_date' => 'sometimes|required|date|after_or_equal:today',
                 'end_date' => 'sometimes|required|date|after:start_date',
                 'status' => 'sometimes|required|in:pending,confirmed,cancelled'
             ]);

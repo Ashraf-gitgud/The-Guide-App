@@ -1,39 +1,31 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import axiosInstance from '../../../services/axiosConfig';
-import './HotelReservationForm.css';
+import './GuideReservationForm.css';
 
-const HotelReservationForm = () => {
-    const { id, hotel_id } = useParams();
+const GuideReservationForm = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const isEditMode = Boolean(id);
-    const isAddMode = Boolean(hotel_id);
+    const isEditMode = Boolean(id);   
+    const isAddMode = !isEditMode ? true : false;
+
     const userId = localStorage.getItem('user_id');
 
     // Separate state for each field
-    const [hotelId, setHotelId] = useState('');
-    const [hotelName, setHotelName] = useState('');
+    const [guideId, setGuideId] = useState('');
+    const [guideName, setGuideName] = useState('');
     const [peopleNumber, setPeopleNumber] = useState('');
-    const [roomType, setRoomType] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [time, setTime] = useState('');
+    const [location, setLocation] = useState('');
     const [status, setStatus] = useState('pending');
 
-    const [hotel, setHotel] = useState([]);
+    const [guides, setGuides] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [validationErrors, setValidationErrors] = useState({});
-
-    const roomTypes = [
-        'single',
-        'double',
-        'twin',
-        'connecting',
-        'triple',
-        'deluxe',
-        'junior suite',
-        'standard'
-    ];
 
     useEffect(() => {
         if (!userId) {
@@ -44,41 +36,46 @@ const HotelReservationForm = () => {
             fetchReservation();
         }
         if (isAddMode) {
-            fetchHotel();
-            setHotelId(hotel_id);
+            fetchGuides();
         }
-    }, [id, userId, navigate, isEditMode, isAddMode, hotel_id]);
+    }, [id, userId, navigate, isEditMode, isAddMode]);
 
-    const fetchHotel = async () => {
+    const fetchGuides = async () => {
         try {
-            const response = await axiosInstance.get(`/hotels/${hotel_id}`);
+            const response = await axiosInstance.get('/guides');
             if (response.data) {
-                setHotel(response.data);
-            } else {
-                setHotel([]);
+                // Transform the data for react-select
+                const formattedGuides = response.data.map(guide => ({
+                    value: guide.guide_id,
+                    label: guide.full_name
+                }));
+                setGuides(formattedGuides);
             }
         } catch (err) {
-            setError('Failed to fetch hotel');
+            setError('Failed to fetch guides');
         }
     };
 
+
     const fetchReservation = useCallback(async () => {
         try {
-            const response = await axiosInstance.get(`/hotel_reservations/${id}`);
+            const response = await axiosInstance.get(`/guide_reservations/${id}`);
             const reservation = response.data.reservation;
             if (reservation) {
-                setHotelName(reservation.hotel.name|| '');
-                setHotelId(reservation.hotel_id || '');
+                setGuideId(reservation.guide_id || '');
+                setGuideName(reservation.guide.full_name || '');
                 setPeopleNumber(reservation.people_number || '');
-                setRoomType(reservation.room_type || '');
                 setStartDate(reservation.start_date ? reservation.start_date.split('T')[0] : '');
                 setEndDate(reservation.end_date ? reservation.end_date.split('T')[0] : '');
+                setTime(reservation.time || '');
+                setLocation(reservation.location || '');
                 setStatus(reservation.status || 'pending');
             }
         } catch (err) {
             setError('Failed to fetch reservation details');
         }
     }, [id]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -87,24 +84,26 @@ const HotelReservationForm = () => {
         setValidationErrors({});
 
         const formData = {
-            hotel_id: parseInt(hotelId),
+            guide_id: parseInt(guideId),
             people_number: parseInt(peopleNumber),
-            room_type: roomType,
             start_date: startDate,
             end_date: endDate,
+            time: time,
+            location: location,
             status: status,
             user_id: parseInt(userId)
         };
 
         try {
             if (isEditMode) {
-                await axiosInstance.put(`/hotel_reservations/${id}`, formData);
-                alert('Hotel reservation updated successfully!');
+                await axiosInstance.put(`/guide_reservations/${id}`, formData);
+                alert('Guide reservation updated successfully!');
             } else {
-                await axiosInstance.post('/hotel_reservations', formData);
-                alert('Hotel reservation created successfully!');
-                navigate('/');
+                await axiosInstance.post('/guide_reservations', formData);
+                alert('Guide reservation created successfully!');
+                navigate('/'); // Navigate to homepage
             }
+            
         } catch (err) {
             if (err.response?.status === 422) {
                 setValidationErrors(err.response.data.errors || {});
@@ -118,10 +117,29 @@ const HotelReservationForm = () => {
         }
     };
 
+    const customStyles = {
+        control: (base) => ({
+            ...base,
+            minHeight: '45px',
+            border: validationErrors.guide_id ? '1px solid #dc3545' : '1px solid #ddd',
+            '&:hover': {
+                border: validationErrors.guide_id ? '1px solid #dc3545' : '1px solid #4a90e2'
+            }
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? '#f0f0f0' : 'white',
+            color: '#333',
+            '&:hover': {
+                backgroundColor: '#e6e6e6'
+            }
+        })
+    };
+
     return (
         <div className="reservation">
             <div className="reservation-header">
-                <h2>Hotel Reservations</h2>
+                <h2>Guide Reservations</h2>
             </div>
             <div className="reservation-form-container">
                 <h2>{isEditMode ? 'Edit Reservation' : 'New Reservation'}</h2>
@@ -129,29 +147,41 @@ const HotelReservationForm = () => {
                 {error && <div className="error-message">{error}</div>}
                 
                 <form onSubmit={handleSubmit} className="reservation-form">
-                {isEditMode && (
-                    <div className="form-group">
-                    <label htmlFor="hotel">Hotel</label>
-                    <input 
-                        id='hotel'
-                        type="text" 
-                        value={hotelName} 
-                        disabled
-                    />
-                </div>
-                )}
-                {isAddMode && (
-                    <div className="form-group">
-                        <label htmlFor="hotel">Hotel</label>
-                        <input 
-                            id='hotel'
-                            type="text" 
-                            value={hotel?.name || ''} 
-                            disabled
-                        />
-                    </div>
-                )}
-    
+                    {isEditMode && (
+                        <div className="form-group">
+                            <label htmlFor="guide">Guide</label>
+                            <input 
+                                id='guide'
+                                type="text" 
+                                value={guideName} 
+                                disabled
+                            />
+                        </div>
+                    )}
+                    {isAddMode && (
+                        <div className="form-group">
+                            <label htmlFor="guide">Select Guide</label>
+                            <Select
+                                id="guide"
+                                value={guides.find(guide => guide.value === parseInt(guideId)) || null}
+                                onChange={(selected) => {
+                                    setGuideId(selected ? selected.value : '');
+                                    setGuideName(selected ? selected.label : '');
+                                }}
+                                options={guides}
+                                placeholder="Search for a guide..."
+                                isClearable
+                                isSearchable
+                                required
+                                styles={customStyles}
+                                className={validationErrors.guide_id ? 'error' : ''}
+                            />
+                            {validationErrors.guide_id && (
+                                <div className="validation-error">{validationErrors.guide_id[0]}</div>
+                            )}
+                        </div>
+                    )}
+
                     <div className="form-group">
                         <label htmlFor="people_number">Number of People</label>
                         <input
@@ -160,6 +190,7 @@ const HotelReservationForm = () => {
                             value={peopleNumber}
                             onChange={(e) => setPeopleNumber(e.target.value)}
                             min="1"
+                            max="27"
                             required
                             className={validationErrors.people_number ? 'error' : ''}
                         />
@@ -167,30 +198,9 @@ const HotelReservationForm = () => {
                             <div className="validation-error">{validationErrors.people_number[0]}</div>
                         )}
                     </div>
-    
+
                     <div className="form-group">
-                        <label htmlFor="room_type">Room Type</label>
-                        <select
-                            id="room_type"
-                            value={roomType}
-                            onChange={(e) => setRoomType(e.target.value)}
-                            required
-                            className={validationErrors.room_type ? 'error' : ''}
-                        >
-                            <option value="">Select room type</option>
-                            {roomTypes.map(type => (
-                                <option key={type} value={type}>
-                                    {type.charAt(0).toUpperCase() + type.slice(1)}
-                                </option>
-                            ))}
-                        </select>
-                        {validationErrors.room_type && (
-                            <div className="validation-error">{validationErrors.room_type[0]}</div>
-                        )}
-                    </div>
-    
-                    <div className="form-group">
-                        <label htmlFor="start_date">Check-in Date</label>
+                        <label htmlFor="start_date">Start Date</label>
                         <input
                             type="date"
                             id="start_date"
@@ -203,9 +213,9 @@ const HotelReservationForm = () => {
                             <div className="validation-error">{validationErrors.start_date[0]}</div>
                         )}
                     </div>
-    
+
                     <div className="form-group">
-                        <label htmlFor="end_date">Check-out Date</label>
+                        <label htmlFor="end_date">End Date</label>
                         <input
                             type="date"
                             id="end_date"
@@ -218,7 +228,37 @@ const HotelReservationForm = () => {
                             <div className="validation-error">{validationErrors.end_date[0]}</div>
                         )}
                     </div>
-    
+
+                    <div className="form-group">
+                        <label htmlFor="time">Time</label>
+                        <input
+                            type="time"
+                            id="time"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                            required
+                            className={validationErrors.time ? 'error' : ''}
+                        />
+                        {validationErrors.time && (
+                            <div className="validation-error">{validationErrors.time[0]}</div>
+                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="location">Location</label>
+                        <input
+                            type="text"
+                            id="location"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            required
+                            className={validationErrors.location ? 'error' : ''}
+                        />
+                        {validationErrors.location && (
+                            <div className="validation-error">{validationErrors.location[0]}</div>
+                        )}
+                    </div>
+
                     {isEditMode && (
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
@@ -233,11 +273,11 @@ const HotelReservationForm = () => {
                             </select>
                         </div>
                     )}
-    
+
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/hotel')}
+                            onClick={() => navigate('/reservations/guide')}
                             className="cancel-btn"
                         >
                             Cancel
@@ -256,4 +296,4 @@ const HotelReservationForm = () => {
     );
 };
 
-export default HotelReservationForm; 
+export default GuideReservationForm; 

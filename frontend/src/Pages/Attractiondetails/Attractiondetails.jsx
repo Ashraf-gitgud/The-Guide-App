@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styles from './Attractiondetails.module.css';
 import Agents from '../../Components/Agents/Agents';
 
@@ -63,8 +63,8 @@ const AttractionPage = () => {
           </div>
         )} */}
         <div className={styles.buttonContainer}>
-          <button className={styles.bookButton}>Book a Tour</button>
-          <button className={styles.rideButton}>Get a Ride</button>
+          <Link to={'/reservations/guide/new'} className={styles.bookButton}>Book a Tour</Link>
+          <Link to={'/reservations/driver/new'} className={styles.rideButton}>Get a Ride</Link>
         </div>
       </div>
     </div>

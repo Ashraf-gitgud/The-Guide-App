@@ -49,7 +49,7 @@ class DriverReservationController extends Controller
                 'time' => 'required|date_format:H:i',
                 'start_place' => 'required|string',
                 'end_place' => 'required|string',
-                'people_number' => 'required|integer|min:1',
+                'people_number' => 'required|integer|min:1|max:6',
                 'status' => 'in:pending,confirmed,cancelled',
             ]);
             
@@ -159,11 +159,11 @@ class DriverReservationController extends Controller
             }
             
             $data = $request->validate([
-                'date' => 'sometimes|required|date',
+                'date' => 'sometimes|required|date|after_or_equal:today',
                 'time' => 'sometimes|required|date_format:H:i',
                 'start_place' => 'sometimes|required|string',
                 'end_place' => 'sometimes|required|string',
-                'people_number' => 'sometimes|required|integer|min:1',
+                'people_number' => 'sometimes|required|integer|min:1|max:6',
                 'status' => 'sometimes|required|in:pending,confirmed,cancelled'
             ]);
 
