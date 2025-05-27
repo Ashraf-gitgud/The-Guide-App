@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../style/Login.css";
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
 
 const Login = () => {
     const [login, setLogin] = useState({
@@ -24,8 +23,7 @@ const Login = () => {
                 // Store the token
                 localStorage.setItem('token', response.data.access_token);
                 // Store the user ID
-                localStorage.setItem('user_id', response.data.user);
-                console.log(response.data.access_token)
+                localStorage.setItem('user_id', response.data.user.user_id);
                 navigate('/');
             }
         } catch(err) {

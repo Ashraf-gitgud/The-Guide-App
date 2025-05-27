@@ -12,6 +12,7 @@ import Attractions from './Pages/Attractionspage'
 import Hotelpage from './Pages/Hotelpage/Hotelpage'
 import Restaurantpage from './Pages/Restaurantpage/Restaurantpage'
 import './App.css';
+import RestaurantReservationForm from './Components/Reservations/Restaurant/RestaurantReservationForm';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
           <Route path="/reservations/hotel" element={<HotelReservationList />} />
           <Route path="/reservations/hotel/:hotel_id/new" element={<HotelReservationForm />} />
           <Route path="/reservations/hotel/:id/edit" element={<HotelReservationForm />} />
+          <Route path="/reservations/restaurant/:restaurant_id/new" element={<RestaurantReservationForm />} />
+          <Route path="/reservations/restaurant/:id/edit" element={<RestaurantReservationForm />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Restaurantpage.css';
 
@@ -35,7 +35,6 @@ const RestaurantPage = () => {
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
   if (!restaurant || !user) return <div className="error">No data available</div>;
-
   return (
     <div className="restaurant-page">
       <header className="restaurant-header">
@@ -63,7 +62,7 @@ const RestaurantPage = () => {
           ) : (
             <div className="image-placeholder">No Image Available</div>
           )}
-          <button className="book-now-btn">Book Now</button>
+          <Link to={`/reservations/restaurant/${restaurant.restaurant_id}/new`} className="book-now-btn">Book Now</Link>
         </div>
       </div>
     </div>

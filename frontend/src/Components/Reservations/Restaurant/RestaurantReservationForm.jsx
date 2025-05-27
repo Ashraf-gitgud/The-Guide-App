@@ -1,78 +1,71 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../services/axiosConfig';
-import './HotelReservationForm.css';
+import './RestaurantReservationForm.css';
 
-const HotelReservationForm = () => {
-    const { id, hotel_id } = useParams();
+const RestaurantReservationForm = () => {
+    const { id, restaurant_id } = useParams();
     const navigate = useNavigate();
+    
     const isEditMode = Boolean(id);
-    const isAddMode = Boolean(hotel_id);
+    const isAddMode = Boolean(restaurant_id);
+    
+    
     const userId = localStorage.getItem('user_id');
 
     // Separate state for each field
-    const [hotelId, setHotelId] = useState('');
-    const [hotelName, setHotelName] = useState('');
+    const [restaurantId, setRestaurantId] = useState('');
+    const [restaurantName, setRestaurantName] = useState('');
     const [peopleNumber, setPeopleNumber] = useState('');
-    const [roomType, setRoomType] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [reservationDate, setReservationDate] = useState('');
+    const [reservationTime, setReservationTime] = useState('');
     const [status, setStatus] = useState('pending');
 
-    const [hotel, setHotel] = useState([]);
+    const [restaurant, setRestaurant] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [validationErrors, setValidationErrors] = useState({});
 
-    const roomTypes = [
-        'single',
-        'double',
-        'twin',
-        'connecting',
-        'triple',
-        'deluxe',
-        'junior suite',
-        'standard'
-    ];
-
     useEffect(() => {
+        
         if (!userId) {
             navigate('/login');
             return;
         }
+        
         if (isEditMode) {
             fetchReservation();
         }
         if (isAddMode) {
-            fetchHotel();
-            setHotelId(hotel_id);
+            fetchRestaurant();
+            setRestaurantId(restaurant_id);
         }
-    }, [id, userId, navigate, isEditMode, isAddMode, hotel_id]);
+    }, [id, userId, navigate, isEditMode, isAddMode, restaurant_id]);
 
-    const fetchHotel = async () => {
+    const fetchRestaurant = async () => {
         try {
-            const response = await axiosInstance.get(`/hotels/${hotel_id}`);
+            const response = await axiosInstance.get(`/restaurants/${restaurant_id}`);
+            
             if (response.data) {
-                setHotel(response.data);
+                setRestaurant(response.data);
             } else {
-                setHotel([]);
+                setRestaurant([]);
             }
         } catch (err) {
-            setError('Failed to fetch hotel');
+            setError('Failed to fetch restaurant');
         }
     };
 
     const fetchReservation = useCallback(async () => {
         try {
-            const response = await axiosInstance.get(`/hotel_reservations/${id}`);
+            const response = await axiosInstance.get(`/restaurant_reservations/${id}`);
             const reservation = response.data.reservation;
             if (reservation) {
-                setHotelName(reservation.hotel.name|| '');
-                setHotelId(reservation.hotel_id || '');
+                setRestaurantId(reservation.restaurant_id || '');
+                setRestaurantName(reservation.restaurant.name || '');
                 setPeopleNumber(reservation.people_number || '');
-                setRoomType(reservation.room_type || '');
-                setStartDate(reservation.start_date ? reservation.start_date.split('T')[0] : '');
-                setEndDate(reservation.end_date ? reservation.end_date.split('T')[0] : '');
+                setReservationDate(reservation.date ? reservation.date.split('T')[0] : '');
+                setReservationTime(reservation.time || '');
                 setStatus(reservation.status || 'pending');
             }
         } catch (err) {
@@ -85,26 +78,25 @@ const HotelReservationForm = () => {
         setLoading(true);
         setError(null);
         setValidationErrors({});
-
         const formData = {
-            hotel_id: parseInt(hotelId),
+            restaurant_id: parseInt(restaurantId),
             people_number: parseInt(peopleNumber),
-            room_type: roomType,
-            start_date: startDate,
-            end_date: endDate,
+            date: reservationDate,
+            time: reservationTime,
             status: status,
             user_id: parseInt(userId)
         };
 
         try {
             if (isEditMode) {
-                await axiosInstance.put(`/hotel_reservations/${id}`, formData);
+                await axiosInstance.put(`/restaurant_reservations/${id}`, formData);
             } else {
-                await axiosInstance.post('/hotel_reservations', formData);
+                await axiosInstance.post('/restaurant_reservations', formData);
             }
-            navigate('/reservations/hotel');
+            navigate('/reservations/restaurant');
         } catch (err) {
             if (err.response?.status === 422) {
+                console.log(err)
                 setValidationErrors(err.response.data.errors || {});
                 setError('Please correct the validation errors below');
             } else {
@@ -114,11 +106,10 @@ const HotelReservationForm = () => {
             setLoading(false);
         }
     };
-
     return (
         <div className="reservation">
             <div className="reservation-header">
-                <h2>Hotel Reservations</h2>
+                <h2>Restaurant Reservations</h2>
             </div>
             <div className="reservation-form-container">
                 <h2>{isEditMode ? 'Edit Reservation' : 'New Reservation'}</h2>
@@ -126,28 +117,28 @@ const HotelReservationForm = () => {
                 {error && <div className="error-message">{error}</div>}
                 
                 <form onSubmit={handleSubmit} className="reservation-form">
-                {isEditMode && (
-                    <div className="form-group">
-                    <label htmlFor="hotel">Hotel</label>
-                    <input 
-                        id='hotel'
-                        type="text" 
-                        value={hotelName} 
-                        disabled
-                    />
-                </div>
-                )}
-                {isAddMode && (
-                    <div className="form-group">
-                        <label htmlFor="hotel">Hotel</label>
-                        <input 
-                            id='hotel'
-                            type="text" 
-                            value={hotel?.name || ''} 
-                            disabled
-                        />
-                    </div>
-                )}
+                    {isEditMode && (
+                        <div className="form-group">
+                            <label htmlFor="restaurant">Restaurant</label>
+                            <input 
+                                id="restaurant" 
+                                type="text" 
+                                value={restaurantName} 
+                                disabled
+                            />
+                        </div>
+                    )}
+                    {isAddMode && (
+                        <div className="form-group">
+                            <label htmlFor="restaurant">Restaurant</label>
+                            <input 
+                                id="restaurant"
+                                type="text" 
+                                value={restaurant?.name || ''} 
+                                disabled
+                            />
+                        </div>
+                    )}
     
                     <div className="form-group">
                         <label htmlFor="people_number">Number of People</label>
@@ -166,53 +157,32 @@ const HotelReservationForm = () => {
                     </div>
     
                     <div className="form-group">
-                        <label htmlFor="room_type">Room Type</label>
-                        <select
-                            id="room_type"
-                            value={roomType}
-                            onChange={(e) => setRoomType(e.target.value)}
+                        <label htmlFor="reservation_date">Reservation Date</label>
+                        <input
+                            type="date"
+                            id="reservation_date"
+                            value={reservationDate}
+                            onChange={(e) => setReservationDate(e.target.value)}
                             required
-                            className={validationErrors.room_type ? 'error' : ''}
-                        >
-                            <option value="">Select room type</option>
-                            {roomTypes.map(type => (
-                                <option key={type} value={type}>
-                                    {type.charAt(0).toUpperCase() + type.slice(1)}
-                                </option>
-                            ))}
-                        </select>
-                        {validationErrors.room_type && (
-                            <div className="validation-error">{validationErrors.room_type[0]}</div>
+                            className={validationErrors.date ? 'error' : ''}
+                        />
+                        {validationErrors.date && (
+                            <div className="validation-error">{validationErrors.date[0]}</div>
                         )}
                     </div>
     
                     <div className="form-group">
-                        <label htmlFor="start_date">Check-in Date</label>
+                        <label htmlFor="reservation_time">Reservation Time </label>
                         <input
-                            type="date"
-                            id="start_date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
+                            type="time"
+                            id="reservation_time"
+                            value={reservationTime}
+                            onChange={(e) => setReservationTime(e.target.value)}
                             required
-                            className={validationErrors.start_date ? 'error' : ''}
+                            className={validationErrors.time ? 'error' : ''}
                         />
-                        {validationErrors.start_date && (
-                            <div className="validation-error">{validationErrors.start_date[0]}</div>
-                        )}
-                    </div>
-    
-                    <div className="form-group">
-                        <label htmlFor="end_date">Check-out Date</label>
-                        <input
-                            type="date"
-                            id="end_date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            required
-                            className={validationErrors.end_date ? 'error' : ''}
-                        />
-                        {validationErrors.end_date && (
-                            <div className="validation-error">{validationErrors.end_date[0]}</div>
+                        {validationErrors.time && (
+                            <div className="validation-error">{validationErrors.time[0]}</div>
                         )}
                     </div>
     
@@ -234,7 +204,7 @@ const HotelReservationForm = () => {
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/hotel')}
+                            onClick={() => navigate('/reservations/restaurant')}
                             className="cancel-btn"
                         >
                             Cancel
@@ -253,4 +223,4 @@ const HotelReservationForm = () => {
     );
 };
 
-export default HotelReservationForm; 
+export default RestaurantReservationForm; 

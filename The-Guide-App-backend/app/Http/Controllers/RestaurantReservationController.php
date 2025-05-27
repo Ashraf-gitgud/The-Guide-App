@@ -145,7 +145,8 @@ class RestaurantReservationController extends Controller
 
             $data = $request->validate([
                 'people_number' => 'sometimes|required|integer',
-                'reservation_date' => 'sometimes|required|date',
+                'date' => 'sometimes|required|date',            
+                'time' => 'sometimes|required|date_format:H:i',
                 'status' => 'sometimes|required|in:pending,confirmed,cancelled'
             ]);
 
@@ -227,7 +228,7 @@ class RestaurantReservationController extends Controller
             if ($reservations->isEmpty()) {
                 return response()->json([
                     'message' => 'No restaurant reservations found for this restaurant',
-                    'debug_info' => [
+                    'debug_ info' => [
                         'restaurant_id' => $restaurant,
                         'count' => 0
                     ]
