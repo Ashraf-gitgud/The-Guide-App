@@ -16,8 +16,14 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8000/api/login", login);
-            alert("Logged in successfully!");
+            const response = await axios.post("http://localhost:8000/api/login", login);
+            const token = response.data.access_token; 
+            if (token) {
+                localStorage.setItem('token', token);
+                alert("Logged in successfully!");
+            } else {
+                alert("No token received");
+            }
         } catch(err) {
             console.log(err);
             alert("Failed to login");
