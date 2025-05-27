@@ -11,7 +11,6 @@ const Login = () => {
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setUser } = useUser();
     
     const handleChange = (e) => {
         setLogin({...login, [e.target.name] : e.target.value})
@@ -25,7 +24,7 @@ const Login = () => {
                 // Store the token
                 localStorage.setItem('token', response.data.access_token);
                 // Store the user ID
-                setUser(response.data.user.user_id);
+                localStorage.setItem('user_id', response.data.user);
                 console.log(response.data.access_token)
                 navigate('/');
             }

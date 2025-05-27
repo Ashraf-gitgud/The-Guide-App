@@ -11,12 +11,10 @@ import Register from './Pages/Register';
 import Attractions from './Pages/Attractionspage'
 import Hotelpage from './Pages/Hotelpage/Hotelpage'
 import Restaurantpage from './Pages/Restaurantpage/Restaurantpage'
-import { UserProvider } from './context/UserContext';
 import './App.css';
 
 function App() {
   return (
-    <UserProvider>
       <BrowserRouter>
         <Nav />
         <Routes>
@@ -34,7 +32,6 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-    </UserProvider>
   );
 }
 
