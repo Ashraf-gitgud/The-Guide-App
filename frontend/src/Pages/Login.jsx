@@ -20,6 +20,8 @@ const Login = () => {
             const token = response.data.access_token; 
             if (token) {
                 localStorage.setItem('token', token);
+                localStorage.setItem('user_id', response.data.user.user_id);
+                localStorage.setItem('role', response.data.user.role);
                 alert("Logged in successfully!");
             } else {
                 alert("No token received");
