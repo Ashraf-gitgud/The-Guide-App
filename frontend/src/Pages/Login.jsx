@@ -19,12 +19,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/api/login", login);
-            if (response.data && response.data.user) {
-                // Store the token
-                localStorage.setItem('token', response.data.access_token);
-                // Store the user ID
+            const token = response.data.access_token; 
+            if (token) {
+                localStorage.setItem('token', token);
                 localStorage.setItem('user_id', response.data.user.user_id);
+                localStorage.setItem('role', response.data.user.role);
+                alert("Logged in successfully!");
                 navigate('/');
+            } else {
+                alert("No token received");
             }
         } catch(err) {
             console.log(err);
