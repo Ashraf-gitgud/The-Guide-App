@@ -19,6 +19,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/api/login", login);
+
             const token = response.data.access_token; 
             if (token) {
                 localStorage.setItem('token', token);
