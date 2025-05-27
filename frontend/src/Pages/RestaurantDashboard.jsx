@@ -29,7 +29,7 @@ const RestaurantDashboard = () => {
 
   const handleAccept = async (id) => {
     try {
-      await axios.patch(
+      await axios.post(
         `http://localhost:8000/api/restaurant/reservations/${id}/accept`,
         {},
         {

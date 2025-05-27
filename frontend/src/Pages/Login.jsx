@@ -21,6 +21,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/api/login", login);
+<<<<<<< HEAD
             if (response.data && response.data.user) {
                 // Store the token
                 localStorage.setItem('token', response.data.access_token);
@@ -28,6 +29,14 @@ const Login = () => {
                 setUser(response.data.user.user_id);
                 console.log(response.data.access_token)
                 navigate('/');
+=======
+            const token = response.data.access_token; 
+            if (token) {
+                localStorage.setItem('token', token);
+                alert("Logged in successfully!");
+            } else {
+                alert("No token received");
+>>>>>>> d8d2df43d48338f0e4b9ef8741fbe7afb9256d25
             }
         } catch(err) {
             console.log(err);
