@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../style/Register.css";
 
 const Register = () => {
@@ -12,6 +13,8 @@ const Register = () => {
         profile: ''
     });
 
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -19,7 +22,19 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8000/api/register', formData);
+            const response = await axios.post('http://localhost:8000/api/register', formData,
+                {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                }
+            );
+
+            // Store the token
+            localStorage.setItem("token", response.data.access_token);
+            
+            // Redirect to profile completion
+            navigate("/completeprofile");
             alert('Registered successfully!');
         } catch (err) {
             console.error(err);
@@ -76,9 +91,9 @@ const Register = () => {
                     <option value="">Select Your Role</option>
                     <option value="tourist">Tourist</option>
                     <option value="guide">Tour Guide</option>
-                    <option value="driver">Driver</option>
-                    <option value="hotel">Hotel Representative</option>
-                    <option value="restaurant">Restaurant Owner</option>
+                    <option value="transporter">Driver</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="restaurant">Restaurant</option>
                 </select>
                 
                 <div className="file-upload-wrapper">
