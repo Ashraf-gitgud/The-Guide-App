@@ -11,6 +11,7 @@ import Register from './Pages/Register';
 import Attractions from './Pages/Attractionspage'
 import Hotelpage from './Pages/Hotelpage/Hotelpage'
 import About from './Pages/About/About'
+import Contact from './Pages/Contact/Contact'
 import Restaurantpage from './Pages/Restaurantpage/Restaurantpage'
 import './App.css';
 
@@ -22,6 +23,7 @@ return (
       <Route path="/" element={<Homepage />} />
       <Route path="/map" element={<Map/>} />
       <Route path="/about" element={<About/>} />
+      <Route path="/contact" element={<Contact/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/attractions" element={<Attractions/>} />
