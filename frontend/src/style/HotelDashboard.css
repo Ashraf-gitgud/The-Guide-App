@@ -1,0 +1,191 @@
+/* HotelDashboard.css */
+
+/* Base Styles */
+.hotel-dashboard {
+  background-color: #0f172a; /* Dark blue background */
+  min-height: 100vh;
+  color: #e2e8f0;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #0f172a;
+}
+
+.loading-text {
+  color: #94a3b8;
+  font-size: 1.5rem;
+}
+
+/* Header Styles */
+.dashboard-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.dashboard-title {
+  color: #f59e0b; /* Amber for hotel accent */
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1e293b;
+}
+
+.hotel-name {
+  font-size: 1.5rem;
+  color: #f8fafc;
+}
+
+/* Content Styles */
+.dashboard-content {
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reservations-title {
+  color: #f59e0b; /* Amber to match header */
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #334155;
+}
+
+.no-reservations {
+  color: #94a3b8;
+  text-align: center;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* Reservation Cards */
+.reservations-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.reservation-card {
+  background-color: #334155;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  border-left: 4px solid #f59e0b; /* Amber accent */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reservation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-text {
+  margin: 0.75rem 0;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.reservation-text strong {
+  color: #cbd5e1;
+}
+
+/* Status Classes */
+.status-pending {
+  color: #fbbf24; /* Amber */
+  font-weight: 600;
+}
+
+.status-confirmed {
+  color: #34d399; /* Emerald */
+  font-weight: 600;
+}
+
+.status-cancelled {
+  color: #f87171; /* Red */
+  font-weight: 600;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.accept-button {
+  background-color: #10b981; /* Emerald */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+.accept-button:hover {
+  background-color: #059669;
+}
+
+.delete-button {
+  background-color: transparent;
+  color: #f87171; /* Red */
+  border: 1px solid #f87171;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.delete-button:hover {
+  background-color: #f87171;
+  color: white;
+}
+
+/* Additional Hotel-Specific Styles */
+.room-details {
+  background-color: #1e293b;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hotel-dashboard {
+    padding: 1rem;
+  }
+  
+  .reservations-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+  
+  .profile-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
