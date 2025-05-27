@@ -1,0 +1,80 @@
+.about-container {
+  background: linear-gradient(
+    to bottom,
+    linear-gradient(0deg, #003d6a 0%, #002343 100%) 50%,
+    linear-gradient(0deg, #003d6a 0%, #002343 100%) 0%,
+    #002343 50%,
+    #002343 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+.image-container {
+  margin-bottom: 0px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.image-container img {
+  max-width: 660px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+.image-container img:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.description {
+  font-size: 18px; /* Slightly larger for readability */
+  line-height: 1.6;
+  margin: 0 auto 30px;
+  text-align: center; /* Centered for balance */
+  max-width: 800px;
+  font-weight: 400;
+  color: #ada9a9;
+  font-style: italic;
+  letter-spacing: 0.5px; /* Subtle spacing for elegance */
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px;
+  color: #333333;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow for card prominence */
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth lift effect */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+  margin: 0 0 20px;
+  color: #002343;
+  text-align: center;
+  font-size: 28px; /* Larger for emphasis */
+  font-weight: 700; /* Bold for hierarchy */
+}
+
+.card p {
+  line-height: 1.7;
+  font-size: 18px; /* Larger for readability */
+  font-weight: 400; /* Lighter for balance */
+  margin: 0;
+}
