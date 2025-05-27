@@ -1,0 +1,140 @@
+/* CompleteProfile.css */
+.profile-completion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0a192f;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-completion-container h2 {
+    color: #64ffda;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.profile-completion-container p {
+    color: #ccd6f6;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.profile-completion-container form {
+    background-color: rgba(10, 25, 47, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(100, 149, 237, 0.2);
+}
+
+.profile-completion-container h3 {
+    color: #64ffda;
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.3);
+    padding-bottom: 8px;
+}
+
+.profile-completion-container input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #64ffda;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #e6f1ff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.profile-completion-container input:focus {
+    outline: none;
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+}
+
+.profile-completion-container input::placeholder {
+    color: #8892b0;
+}
+
+.profile-completion-container input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.profile-completion-container input[type="number"]::-webkit-outer-spin-button,
+.profile-completion-container input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #64ffda;
+    border: 1px solid #64ffda;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Loading and error states */
+.loading-message,
+.error-message {
+    color: #ccd6f6;
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+}
+
+.error-message {
+    color: #ff6b6b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .profile-completion-container form {
+        padding: 20px;
+    }
+    
+    .profile-completion-container h2 {
+        font-size: 24px;
+    }
+    
+    .profile-completion-container h3 {
+        font-size: 18px;
+    }
+}
+
+/* Role-specific form styling */
+.driver-form,
+.hotel-form,
+.restaurant-form,
+.guide-form,
+.tourist-form {
+    margin-bottom: 20px;
+}
+
+/* Add some spacing between form sections */
+.driver-form > *:not(h3),
+.hotel-form > *:not(h3),
+.restaurant-form > *:not(h3),
+.guide-form > *:not(h3),
+.tourist-form > *:not(h3) {
+    margin-bottom: 15px;
+}

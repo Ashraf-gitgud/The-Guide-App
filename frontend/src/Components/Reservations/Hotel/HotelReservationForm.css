@@ -1,3 +1,25 @@
+.reservation {
+  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.reservation-header h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin: 0;
+}
 .reservation-form-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -31,6 +53,8 @@
 .form-group input.error,
 .form-group select.error {
   border-color: #dc3545;
+  margin-bottom: auto;
+  margin-top: auto;
 }
 
 .form-group input.error:focus,
