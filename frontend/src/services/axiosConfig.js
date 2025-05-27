@@ -8,17 +8,13 @@ const axiosInstance = axios.create({
     }
 });
 
-// Add request interceptor to include the token
+// Request interceptor to add token to every request
 axiosInstance.interceptors.request.use(
     (config) => {
-        // Get token from localStorage
-        const token = localStorage.getItem('auth_token');
-        
-        // If token exists, add it to the headers
+        const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-        
         return config;
     },
     (error) => {
@@ -26,13 +22,15 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Add response interceptor to handle token expiration
+// Response interceptor to handle token expiration
 axiosInstance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
         if (error.response?.status === 401) {
-            // Token is invalid or expired
-            localStorage.removeItem('auth_token');
+            // Token expired or invalid
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            window.location.href = '/login';
         }
         return Promise.reject(error);
     }

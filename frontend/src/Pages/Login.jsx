@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../style/Login.css";
-import { BrowserRouter, Routes, Route ,Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 const Login = () => {
     const [login, setLogin] = useState({
         email: '',
         password: ''
     });
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { setUser } = useUser();
     
     const handleChange = (e) => {
         setLogin({...login, [e.target.name] : e.target.value})
@@ -16,11 +20,18 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8000/api/login", login);
-            alert("Logged in successfully!");
+            const response = await axios.post("http://localhost:8000/api/login", login);
+            if (response.data && response.data.user) {
+                // Store the token
+                localStorage.setItem('token', response.data.access_token);
+                // Store the user ID
+                setUser(response.data.user.user_id);
+                console.log(response.data.access_token)
+                navigate('/');
+            }
         } catch(err) {
             console.log(err);
-            alert("Failed to login");
+            setError(err.response?.data?.message || "Failed to login");
         }
     }
 
@@ -29,6 +40,8 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="login-form">
                 <h2 className="form-title">Explore Morocco</h2>
                 <p className="form-subtitle">Sign in to your account</p>
+                
+                {error && <div className="error-message">{error}</div>}
                 
                 <input 
                     name="email" 
@@ -52,9 +65,9 @@ const Login = () => {
                 </button>
                 
                 <div className="form-footer">
-                    <a href="#" className="form-link">Forgot password?</a>
+                    <a type="button" className="form-link">Forgot password?</a>
                     <span className="form-divider">|</span>
-                    <Link to ="/register" className="form-link">Create account</Link>
+                    <Link to="/register" className="form-link">Create account</Link>
                 </div>
             </form>
         </div>

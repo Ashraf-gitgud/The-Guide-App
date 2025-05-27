@@ -131,6 +131,7 @@
 }
 
 .book-now-btn {
+  text-decoration-line: none;
   background: white;
   color: #002343;
   padding: 12px 24px;

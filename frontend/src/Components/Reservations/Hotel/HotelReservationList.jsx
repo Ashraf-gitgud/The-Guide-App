@@ -7,7 +7,6 @@ const HotelReservationList = () => {
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const $token = '1|pbItNuBQNB1lsns4T7T3emOSwNiy9ipWKAzIjPU05fe9ba94';
 
     useEffect(() => {
         fetchReservations();
@@ -15,11 +14,7 @@ const HotelReservationList = () => {
 
     const fetchReservations = async () => {
         try {
-            const response = await axiosInstance.get('/hotel_reservations', {
-                headers: {
-                    'Authorization': `Bearer ${$token}`
-                }
-            });
+            const response = await axiosInstance.get('/hotel_reservations');
             if (response.data && typeof response.data === 'object') {
                 const reservationsArray = Object.values(response.data);
                 setReservations(reservationsArray[0]);
@@ -43,11 +38,7 @@ const HotelReservationList = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this reservation?')) {
             try {
-                await axiosInstance.delete(`/hotel_reservations/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${$token}`
-                    }
-                });
+                await axiosInstance.delete(`/hotel_reservations/${id}`);
                 setReservations(reservations.filter(res => res.id !== id));
             } catch (err) {
                 setError('Failed to delete reservation');

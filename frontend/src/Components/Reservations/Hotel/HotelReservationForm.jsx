@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../services/axiosConfig';
+import { useUser } from '../../../context/UserContext';
 import './HotelReservationForm.css';
+import { Link } from 'react-router-dom';
 
 const HotelReservationForm = () => {
-    const { id } = useParams();
+    const { id, hotel_id } = useParams();
     const navigate = useNavigate();
     const isEditMode = Boolean(id);
-
-    const $token = '1|pbItNuBQNB1lsns4T7T3emOSwNiy9ipWKAzIjPU05fe9ba94';
+    const isAddMode = Boolean(hotel_id);
+    const { userId } = useUser();
 
     // Separate state for each field
     const [hotelId, setHotelId] = useState('');
@@ -35,19 +37,22 @@ const HotelReservationForm = () => {
     ];
 
     useEffect(() => {
+        if (!userId) {
+            navigate('/login');
+            return;
+        }
         fetchHotels();
         if (isEditMode) {
             fetchReservation();
         }
-    }, [id]);
+        if (isAddMode) {
+            setHotelId(hotel_id);
+        }
+    }, [id, userId, navigate, isEditMode, isAddMode, hotel_id]);
 
     const fetchHotels = async () => {
         try {
-            const response = await axiosInstance.get('/hotels', {
-                headers: {
-                    'Authorization': `Bearer ${$token}`
-                }
-            });
+            const response = await axiosInstance.get('/hotels');
             if (response.data && typeof response.data === 'object') {
                 const hotelsArray = Object.values(response.data);
                 setHotels(hotelsArray);
@@ -59,13 +64,9 @@ const HotelReservationForm = () => {
         }
     };
 
-    const fetchReservation = async () => {
+    const fetchReservation = useCallback(async () => {
         try {
-            const response = await axiosInstance.get(`/hotel_reservations/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${$token}`
-                }
-            });
+            const response = await axiosInstance.get(`/hotel_reservations/${id}`);
             const reservation = response.data.reservation;
             if (reservation) {
                 setHotelId(reservation.hotel_id || '');
@@ -78,7 +79,7 @@ const HotelReservationForm = () => {
         } catch (err) {
             setError('Failed to fetch reservation details');
         }
-    };
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -92,23 +93,15 @@ const HotelReservationForm = () => {
             room_type: roomType,
             start_date: startDate,
             end_date: endDate,
-            status: status
+            status: status,
+            user_id: parseInt(userId)
         };
-        console.log(formData); 
 
         try {
             if (isEditMode) {
-                await axiosInstance.put(`/hotel_reservations/${id}`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${$token}`
-                    }
-                });
+                await axiosInstance.put(`/hotel_reservations/${id}`, formData);
             } else {
-                await axiosInstance.post('/hotel_reservations', formData, {
-                    headers: {
-                        'Authorization': `Bearer ${$token}`
-                    }
-                });
+                await axiosInstance.post('/hotel_reservations', formData);
             }
             navigate('/reservations/hotel');
         } catch (err) {
@@ -117,7 +110,6 @@ const HotelReservationForm = () => {
                 setError('Please correct the validation errors below');
             } else {
                 setError(err.response?.data?.message || 'Failed to save reservation');
-                console.log(err.response?.data)
             }
         } finally {
             setLoading(false);
@@ -131,26 +123,26 @@ const HotelReservationForm = () => {
             {error && <div className="error-message">{error}</div>}
             
             <form onSubmit={handleSubmit} className="reservation-form">
+            {isEditMode && (
+                <div className="form-group">
+                <label htmlFor="hotel_id">Hotel</label>
+                <input 
+                    type="text" 
+                    value={hotels.find(hotel => hotel.hotel_id === parseInt(hotelId))?.name || ''} 
+                    disabled
+                />
+            </div>
+            )}
+            {isAddMode && (
                 <div className="form-group">
                     <label htmlFor="hotel_id">Hotel</label>
-                    <select
-                        id="hotel_id"
-                        value={hotelId}
-                        onChange={(e) => setHotelId(e.target.value)}
-                        required
-                        className={validationErrors.hotel_id ? 'error' : ''}
-                    >
-                        <option value="">Select a hotel</option>
-                        {hotels.map((hotel) => (
-                            <option key={hotel.hotel_id} value={hotel.hotel_id}>
-                                {hotel.name}
-                            </option>
-                        ))}
-                    </select>
-                    {validationErrors.hotel_id && (
-                        <div className="validation-error">{validationErrors.hotel_id[0]}</div>
-                    )}
+                    <input 
+                        type="text" 
+                        value={hotels.find(hotel => hotel.hotel_id === parseInt(hotel_id))?.name || ''} 
+                        disabled
+                    />
                 </div>
+            )}
 
                 <div className="form-group">
                     <label htmlFor="people_number">Number of People</label>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Hotelpage.css';
 
 const HotelPage = () => {
@@ -66,7 +67,7 @@ const HotelPage = () => {
           ) : (
             <div className="image-placeholder">No Image Available</div>
           )}
-          <button className="book-now-btn">Book Now</button>
+          <Link to={`/reservations/hotel/${hotel.hotel_id}/new`} className="book-now-btn">Book Now</Link>
         </div>
       </div>
     </div>
