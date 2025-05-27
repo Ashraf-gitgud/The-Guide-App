@@ -1,10 +1,10 @@
-.page-container {
+.attractions-page-container {
     background-color: #0a192f;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
 }
 
-.header {
+.attractions-header {
     width: 100%;
     height: 100vh;
     min-height: 800px;
@@ -19,13 +19,13 @@
     position: relative;
 }
 
-.hero-content {
+.attractions-hero-content {
     max-width: 800px;
     padding: 0 30px;
     z-index: 2;
 }
 
-.hero-content h1 {
+.attractions-hero-content h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
     margin-bottom: 20px;
     font-weight: 700;
@@ -33,45 +33,45 @@
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.hero-content p {
+.attractions-hero-content p {
     font-size: clamp(1.1rem, 2vw, 1.5rem);
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.crown-jewels-section {
+.attractions-crown-jewels-section {
     padding: 80px 20px;
     background: linear-gradient(to bottom, #0a192f, #112240);
     text-align: center;
 }
 
-.section-inner {
+.attractions-section-inner {
     max-width: 1000px;
     margin: 0 auto;
 }
 
-.section-title {
+.attractions-section-title {
     font-size: clamp(2rem, 4vw, 3rem);
     margin-bottom: 15px;
     color: #ffffff;
     font-weight: 700;
 }
 
-.section-subtitle {
+.attractions-section-subtitle {
     font-size: clamp(1.5rem, 3vw, 2rem);
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 10px;
     font-weight: 500;
 }
 
-.section-description {
+.attractions-section-description {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.8);
     max-width: 700px;
     margin: 0 auto 30px;
 }
 
-.divider-line {
+.attractions-divider-line {
     width: 100px;
     height: 3px;
     background: rgba(255, 255, 255, 0.3);
@@ -88,7 +88,7 @@
     margin: 0 auto;
 }
 
-.card {
+.attractions-card {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
@@ -100,21 +100,21 @@
     border: 2px solid rgba(255, 255, 255, 0.15);
 }
 
-.card:hover {
+.attractions-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-.card-vertical {
+.attractions-card-vertical {
     grid-row: span 2;
 }
 
-.card-horizontal {
+.attractions-card-horizontal {
     grid-column: span 2;
 }
 
-.card-overlay {
+.attractions-card-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -124,16 +124,16 @@
     transition: all 0.4s ease;
 }
 
-.card-content {
+.attractions-card-content {
     transform: translateY(20px);
     transition: transform 0.4s ease;
 }
 
-.card:hover .card-content {
+.attractions-card:hover .attractions-card-content {
     transform: translateY(0);
 }
 
-.card h3 {
+.attractions-card h3 {
     margin: 0;
     font-size: 1.6rem;
     font-weight: 600;
@@ -141,11 +141,11 @@
     transition: all 0.3s ease;
 }
 
-.card:hover h3 {
+.attractions-card:hover h3 {
     font-size: 1.7rem;
 }
 
-.city-tag {
+.attractions-city-tag {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 1.1rem;
@@ -154,11 +154,12 @@
     align-items: center;
 }
 
-.city-tag::before {
+.attractions-city-tag::before {
     content: '📍';
     margin-right: 8px;
 }
-.card-overlay {
+
+.attractions-card-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -172,16 +173,16 @@
     height: 100%;
 }
 
-.card-content {
+.attractions-card-content {
     transform: translateY(20px);
     transition: transform 0.4s ease;
 }
 
-.card:hover .card-content {
+.attractions-card:hover .attractions-card-content {
     transform: translateY(0);
 }
 
-.see-more-btn {
+.attractions-see-more-btn {
     background-color: #002343;
     color: #ffffff;
     border: none;
@@ -196,29 +197,29 @@
     text-decoration: none;
 }
 
-.card:hover .see-more-btn {
+.attractions-card:hover .attractions-see-more-btn {
     opacity: 1;
     transform: translateY(0);
 }
 
-.see-more-btn:hover {
+.attractions-see-more-btn:hover {
     background-color: #153b5f;
 }
 
 @media (max-width: 1200px) {
-    .header {
+    .attractions-header {
         min-height: 700px;
     }
 }
 
 @media (max-width: 1024px) {
-    .card-horizontal {
+    .attractions-card-horizontal {
         grid-column: span 1;
     }
 }
 
 @media (max-width: 768px) {
-    .header {
+    .attractions-header {
         height: 80vh;
         min-height: 600px;
         background-attachment: scroll;
@@ -229,26 +230,26 @@
         grid-template-columns: 1fr;
     }
     
-    .card-vertical {
+    .attractions-card-vertical {
         grid-row: span 1;
     }
 }
 
 @media (max-width: 480px) {
-    .header {
+    .attractions-header {
         height: 70vh;
         min-height: 500px;
     }
     
-    .hero-content h1 {
+    .attractions-hero-content h1 {
         font-size: 2rem;
     }
     
-    .section-title {
+    .attractions-section-title {
         font-size: 1.8rem;
     }
     
-    .section-subtitle {
+    .attractions-section-subtitle {
         font-size: 1.3rem;
     }
 }

@@ -20,22 +20,22 @@ const Attractionspage = () => {
     }, []);
 
     return (
-        <div className="page-container">
+        <div className="attractions-page-container">
             {/* Hero Section */}
-            <div className="header">
-                <div className="hero-content">
+            <div className="attractions-header">
+                <div className="attractions-hero-content">
                     <h1>Discover Morocco's Hidden Gems</h1>
                     <p>Explore the most breathtaking attractions in every corner of the North — from ancient kasbahs to stunning waterfalls.</p>
                 </div>
             </div>
             
             {/* Crown Jewels Section */}
-            <div className="crown-jewels-section">
-                <div className="section-inner">
-                    <h1 className="section-title">Northern Morocco's Crown Jewels</h1>
-                    <h2 className="section-subtitle">To travel is to live</h2>
-                    <p className="section-description">Must-visit destinations in Morocco's magical north that will steal your heart</p>
-                    <div className="divider-line"></div>
+            <div className="attractions-crown-jewels-section">
+                <div className="attractions-section-inner">
+                    <h1 className="attractions-section-title">Northern Morocco's Crown Jewels</h1>
+                    <h2 className="attractions-section-subtitle">To travel is to live</h2>
+                    <p className="attractions-section-description">Must-visit destinations in Morocco's magical north that will steal your heart</p>
+                    <div className="attractions-divider-line"></div>
                 </div>
             </div>
 
@@ -43,19 +43,19 @@ const Attractionspage = () => {
             <div className="attractions-container">
                 {attractions.map((attraction, index) => (
                     <div
-                        className={`card ${index % 5 === 0 ? 'card-vertical' : index % 8 === 0 ? 'card-horizontal' : ''}`}
+                        className={`attractions-card ${index % 5 === 0 ? 'attractions-card-vertical' : index % 8 === 0 ? 'attractions-card-horizontal' : ''}`}
                         key={attraction.id}
                         style={{ 
                             backgroundImage: `url(${attraction.image || "default-image.jpg"})` 
                         }}
                     >
-                        <div className="card-overlay">
-                            <div className="card-content">
+                        <div className="attractions-card-overlay">
+                            <div className="attractions-card-content">
                                 <h3>{attraction.name}</h3>
-                                {attraction.city && <p className="city-tag">{attraction.city}</p>}
+                                {attraction.city && <p className="attractions-city-tag">{attraction.city}</p>}
                                 <Link 
                                     to={`/attractions/${attraction.id}`} 
-                                    className="see-more-btn"
+                                    className="attractions-see-more-btn"
                                 >
                                     See More
                                 </Link>

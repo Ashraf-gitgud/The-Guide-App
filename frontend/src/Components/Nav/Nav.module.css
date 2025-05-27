@@ -8,69 +8,65 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 9999;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
 }
 
 .navBrand {
   display: block;
   padding-bottom: 10px;
   height: 40px;
+  margin-right: 2rem;
 }
 
 .navBrand img {
-  scale: 1.0;
   height: 140%;
   padding-left: 10px;
   padding-right: 10px;
-  padding-bottom: 15px;
   object-fit: contain;
 }
 
 .navMenu {
   display: flex;
-  gap: 1rem; /* Slightly reduced from 1.2rem to accommodate dividers */
+  gap: 1rem;
   list-style: none;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   align-items: center;
 }
 
-/* New style for dividers */
-.navDivider {
-  width: 1px;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  margin: 0 0.2rem; /* Small margin for spacing */
+.navRight {
+  display: flex;
+  align-items: center;
 }
 
 .navSignUp {
-  margin-left: 490px; /* Slightly reduced from 500px to maintain layout */
   background-color: rgba(250, 250, 250, 0.1);
   padding: 10px;
   border-radius: 10px;
-}
-
-.navSignUp .navLink::after {
-  content: none;
 }
 
 .navLink {
   color: #fff;
   font-weight: 600;
   padding: 0.5rem 1rem;
-  font-size: Large;
+  font-size: large;
   text-decoration: none;
   position: relative;
   transition: color 0.25s ease;
 }
 
-.navLink.active {
-  color: #aad8ff;
+.navLink i {
+  margin-right: 0.5rem;
 }
 
-.navLink.active::after {
-  width: 100%;
+.navLink.active {
+  color: #aad8ff;
 }
 
 .navLink:hover, 
@@ -90,21 +86,14 @@
   transition: width 0.3s ease;
 }
 
-.navLink:hover::after, 
-.navLink:focus::after {
-  width: 100%;
+.navSignUp::after{
+  background-color: transparent;
 }
 
-.navIcon, 
-.navIcon::before, 
-.navIcon::after {
-  display: block;
-  width: 26px;
-  height: 3px;
-  background-color: white;
-  border-radius: 2px;
-  position: absolute;
-  transition: all 0.3s ease;
+.navLink:hover::after, 
+.navLink:focus::after, 
+.navLink.active::after {
+  width: 100%;
 }
 
 .navToggle {
@@ -112,30 +101,28 @@
   background: none;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
   padding: 0;
-  position: relative;
+  z-index: 1000;
 }
 
 .navIcon {
-  position: relative;
-  width: 26px;
+  display: block;
+  width: 30px;
   height: 3px;
-  background-color: #fff;
-  border-radius: 2px;
+  background-color: white;
+  position: relative;
   transition: background-color 0.3s ease;
 }
 
 .navIcon::before, 
 .navIcon::after {
   content: '';
-  position: absolute;
-  width: 26px;
+  display: block;
+  width: 30px;
   height: 3px;
-  background-color: #fff;
-  border-radius: 2px;
-  transition: transform 0.3s ease, top 0.3s ease;
+  background-color: white;
+  position: absolute;
+  transition: transform 0.3s ease;
 }
 
 .navIcon::before {
@@ -143,11 +130,35 @@
 }
 
 .navIcon::after {
-  top: 8px;
+  bottom: -8px;
+}
+
+.navIcon.open {
+  background-color: transparent;
+}
+
+.navIcon.open::before {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.navIcon.open::after {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobileOnly {
+  display: none;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
+  .nav {
+    padding: 1rem;
+  }
+
+  .navLeft {
+    flex: 1;
+  }
+
   .navMenu {
     display: none;
     flex-direction: column;
@@ -158,7 +169,10 @@
     background-color: #002343;
     padding: 1rem 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
-    border-radius: 0 0 8px 8px;
+  }
+
+  .navMenuOpen {
+    display: flex;
   }
 
   .navBrand {
@@ -169,33 +183,31 @@
     max-width: 150px;
   }
 
-  .navMenuOpen {
-    display: flex;
-  }
-
   .navToggle {
     display: block;
+  }
+
+  .navRight {
+    display: none;
   }
 
   .navLink {
     padding: 1rem;
     width: 100%;
     text-align: center;
-    border-radius: 0;
   }
 
   .navSignUp {
-    margin-left: 0;
+    background-color: transparent;
+    padding: 1rem;
+    border-radius: 0;
+  }
+
+  .mobileOnly {
+    display: block;
   }
 
   .navLink::after {
     display: none;
-  }
-
-  /* Mobile style for dividers */
-  .navDivider {
-    width: 80%;
-    height: 1px;
-    margin: 0.5rem auto;
   }
 }
