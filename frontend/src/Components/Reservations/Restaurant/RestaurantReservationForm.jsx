@@ -98,7 +98,6 @@ const RestaurantReservationForm = () => {
             status: status,
             user_id: parseInt(userId)
         };
-console.log(formData);
         try {
             if (isEditMode) {
                 await axiosInstance.put(`/restaurant_reservations/${id}`, formData);
