@@ -117,7 +117,7 @@ const Reviews = ({ target, touristId }) => {
     };
 
     if (!token) {
-        return <div className="text-center text-[#002343] text-lg">Please log in to see reviews.</div>;
+        return <div className="notice">Please log in to see reviews.</div>;
     }
 
     return (

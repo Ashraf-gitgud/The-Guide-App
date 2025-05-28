@@ -1,5 +1,10 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
+.notice{
+    color: white;
+    padding:5px;
+    
+}
 .reviews-container {
     background-color: #002343;
     color: #002343;
