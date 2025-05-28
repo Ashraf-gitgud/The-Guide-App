@@ -10,59 +10,61 @@ const Login = () => {
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    
+
     const handleChange = (e) => {
-        setLogin({...login, [e.target.name] : e.target.value})
-    }
-    
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/api/login", login);
-
-            if (response.data && response.data.user) {
-                // Store the token
-                localStorage.setItem('token', response.data.access_token);
-                // Store the user ID
+            const token = response.data.access_token;
+            if (token) {
+                localStorage.setItem('token', token);
                 localStorage.setItem('user_id', response.data.user.user_id);
-                navigate('/');
-
+                localStorage.setItem('role', response.data.user.role);
+                alert("Logged in successfully!");
+                navigate('/'); // Navigate to home
+                window.location.reload(); // Force full page refresh
+            } else {
+                alert("No token received");
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             setError(err.response?.data?.message || "Failed to login");
         }
-    }
+    };
 
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
                 <h2 className="form-title">Explore Morocco</h2>
                 <p className="form-subtitle">Sign in to your account</p>
-                
+
                 {error && <div className="error-message">{error}</div>}
-                
-                <input 
-                    name="email" 
-                    onChange={handleChange} 
-                    placeholder="Email" 
+
+                <input
+                    name="email"
+                    onChange={handleChange}
+                    placeholder="Email"
                     className="form-input"
-                    required 
+                    required
                 />
-                
-                <input 
-                    name="password" 
-                    onChange={handleChange} 
-                    placeholder="Password" 
-                    type="password" 
+
+                <input
+                    name="password"
+                    onChange={handleChange}
+                    placeholder="Password"
+                    type="password"
                     className="form-input"
-                    required 
+                    required
                 />
-                
+
                 <button type="submit" className="form-button">
                     Login
                 </button>
-                
+
                 <div className="form-footer">
                     <a type="button" href="/login/" className="form-link">Forgot password?</a>
                     <span className="form-divider">|</span>
@@ -70,7 +72,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default Login;

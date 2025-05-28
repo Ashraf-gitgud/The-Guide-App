@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Add the isAdmin middleware
         $middleware->alias([
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+            'CheckAccountStatus' => \App\Http\Middleware\IsAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
