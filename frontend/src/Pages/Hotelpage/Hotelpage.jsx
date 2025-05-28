@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Hotelpage.css';
+import Reviews from '../../Components/Reviews/Reviews';
 
 const HotelPage = () => {
   const { id } = useParams();
@@ -10,17 +11,31 @@ const HotelPage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [touristId, setTouristId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const hotelResponse = await axios.get(`http://127.0.0.1:8000/api/hotels/${id}`);
         setHotel(hotelResponse.data);
+
         const userResponse = await axios.get(`http://127.0.0.1:8000/api/users/${hotelResponse.data.user_id}`);
         setUser(userResponse.data);
+
+        // Fetch tourist data only if not admin
+        const userRole = localStorage.getItem('role');
+        if (userRole == 'tourist') {
+          const userId = localStorage.getItem('user_id');
+          if (userId) {
+            const touristResponse = await axios.get(`http://127.0.0.1:8000/api/tourists/${userId}`);
+            setTouristId(touristResponse.data.tourist_id);
+          }
+        }
+
         setLoading(false);
       } catch (err) {
         setError('An error occurred while fetching data');
+        console.error(err);
         setLoading(false);
       }
     };
@@ -47,18 +62,15 @@ const HotelPage = () => {
         <div className="hotel-details">
           <div className="detail-card">
             <h3>Contact Information</h3>
-            <p><i className="fas fa-envelope"></i> <strong>Email:</strong> {hotel.email}</p>
-            <p><i className="fas fa-phone"></i> <strong>Phone:</strong> {hotel.phone_number}</p>
-            <p><i className="fas fa-map-marker-alt"></i> <strong>Address:</strong> {hotel.adress}</p>
-            {/* <p><i className="fas fa-map"></i> <strong>Position:</strong> {formatPosition(hotel.position)}</p> */}
+            <p><i className="fas fa-envelope"></i> <strong>Email: </strong> {hotel.email}</p>
+            <p><i className="fas fa-phone"></i> <strong>Phone: </strong> {hotel.phone_number}</p>
+            <p><i className="fas fa-map-marker-alt"></i> <strong>Address: </strong> {hotel.adress}</p>
           </div>
           <div className="detail-card">
             <h3>Hotel Information</h3>
-            <p><i className="fas fa-star"></i> <strong>Hotel Rating:</strong> {hotel.hotel_rating} stars</p>
-            <p><i className="fas fa-users"></i> <strong>User Rating:</strong> {hotel.rating} / 5</p>
-            {/* <p><i className="fas fa-info-circle"></i> <strong>Status:</strong> {hotel.status}</p> */}
-            <p><i className="fas fa-calendar-alt"></i> <strong>Created:</strong> {new Date(hotel.created_at).toLocaleDateString()}</p>
-            {/* <p><i className="fas fa-clock"></i> <strong>Last Updated:</strong> {new Date(hotel.updated_at).toLocaleDateString()}</p> */}
+            <p><i className="fas fa-star"></i> <strong>Hotel Rating: </strong> {hotel.hotel_rating} stars</p>
+            <p><i className="fas fa-users"></i> <strong>User Rating: </strong> {hotel.rating} / 5</p>
+            <p><i className="fas fa-calendar-alt"></i> <strong>Created: </strong> {new Date(hotel.created_at).toLocaleDateString()}</p>
           </div>
         </div>
         <div className="hotel-image">
@@ -70,6 +82,7 @@ const HotelPage = () => {
           <Link to={`/reservations/hotel/${hotel.hotel_id}/new`} className="book-now-btn">Book Now</Link>
         </div>
       </div>
+      <Reviews target={user.user_id} touristId={touristId} />
     </div>
   );
 };

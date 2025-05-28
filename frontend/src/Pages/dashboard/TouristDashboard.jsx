@@ -167,7 +167,7 @@ const TouristDashboard = () => {
                                                     <p>Check-out: {formatDate(reservation.end_date)}</p>
                                                     <p>Room Type: {reservation.room_type}</p>
                                                     <p>Guests: {reservation.people_number}</p>
-                                                    <p className={`status-rservation ${getStatusColor(reservation.status)}`}>
+                                                    <p className={`status-rservation $dStatusColor(reservation.status)}`}>
                                                         {reservation.status}
                                                     </p>
                                                 </div>

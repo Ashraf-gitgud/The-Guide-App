@@ -26,6 +26,7 @@ use App\Http\Controllers\RestaurantDashboardController;
 use App\Http\Controllers\HotelDashboardController;
 use App\Http\Controllers\DriverDashboardController;
 use App\Http\Controllers\GuideDashboardController;
+use App\Http\Controllers\TouristController;
 
 
 // Public routes
@@ -43,6 +44,7 @@ Route::get("/drivers", [DriverController::class, 'index']);
 Route::get("/drivers/{id}", [DriverController::class, 'show']);
 Route::get("/users", [UserController::class, 'index']);
 Route::get("/users/{id}", [UserController::class, 'show']);
+Route::get("/tourists/{user_id}", [TouristController::class, 'getByUserId']);
 
 
 // Admin protected routes
@@ -54,7 +56,7 @@ Route::middleware(['auth:sanctum', 'isAdmin'])->prefix('admin')->group(function 
     Route::get('/dashboard', [AdminController::class, 'dashboardData']);
 
     // Reviews management
-    Route::delete('/reviews/{id}', [AdminController::class, 'deleteReviews']);
+    Route::delete('/reviews/{id}', [AdminController::class, 'destroy']);
 });
 
 // Authenticated user routes
