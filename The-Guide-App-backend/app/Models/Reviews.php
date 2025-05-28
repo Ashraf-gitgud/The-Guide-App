@@ -21,6 +21,6 @@ class Reviews extends Model
     }
     public function tourist()
     {
-        return $this->belongsTo(User::class, 'tourist_id', 'tourist_id');
+        return $this->belongsTo(Tourist::class, 'tourist_id', 'tourist_id');
     }
 }

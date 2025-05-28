@@ -94,6 +94,9 @@ Route::middleware(['auth:sanctum'])->prefix('guide')->group(function () {
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    // Get reviews by user_id
+    Route::get('/reviews/user/{userId}', [ReviewsController::class, 'getReviewsByUser']);
+
     Route::apiResources([
         'reviews' => ReviewsController::class,
         'hotel_reservations' => HotelReservationController::class,
@@ -108,10 +111,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservations/hotel/{hotel_id}', [HotelReservationController::class, 'getHotelReservations']);
     Route::get('/reservations/restaurant/{restaurant_id}', [RestaurantReservationController::class, 'getUserReservations']);
     Route::get('/reservations/guide/{guide_id}', [GuideReservationController::class, 'getGuideReservations']);
-
-    // Get reviews by user_id
-    Route::get('/reviews/user/{userId}', [ReviewsController::class, 'getReviewsByUser']);
-
 });
 
 // Notification routes

@@ -100,8 +100,7 @@ class ReviewsController extends Controller
                 'review' => $review,
                 'debug_info' => [
                     'id' => $id,
-                    'user_id' => $review->user_id,
-                    'reviewable_id' => $review->reviewable_id
+                    'user_id' => $review->user_id
                 ]
             ]);
         } catch (\Exception $e) {
@@ -140,9 +139,8 @@ class ReviewsController extends Controller
                 'comment' => 'nullable|string'
             ]);
 
-            // Prevent updating user_id and reviewable_id
+            // Prevent updating user_id
             unset($data['user_id']);
-            unset($data['reviewable_id']);
 
             $review->fill($data);
             $review->save();
@@ -220,21 +218,14 @@ class ReviewsController extends Controller
             if ($reviews->isEmpty()) {
                 return response()->json([
                     'message' => 'No reviews found for this user',
-                    'user_id' => $userId,
-                    'debug_info' => [
-                        'count' => 0,
-                        'user_id' => $userId
-                    ]
+                    'user_id' => $userId
                 ], 404);
             }
 
             return response()->json([
                 'reviews' => $reviews,
-                'debug_info' => [
-                    'count' => $reviews->count(),
-                    'user_id' => $userId
-                ]
-            ], 201);
+                'count' => $reviews->count()
+            ], 200);
         } catch (\Exception $e) {
             Log::error('Error retrieving user reviews:', [
                 'error' => $e->getMessage(),
@@ -243,9 +234,8 @@ class ReviewsController extends Controller
             ]);
             return response()->json([
                 'message' => 'Error retrieving user reviews',
-                'error' => $e->getMessage(),
-                'user_id' => $userId
-            ], 403);
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

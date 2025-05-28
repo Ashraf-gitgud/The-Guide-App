@@ -33,111 +33,142 @@ class ReviewsSeeder extends Seeder
 
         // Tangier Reviews (Tourists 1–8, User IDs 1–8)
         $tangierTourists = [
-            ['user_id' => 1, 'name' => 'John Smith'],
-            ['user_id' => 2, 'name' => 'Maria Garcia'],
-            ['user_id' => 3, 'name' => 'Hiroshi Tanaka'],
-            ['user_id' => 4, 'name' => 'Sophie Dubois'],
-            ['user_id' => 5, 'name' => 'Ahmed Khan'],
-            ['user_id' => 6, 'name' => 'Elena Rossi'],
-            ['user_id' => 7, 'name' => 'Liam O’Connor'],
-            ['user_id' => 8, 'name' => 'Chen Wei'],
+            ['tourist_id' => 1, 'name' => 'John Smith'],
+            ['tourist_id' => 2, 'name' => 'Maria Garcia'],
+            ['tourist_id' => 3, 'name' => 'Hiroshi Tanaka'],
+            ['tourist_id' => 4, 'name' => 'Sophie Dubois'],
+            ['tourist_id' => 5, 'name' => 'Ahmed Khan'],
+            ['tourist_id' => 6, 'name' => 'Elena Rossi'],
+            ['tourist_id' => 7, 'name' => 'Liam O\'Connor'],
+            ['tourist_id' => 8, 'name' => 'Chen Wei'],
+        ];
+        $users = [
+            ['user_id' => 44, 'name' => 'El Minzah Hotel', 'role' => 'hotel'],
+            ['user_id' => 45, 'name' => 'Fairmont Tazi Palace Tangier', 'role' => 'hotel'],
+            ['user_id' => 46, 'name' => 'Hilton Tangier Al Houara Resort & Spa', 'role' => 'hotel'],
+            ['user_id' => 47, 'name' => 'Hotel Nord-Pinus Tanger', 'role' => 'hotel'],
+            ['user_id' => 48, 'name' => 'La Tangerina', 'role' => 'hotel'],
+            ['user_id' => 49, 'name' => 'Blanco Riad', 'role' => 'hotel'],
+            ['user_id' => 50, 'name' => 'Hotel La Paloma', 'role' => 'hotel'],
+            ['user_id' => 55, 'name' => 'El Morocco Club', 'role' => 'restaurant'],
+            ['user_id' => 56, 'name' => 'El Korsan', 'role' => 'restaurant'],
+            ['user_id' => 57, 'name' => 'Ahlen', 'role' => 'restaurant'],
+            ['user_id' => 58, 'name' => 'Kebdani', 'role' => 'restaurant'],
+            ['user_id' => 59, 'name' => 'Dar Harruch', 'role' => 'restaurant'],
+            ['user_id' => 60, 'name' => 'Restaurante El Reducto', 'role' => 'restaurant'],
+            ['user_id' => 4, 'name' => 'Khalid Bouziane', 'role' => 'transporte'],
+            ['user_id' => 5, 'name' => 'Noura El Amine', 'role' => 'transporte'],
+            ['user_id' => 6, 'name' => 'Yassine Cherkaoui', 'role' => 'transporte'],
+            ['user_id' => 7, 'name' => 'Samira Lahlou', 'role' => 'transporte'],
+            ['user_id' => 8, 'name' => 'Rachid Zniber', 'role' => 'transporte'],
+            ['user_id' => 9, 'name' => 'Hanan Mounir', 'role' => 'transporte'],
+            ['user_id' => 10, 'name' => 'Abdelhak Saidi', 'role' => 'transporte'],
+            ['user_id' => 11, 'name' => 'Loubna Essaghir', 'role' => 'transporte'],
+            ['user_id' => 24, 'name' => 'Mohammed Amrani', 'role' => 'guide'],
+            ['user_id' => 25, 'name' => 'Fatima Zahra', 'role' => 'guide'],
+            ['user_id' => 26, 'name' => 'Youssef Bennani', 'role' => 'guide'],
+            ['user_id' => 27, 'name' => 'Amina El Idrissi', 'role' => 'guide'],
+            ['user_id' => 28, 'name' => 'Hassan Tazi', 'role' => 'guide'],
+            ['user_id' => 29, 'name' => 'Khadija Roudani', 'role' => 'guide'],
+            ['user_id' => 30, 'name' => 'Omar Laaroussi', 'role' => 'guide'],
+            ['user_id' => 31, 'name' => 'Nadia Chafik', 'role' => 'guide'],
         ];
 
         foreach ($tangierTourists as $tourist) {
-            // Review for a hotel (reviewable_id 1–5)
+            // Review for a hotel (user_id 1–5)
             Reviews::create([
-                'reviewable_id' => rand(1, 5), // Tangier hotels
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
-            // Review for a restaurant (reviewable_id 1–5)
+            // Review for a restaurant (user_id 1–5)
             Reviews::create([
-                'reviewable_id' => rand(1, 5), // Tangier restaurants
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
             // Additional review (hotel or restaurant)
             Reviews::create([
-                'reviewable_id' => rand(1, 5),
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
         }
 
         // Tétouan Reviews (Tourists 9–14, User IDs 9–14)
         $tetouanTourists = [
-            ['user_id' => 9, 'name' => 'Emma Müller'],
-            ['user_id' => 10, 'name' => 'Carlos Lopez'],
-            ['user_id' => 11, 'name' => 'Aisha Patel'],
-            ['user_id' => 12, 'name' => 'Lucas Silva'],
-            ['user_id' => 13, 'name' => 'Freya Jensen'],
-            ['user_id' => 14, 'name' => 'Omar Farooq'],
+            ['tourist_id' => 9, 'name' => 'Emma Müller'],
+            ['tourist_id' => 10, 'name' => 'Carlos Lopez'],
+            ['tourist_id' => 11, 'name' => 'Aisha Patel'],
+            ['tourist_id' => 12, 'name' => 'Lucas Silva'],
+            ['tourist_id' => 13, 'name' => 'Freya Jensen'],
+            ['tourist_id' => 14, 'name' => 'Omar Farooq'],
         ];
 
         foreach ($tetouanTourists as $tourist) {
-            // Review for a hotel (reviewable_id 6–8)
+            // Review for a hotel (user_id 6–8)
             Reviews::create([
-                'reviewable_id' => rand(6, 8), // Tétouan hotels
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
-            // Review for a restaurant (reviewable_id 6–8)
+            // Review for a restaurant (user_id 6–8)
             Reviews::create([
-                'reviewable_id' => rand(6, 8), // Tétouan restaurants
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
             // Additional review (hotel or restaurant)
             Reviews::create([
-                'reviewable_id' => rand(6, 8),
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
         }
 
         // Chefchaouen Reviews (Tourists 15–20, User IDs 15–20)
         $chefchaouenTourists = [
-            ['user_id' => 15, 'name' => 'Isabella Moretti'],
-            ['user_id' => 16, 'name' => 'James Carter'],
-            ['user_id' => 17, 'name' => 'Mei Ling Wong'],
-            ['user_id' => 18, 'name' => 'Hugo Martinez'],
-            ['user_id' => 19, 'name' => 'Anya Petrova'],
-            ['user_id' => 20, 'name' => 'Sami Al-Nasser'],
+            ['tourist_id' => 15, 'name' => 'Isabella Moretti'],
+            ['tourist_id' => 16, 'name' => 'James Carter'],
+            ['tourist_id' => 17, 'name' => 'Mei Ling Wong'],
+            ['tourist_id' => 18, 'name' => 'Hugo Martinez'],
+            ['tourist_id' => 19, 'name' => 'Anya Petrova'],
+            ['tourist_id' => 20, 'name' => 'Sami Al-Nasser'],
         ];
 
         foreach ($chefchaouenTourists as $tourist) {
-            // Review for a hotel (reviewable_id 9–10)
+            // Review for a hotel (user_id 9–10)
             Reviews::create([
-                'reviewable_id' => rand(9, 10), // Chefchaouen hotels
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
-            // Review for a restaurant (reviewable_id 9–10)
+            // Review for a restaurant (user_id 9–10)
             Reviews::create([
-                'reviewable_id' => rand(9, 10), // Chefchaouen restaurants
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
 
             // Additional review (hotel or restaurant)
             Reviews::create([
-                'reviewable_id' => rand(9, 10),
+                'user_id' => $users[array_rand($users)]['user_id'],
                 'rating' => rand(1, 5),
                 'comment' => $comments[array_rand($comments)],
-                'user_id' => $tourist['user_id'],
+                'tourist_id' => $tourist['tourist_id'],
             ]);
         }
     }
