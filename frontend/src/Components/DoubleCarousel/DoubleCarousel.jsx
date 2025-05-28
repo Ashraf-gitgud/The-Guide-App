@@ -34,12 +34,12 @@ const DoubleCarousel = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500, // Transition speed for manual sliding
+    speed: 500, 
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true, // Enable automatic sliding
-    autoplaySpeed: 3000, // Slower movement (5000ms = 5 seconds per slide)
-    pauseOnHover: true, // Pause sliding when hovered
+    autoplay: true,  
+    autoplaySpeed: 3000,  
+    pauseOnHover: true, 
     responsive: [
       {
         breakpoint: 1024,

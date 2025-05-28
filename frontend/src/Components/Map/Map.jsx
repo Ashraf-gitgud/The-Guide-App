@@ -6,12 +6,11 @@ import styles from './Map.module.css';
 import L from 'leaflet';
 import axios from 'axios';
 
-// Define custom icons using absolute paths from public/images/markers
 const hotelIcon = L.icon({
   iconUrl: '/images/markers/bed.png',
-  iconSize: [32, 32], // Reduced size
-  iconAnchor: [14, 28], // Adjusted anchor (half of iconSize width, full height)
-  popupAnchor: [0, -28], // Adjusted popup anchor
+  iconSize: [32, 32],
+  iconAnchor: [14, 28],
+  popupAnchor: [0, -28],
 });
 
 const restaurantIcon = L.icon({
@@ -28,7 +27,6 @@ const attractionIcon = L.icon({
   popupAnchor: [0, -28],
 });
 
-// Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -38,7 +36,7 @@ L.Icon.Default.mergeOptions({
 
 const Map = () => {
   const [locations, setLocations] = useState([]);
-  const [mapCenter, setMapCenter] = useState([35.759465, -5.833954]); // Morocco center
+  const [mapCenter, setMapCenter] = useState([35.759465, -5.833954]);
   const [mapZoom, setMapZoom] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -104,28 +102,26 @@ const Map = () => {
     fetchLocations();
   }, []);
 
-  // Handle search input and filter suggestions
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
     if (query) {
       const filtered = locations
         .filter(loc => loc.name.toLowerCase().includes(query.toLowerCase()))
-        .slice(0, 3); // Limit to 3 suggestions
+        .slice(0, 3);
       setSuggestions(filtered);
     } else {
       setSuggestions([]);
     }
   };
 
-  // Center map on selected location
   const handleSelectLocation = (position) => {
     setMapCenter(position);
-    setMapZoom(14); // Zoom in on selection
-    setSearchQuery(''); // Clear search input
-    setSuggestions([]); // Clear suggestions
+    setMapZoom(14);
+    setSearchQuery('');
+    setSuggestions([]);
     if (mapRef.current) {
-      mapRef.current.flyTo(position, 14); // Smooth transition
+      mapRef.current.flyTo(position, 14);
     }
   };
 

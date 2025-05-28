@@ -59,6 +59,8 @@ const ItemCard = ({ item, index }) => {
       className={styles.itemCardWrapper}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
     >
       <div
         className={styles.itemCard}
@@ -66,7 +68,6 @@ const ItemCard = ({ item, index }) => {
       >
         <h3 className={styles.itemName}>{item.name}</h3>
       </div>
-
       <div
         className={`
           ${styles.expandedCard} 

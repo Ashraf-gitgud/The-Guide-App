@@ -208,4 +208,7 @@
     flex-direction: column;
     gap: 10px;
   }
+  .book-now-btn{
+    text-align: center;
+  }
 }

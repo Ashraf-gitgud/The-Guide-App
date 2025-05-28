@@ -146,7 +146,7 @@
   resize: none;
 }
 
-.submit-button {
+.Csubmit-button {
   padding: 12px;
   background-color: #002343;
   color: #fff;
@@ -160,7 +160,7 @@
   transition: background-color 0.3s;
 }
 
-.submit-button:hover {
+.Csubmit-button:hover {
   background-color: #002343ea;
 }
 
@@ -174,7 +174,7 @@
     flex-direction: column;
     padding: 20px;
   }
-  .contact-info,
+  .contact-info, 
   .contact-form {
     max-width: 100%;
   }
@@ -182,6 +182,18 @@
     height: 150px;
   }
   .contact-form form {
+    width: 100%;
+  }
+  /* New styles for mobile layout */
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .form-group {
+    width: 100%;
+  }
+  .Csubmit-button {
+    align-self: center;
     width: 100%;
   }
 }

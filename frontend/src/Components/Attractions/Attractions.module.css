@@ -1,61 +1,66 @@
 .attractionsSection {
   background-color: rgb(0, 35, 67);
-  padding: 1px 30px;
+  padding: 20px 5%;
+  min-height: 100vh;
 }
 
 .attractionsHeader {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .attractionsTitle {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   color: #ffffff;
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
   font-weight: bold;
   text-shadow: 1px 1px 4px black;
 }
 
 .attractionsSubtitle {
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
   color: #c0c0c0;
-  max-width: 600px;
+  max-width: 80%;
   margin: 0 auto;
 }
 
 .attractionsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 1rem;
+  padding: 0 1rem;
 }
-
-
 
 .itemCardWrapper {
   position: relative;
+  width: 100%;
 }
 
 .itemCard {
   width: 100%;
-  scale: 0.95;
-  padding-bottom: 100%; /* Create a square aspect ratio */
+  padding-bottom: 100%;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.itemCard:hover {
+  transform: scale(1.05);
 }
 
 .itemName {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem;
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   margin: 0;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   text-align: center;
 }
 
@@ -64,13 +69,14 @@
   top: -40%;
   left: 0;
   width: 150%;
-  height: 300px;
+  height: auto;
+  min-height: 300px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   z-index: 20;
   overflow: hidden;
-  transition: transform 0.3s ease, opacity 0.5s;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -84,12 +90,6 @@
   z-index: 999;
 }
 
-
-.itemCardWrapper:hover .expandedCard {
-  opacity: 1;
-  transform: translateY(-30px);
-}
-
 .expandRight {
   left: 0;
 }
@@ -101,61 +101,52 @@
 
 .expandedImage {
   width: 100%;
-  height: 70%;
+  height: 200px;
   object-fit: cover;
 }
 
 .expandedContent {
-  padding: 10px;
-  height: 30%;
+  padding: 0.75rem;
+  height: 40%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .expandedContent h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-
-.expandedContent p {
-  font-size: 0.9rem;
-  margin: 5px 0;
-  overflow: wrap ;
+  margin: 0 0 0.5rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
 }
 
 .descriptionWrapper {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .description {
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* single line */
+  white-space: normal;
   flex: 1;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
-
 
 .seeMoreButton {
   background-color: #002343;
   color: white;
   border: none;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 0.9rem;
-  align-self: flex-end;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   text-decoration: none;
-
+  white-space: nowrap;
 }
-
 
 .seeMoreButton:hover {
   background-color: #0056b3;
@@ -163,28 +154,106 @@
 
 .dividerContainer {
   position: relative;
-  margin-top: 10px;
+  margin-top: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
 }
 
 .dividerLine {
   flex-grow: 1;
   height: 1px;
   background-color: white;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
 
 .discoverMore {
   white-space: nowrap;
   color: white;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   transition: opacity 0.3s ease;
 }
 
 .discoverMore:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .attractionsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .expandedCard {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 90%;
+    max-width: 400px;
+    min-height: 250px;
+  }
+
+  .expandedCardVisible {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .expandRight,
+  .expandLeft {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+  }
+
+  .expandedImage {
+    height: 50%;
+  }
+
+  .expandedContent {
+    height: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .attractionsSection {
+    padding: 10px 3%;
+  }
+
+  .attractionsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .expandedCard {
+    max-width: 300px;
+    min-height: 200px;
+  }
+
+  .itemCard:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .attractionsTitle {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .attractionsSubtitle {
+    font-size: clamp(0.8rem, 4vw, 1rem);
+    max-width: 90%;
+  }
+
+  .attractionsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .expandedCard {
+    max-width: 90%;
+    min-height: 180px;
+  }
+
+  .description {
+    max-height: 3em;
+  }
 }

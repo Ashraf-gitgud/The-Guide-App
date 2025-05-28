@@ -1,7 +1,9 @@
 .searchContainer {
-  max-width: 900px;
+  max-width: 600px;
+  width: 90%;
   margin: 2rem auto;
-  translate: 0% 50%;
+  transform: translateY(50%);
+  position: relative;
 }
 
 .searchForm {
@@ -12,7 +14,7 @@
 }
 
 .searchInput {
-  width: 500px;
+  width: 100%;
   flex-grow: 1;
   padding: 12px 20px;
   font-size: 16px;
@@ -37,6 +39,7 @@
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .filterButton {
@@ -44,7 +47,7 @@
   border: none;
   color: white;
   padding: 8px 16px;
-  margin: 0 5px;
+  margin: 5px;
   cursor: pointer;
   border-radius: 20px;
   transition: all 0.3s ease;
@@ -59,8 +62,6 @@
   color: rgb(0, 35, 67);
 }
 
-/* ... (previous styles remain unchanged) ... */
-
 .suggestions {
   list-style: none;
   padding: 0;
@@ -73,8 +74,9 @@
   position: absolute;
   top: 50%;
   left: 0;
-  width: 100%;
+  width: 90%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .suggestionItem {
@@ -97,7 +99,6 @@
   height: 50px;
   object-fit: cover;
   margin-right: 15px;
-  border-radius: 4px;
   border-radius: 5px;
 }
 
@@ -113,4 +114,63 @@
 .suggestionType {
   font-size: 0.8em;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  .searchContainer {
+    width: 95%;
+    transform: translateY(25%);
+  }
+
+  .searchForm {
+    flex-direction: row;
+    border-radius: 20px;
+    height: 40px;
+  }
+
+  .searchInput {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .searchButton {
+    padding: 8px 12px;
+  }
+
+  .filterButtons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+  }
+
+  .filterButton {
+    flex: 0 0 auto;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchContainer {
+    transform: translateY(15%);
+  }
+
+  .searchForm {
+    height: 36px;
+  }
+
+  .searchInput {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .searchButton {
+    padding: 6px 10px;
+  }
+
+  .filterButton {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
 }
