@@ -42,6 +42,13 @@ const DriverReservationForm = () => {
         }
     }, [id, userId, navigate, isEditMode, isAddMode]);
 
+    // Add new useEffect for date changes
+    useEffect(() => {
+        if (isAddMode && date) {
+            fetchDrivers();
+        }
+    }, [date, isAddMode]);
+
     const fetchDrivers = async () => {
         try {
             const response = await axiosInstance.get('/drivers');
