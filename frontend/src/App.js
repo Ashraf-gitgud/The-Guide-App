@@ -11,6 +11,7 @@ import Attractions from "./Pages/Attractionspage";
 import Hotelpage from "./Pages/Hotelpage/Hotelpage";
 import About from "./Pages/About/About";
 import Contact from "./Pages/Contact/Contact";
+import Faq from "./Pages/Faq/Faq";
 import Restaurantpage from "./Pages/Restaurantpage/Restaurantpage";
 import Admindashboard from "./Pages/Admindashboard";
 import GuideDashboard from "./Pages/GuideDashboard";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/map" element={<Map />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/completeprofile" element={<CompleteProfile />} />
