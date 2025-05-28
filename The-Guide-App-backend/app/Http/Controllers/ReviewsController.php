@@ -38,7 +38,7 @@ class ReviewsController extends Controller
             return response()->json([
                 'message' => 'Error retrieving reviews',
                 'error' => $e->getMessage()
-            ], 500);
+            ], 403);
         }
     }
 
@@ -46,8 +46,8 @@ class ReviewsController extends Controller
     {
         try {
             $data = $request->validate([
+                'tourist_id' => 'required|exists:tourists,tourist_id',
                 'user_id' => 'required|exists:users,user_id',
-                'reviewable_id' => 'required|integer',
                 'rating' => 'required|integer|min:1|max:5',
                 'comment' => 'nullable|string'
             ]);
@@ -55,7 +55,7 @@ class ReviewsController extends Controller
             $review = Reviews::create($data);
             return response()->json([
                 'message' => 'Review created successfully',
-                'review' => $review->load('user')
+                'review' => $review->load(['user', 'tourist'])
             ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation error:', [
@@ -75,7 +75,7 @@ class ReviewsController extends Controller
             return response()->json([
                 'message' => 'Error creating review',
                 'error' => $e->getMessage()
-            ], 500);
+            ], 403);
         }
     }
 
@@ -114,7 +114,7 @@ class ReviewsController extends Controller
                 'message' => 'Error finding review',
                 'error' => $e->getMessage(),
                 'id' => $id
-            ], 500);
+            ], 403);
         }
     }
 
@@ -170,7 +170,7 @@ class ReviewsController extends Controller
                 'message' => 'Error updating review',
                 'error' => $e->getMessage(),
                 'id' => $id
-            ], 500);
+            ], 403);
         }
     }
 
@@ -206,7 +206,46 @@ class ReviewsController extends Controller
                 'message' => 'Error deleting review',
                 'error' => $e->getMessage(),
                 'id' => $id
-            ], 500);
+            ], 403);
+        }
+    }
+
+    public function getReviewsByUser($userId)
+    {
+        try {
+            $reviews = Reviews::where('user_id', $userId)
+                            ->with(['user', 'tourist'])
+                            ->get();
+            
+            if ($reviews->isEmpty()) {
+                return response()->json([
+                    'message' => 'No reviews found for this user',
+                    'user_id' => $userId,
+                    'debug_info' => [
+                        'count' => 0,
+                        'user_id' => $userId
+                    ]
+                ], 404);
+            }
+
+            return response()->json([
+                'reviews' => $reviews,
+                'debug_info' => [
+                    'count' => $reviews->count(),
+                    'user_id' => $userId
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error retrieving user reviews:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'user_id' => $userId
+            ]);
+            return response()->json([
+                'message' => 'Error retrieving user reviews',
+                'error' => $e->getMessage(),
+                'user_id' => $userId
+            ], 403);
         }
     }
 }

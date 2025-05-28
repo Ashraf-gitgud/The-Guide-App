@@ -22,6 +22,10 @@ class Tourist extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(User::class, 'tourist_id', 'tourist_id');
+    }
 }
 
 

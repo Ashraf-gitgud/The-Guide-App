@@ -12,16 +12,15 @@ class Reviews extends Model
     protected $primaryKey = 'review_id';
 
     protected $fillable = [
-        'rating', 'comment', 'user_id', 'reviewable_type', 'reviewable_id'
+        'rating', 'comment', 'tourist_id', 'user_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
-
-    public function reviewable()
+    public function tourist()
     {
-        return $this->morphTo('reviewable', 'reviewable_type', 'reviewable_id');
+        return $this->belongsTo(User::class, 'tourist_id', 'tourist_id');
     }
 }
