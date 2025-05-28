@@ -31,8 +31,8 @@
   background-position: center;
   display: flex;
   justify-content: flex-start;
-  padding-top: 20px; /* add some spacing from the top */
-  text-align: center; /* center the text */
+  padding-top: 20px;  
+  text-align: center;  
   flex-direction: column;
 }
 

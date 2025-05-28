@@ -55,13 +55,7 @@ const AttractionPage = () => {
           <div className={styles.infoItem}>
             <strong>Social Hours: </strong> {attraction.social_hours}
           </div>
-        </div>{/* 
-        {position && (
-          <div className={styles.position}>
-            <strong>Position: </strong> 
-            Latitude: {position[0]}, Longitude: {position[1]}
-          </div>
-        )} */}
+        </div>
         <div className={styles.buttonContainer}>
           <Link to={`/reservations/guide/${attraction.id}/new`} className={styles.bookButton}>Book a Tour</Link>
           <Link to={`/reservations/driver/${attraction.id}/new`} className={styles.rideButton}>Get a Ride</Link>

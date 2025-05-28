@@ -160,7 +160,7 @@ const ContactPage = () => {
                 required
               />
             </div>
-            <button type="submit" className="submit-button">
+            <button type="submit" className="Csubmit-button">
               Submit
             </button>
             {submitStatus && <p className="submit-status">{submitStatus}</p>}
