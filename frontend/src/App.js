@@ -22,7 +22,7 @@ import "./App.css";
 import RestaurantReservationForm from "./Components/Reservations/Restaurant/RestaurantReservationForm";
 import GuideReservationForm from "./Components/Reservations/Guide/GuideReservationForm";
 import DriverReservationForm from "./Components/Reservations/Driver/DriverReservationForm";
-import TouristDashboard from "./Pages/Dashboard/TouristDashboard.jsx";
+import TouristDashboard from "./Pages/Dashboard/TouristDashboard";
 
 function App() {
   return (
