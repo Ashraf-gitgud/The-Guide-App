@@ -63,8 +63,8 @@ const AttractionPage = () => {
           </div>
         )} */}
         <div className={styles.buttonContainer}>
-          <Link to={'/reservations/guide/new'} className={styles.bookButton}>Book a Tour</Link>
-          <Link to={'/reservations/driver/new'} className={styles.rideButton}>Get a Ride</Link>
+          <Link to={`/reservations/guide/${attraction.id}/new`} className={styles.bookButton}>Book a Tour</Link>
+          <Link to={`/reservations/driver/${attraction.id}/new`} className={styles.rideButton}>Get a Ride</Link>
         </div>
       </div>
     </div>

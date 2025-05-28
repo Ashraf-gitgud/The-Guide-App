@@ -36,8 +36,6 @@ const TouristDashboard = () => {
             if (err.response?.status === 404) {
                 if (err.response.data.message === 'User not found') {
                     setError('User account not found. Please contact support.');
-                    // Optionally redirect to login or registration
-                    // navigate('/login');
                 } else if (err.response.data.message === 'No reservations found for this user') {
                     setUserData(err.response.data.user);
                     setNoReservations(true);
@@ -49,6 +47,38 @@ const TouristDashboard = () => {
             console.error(err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleEdit = (type, id) => {
+        switch(type) {
+            case 'hotel':
+                navigate(`/reservations/hotel/${id}/edit`);
+                break;
+            case 'restaurant':
+                navigate(`/reservations/restaurant/${id}/edit`);
+                break;
+            case 'guide':
+                navigate(`/reservations/guide/${id}/edit`);
+                break;
+            case 'driver':
+                navigate(`/reservations/driver/${id}/edit`);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleDelete = async (type, id) => {
+        if (window.confirm('Are you sure you want to cancel this reservation?')) {
+            try {
+                await axiosInstance.delete(`/${type}_reservations/${id}`);
+                // Refresh the data after deletion
+                fetchUserData();
+            } catch (err) {
+                console.error('Error deleting reservation:', err);
+                setError('Failed to cancel reservation. Please try again later.');
+            }
         }
     };
 
@@ -71,21 +101,20 @@ const TouristDashboard = () => {
 
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="error">{error}</div>;
-
     return (
-        <div className="dashboard">
-            <div className="dashboard-header">
+        <div className="touristdashboard">
+            <div className="touristdashboard-header">
                 <h1>Tourist Dashboard</h1>
             </div>
 
-            <div className="dashboard-content">
+            <div className="touristdashboard-content">
                 {userData && (
-                    <div className="profile-section">
+                    <div className="profil-section">
                         <h2>Profile Information</h2>
-                        <div className="profile-info">
+                        <div className="profil-info">
                             <div className="info-group">
                                 <label>Name:</label>
-                                <span>{userData.name}</span>
+                                <span>{userData.full_name}</span>
                             </div>
                             <div className="info-group">
                                 <label>Email:</label>
@@ -93,8 +122,11 @@ const TouristDashboard = () => {
                             </div>
                             <div className="info-group">
                                 <label>Phone:</label>
-                                <span>{userData.phone}</span>
+                                <span>{userData.phone_number}</span>
                             </div>
+                        </div>
+                        <div className="profil">
+                            <img src={userData.user.profile} alt="Profile" className="profil-image" />
                         </div>
                     </div>
                 )}
@@ -105,128 +137,212 @@ const TouristDashboard = () => {
                     {noReservations ? (
                         <div className="no-reservations-container">
                             <p className="no-reservations-message">You haven't made any reservations yet.</p>
-                            <div className="reservation-actions">
+                            <div className="no-reservations-actions">
                                 <button 
                                     className="action-button"
-                                    onClick={() => navigate('/hotels')}
+                                    onClick={() => navigate('/')}
                                 >
-                                    Book a Hotel
+                                    Book a Hotel or restaurant
                                 </button>
                                 <button 
                                     className="action-button"
-                                    onClick={() => navigate('/guides')}
+                                    onClick={() => navigate('/attractions')}
                                 >
-                                    Hire a Guide
-                                </button>
-                                <button 
-                                    className="action-button"
-                                    onClick={() => navigate('/drivers')}
-                                >
-                                    Book a Driver
+                                    Hire a Guide or Driver
                                 </button>
                             </div>
                         </div>
                     ) : (
                         <>
                             {/* Hotel Reservations */}
-                            <div className="reservation-category">
+                            <div className="reservations-category">
                                 <h3>Hotel Reservations</h3>
                                 {reservations.hotel_reservations.length > 0 ? (
-                                    <div className="reservation-list">
+                                    <div className="reservations-list">
                                         {reservations.hotel_reservations.map(reservation => (
-                                            <div key={reservation.id} className="reservation-card">
+                                            <div key={reservation.id} className="reservations-card" data-status={reservation.status}>
                                                 <h4>{reservation.hotel.name}</h4>
-                                                <div className="reservation-details">
+                                                <div className="reservations-details">
                                                     <p>Check-in: {formatDate(reservation.start_date)}</p>
                                                     <p>Check-out: {formatDate(reservation.end_date)}</p>
                                                     <p>Room Type: {reservation.room_type}</p>
                                                     <p>Guests: {reservation.people_number}</p>
-                                                    <p className={`status ${getStatusColor(reservation.status)}`}>
+                                                    <p className={`status-rservation ${getStatusColor(reservation.status)}`}>
                                                         {reservation.status}
                                                     </p>
+                                                </div>
+                                                <div className="reservations-actions">
+                                                    <button 
+                                                        className="edit-btn"
+                                                        onClick={() => handleEdit('hotel', reservation.id)}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete('hotel', reservation.id)}
+                                                    >
+                                                        Cancel
+                                                    </button>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="no-reservations">No hotel reservations found</p>
+                                    <div className="reservations-actions-mini">
+                                        <p className="no-reservations">No hotel reservations found</p>
+                                        <button 
+                                        className="action-button"
+                                        onClick={() => navigate('/')}
+                                        >
+                                            Book a Hotel
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                             {/* Restaurant Reservations */}
+                             <div className="reservations-category">
+                                <h3>Restaurant Reservations</h3>
+                                {reservations.restaurant_reservations.length > 0 ? (
+                                    <div className="reservations-list">
+                                        {reservations.restaurant_reservations.map(reservation => (
+                                            <div key={reservation.id} className="reservations-card" data-status={reservation.status}>
+                                                <h4>{reservation.restaurant.name}</h4>
+                                                <div className="reservations-details">
+                                                    <p>Date: {formatDate(reservation.date)}</p>
+                                                    <p>Time: {reservation.time}</p>
+                                                    <p>People: {reservation.people_number}</p>
+                                                    <p className={`status-rservation ${getStatusColor(reservation.status)}`}>
+                                                        {reservation.status}
+                                                    </p>
+                                                </div>
+                                                <div className="reservations-actions">
+                                                    <button 
+                                                        className="edit-btn"
+                                                        onClick={() => handleEdit('restaurant', reservation.id)}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete('restaurant', reservation.id)}
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="reservations-actions-mini">
+                                        <p className="no-reservations">No restaurant reservations found</p>
+                                        <button 
+                                        className="action-button"
+                                        onClick={() => navigate('/')}
+                                        >
+                                            Book a restaurant
+                                        </button>
+                                    </div>
                                 )}
                             </div>
 
                             {/* Guide Reservations */}
-                            <div className="reservation-category">
+                            <div className="reservations-category">
                                 <h3>Guide Reservations</h3>
                                 {reservations.guide_reservations.length > 0 ? (
-                                    <div className="reservation-list">
+                                    <div className="reservations-list">
                                         {reservations.guide_reservations.map(reservation => (
-                                            <div key={reservation.id} className="reservation-card">
+                                            <div key={reservation.id} className="reservations-card" data-status={reservation.status}>
                                                 <h4>{reservation.guide.full_name}</h4>
-                                                <div className="reservation-details">
+                                                <div className="reservations-details">
                                                     <p>Date: {formatDate(reservation.start_date)}</p>
                                                     <p>Time: {reservation.time}</p>
                                                     <p>Location: {reservation.location}</p>
                                                     <p>People: {reservation.people_number}</p>
-                                                    <p className={`status ${getStatusColor(reservation.status)}`}>
+                                                    <p className={`status-rservation ${getStatusColor(reservation.status)}`}>
                                                         {reservation.status}
                                                     </p>
+                                                </div>
+                                                <div className="reservations-actions">
+                                                    <button 
+                                                        className="edit-btn"
+                                                        onClick={() => handleEdit('guide', reservation.id)}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete('guide', reservation.id)}
+                                                    >
+                                                        Cancel
+                                                    </button>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="no-reservations">No guide reservations found</p>
+                                    <div className="reservations-actions-mini">
+                                        <p className="no-reservations">No guide reservations found</p>
+                                            <button 
+                                            className="action-button"
+                                            onClick={() => navigate('/attractions')}
+                                            >
+                                                Hire a Guide
+                                            </button>
+                                    </div>
                                 )}
                             </div>
 
                             {/* Driver Reservations */}
-                            <div className="reservation-category">
+                            <div className="reservations-category">
                                 <h3>Driver Reservations</h3>
                                 {reservations.driver_reservations.length > 0 ? (
-                                    <div className="reservation-list">
+                                    <div className="reservations-list">
                                         {reservations.driver_reservations.map(reservation => (
-                                            <div key={reservation.id} className="reservation-card">
+                                            <div key={reservation.id} className="reservations-card" data-status={reservation.status}>
                                                 <h4>{reservation.driver.full_name}</h4>
-                                                <div className="reservation-details">
+                                                <div className="reservations-details">
                                                     <p>Date: {formatDate(reservation.date)}</p>
                                                     <p>Time: {reservation.time}</p>
                                                     <p>From: {reservation.start_place}</p>
                                                     <p>To: {reservation.end_place}</p>
                                                     <p>People: {reservation.people_number}</p>
-                                                    <p className={`status ${getStatusColor(reservation.status)}`}>
+                                                    <p className={`status-rservation ${getStatusColor(reservation.status)}`}>
                                                         {reservation.status}
                                                     </p>
+                                                </div>
+                                                <div className="reservations-actions">
+                                                    <button 
+                                                        className="edit-btn"
+                                                        onClick={() => handleEdit('driver', reservation.id)}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete('driver', reservation.id)}
+                                                    >
+                                                        Cancel
+                                                    </button>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="no-reservations">No driver reservations found</p>
+                                    <div className="reservations-actions-mini">
+                                        <p className="no-reservations">No driver reservations found  </p>
+                                        <button 
+                                        className="action-button"
+                                        onClick={() => navigate('/attractions')}
+                                        >
+                                            Hire a Driver
+                                        </button>
+                                    </div>
                                 )}
                             </div>
 
-                            {/* Restaurant Reservations */}
-                            <div className="reservation-category">
-                                <h3>Restaurant Reservations</h3>
-                                {reservations.restaurant_reservations.length > 0 ? (
-                                    <div className="reservation-list">
-                                        {reservations.restaurant_reservations.map(reservation => (
-                                            <div key={reservation.id} className="reservation-card">
-                                                <h4>{reservation.restaurant.name}</h4>
-                                                <div className="reservation-details">
-                                                    <p>Date: {formatDate(reservation.date)}</p>
-                                                    <p>Time: {reservation.time}</p>
-                                                    <p>People: {reservation.people_number}</p>
-                                                    <p className={`status ${getStatusColor(reservation.status)}`}>
-                                                        {reservation.status}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <p className="no-reservations">No restaurant reservations found</p>
-                                )}
-                            </div>
+                           
                         </>
                     )}
                 </div>

@@ -18,7 +18,8 @@ const HotelReservationForm = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('pending');
-
+     
+    const [isNotTourist, setIsNotTourist] = useState(true);
     const [hotel, setHotel] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -41,6 +42,7 @@ const HotelReservationForm = () => {
             return;
         }
         if (isEditMode) {
+            fetchUsers();
             fetchReservation();
         }
         if (isAddMode) {
@@ -59,6 +61,16 @@ const HotelReservationForm = () => {
             }
         } catch (err) {
             setError('Failed to fetch hotel');
+        }
+    };
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosInstance.get(`/users/${userId}`);
+            if(!response.data.role === 'tourist'){
+                setIsNotTourist(false);
+            }
+        } catch (err) {
+            setError('Failed to fetch user');
         }
     };
 
@@ -100,6 +112,7 @@ const HotelReservationForm = () => {
             if (isEditMode) {
                 await axiosInstance.put(`/hotel_reservations/${id}`, formData);
                 alert('Hotel reservation updated successfully!');
+                navigate('/tourist')
             } else {
                 await axiosInstance.post('/hotel_reservations', formData);
                 alert('Hotel reservation created successfully!');
@@ -117,6 +130,8 @@ const HotelReservationForm = () => {
             setLoading(false);
         }
     };
+    // Get today's date in YYYY-MM-DD format for the date input min attribute
+    const today = new Date().toISOString().split('T')[0];
 
     return (
         <div className="reservation">
@@ -196,6 +211,7 @@ const HotelReservationForm = () => {
                             id="start_date"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
+                            min={today}
                             required
                             className={validationErrors.start_date ? 'error' : ''}
                         />
@@ -219,7 +235,7 @@ const HotelReservationForm = () => {
                         )}
                     </div>
     
-                    {isEditMode && (
+                    {!isNotTourist && isEditMode && (
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
                             <select
@@ -237,7 +253,7 @@ const HotelReservationForm = () => {
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/hotel')}
+                            onClick={() => navigate('/tourist')}
                             className="cancel-btn"
                         >
                             Cancel

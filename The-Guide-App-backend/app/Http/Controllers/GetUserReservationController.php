@@ -6,7 +6,7 @@ use App\Models\DriverReservation;
 use App\Models\GuideReservation;
 use App\Models\HotelReservation;
 use App\Models\RestaurantReservation;
-use App\Models\User;
+use App\Models\Tourist;
 use Illuminate\Http\Request;
 
 class GetUserReservationController extends Controller
@@ -15,9 +15,9 @@ class GetUserReservationController extends Controller
     {
         try {
             // Get user information
-            $user = User::find($user_id);
+            $tourist = Tourist::with(['user'])->where('user_id', $user_id)->first();
             
-            if (!$user) {
+            if (!$tourist) {
                 return response()->json([
                     'message' => 'User not found',
                     'debug_info' => [
@@ -54,7 +54,7 @@ class GetUserReservationController extends Controller
             if ($totalCount === 0) {
                 return response()->json([
                     'message' => 'No reservations found for this user',
-                    'user' => $user,
+                    'user' => $tourist,
                     'debug_info' => [
                         'user_id' => $user_id,
                         'count' => 0
@@ -63,7 +63,7 @@ class GetUserReservationController extends Controller
             }
 
             return response()->json([
-                'user' => $user,
+                'user' => $tourist,
                 'reservations' => $allReservations,
                 'debug_info' => [
                     'user_id' => $user_id,

@@ -20,7 +20,8 @@ const RestaurantReservationForm = () => {
     const [reservationDate, setReservationDate] = useState('');
     const [reservationTime, setReservationTime] = useState('');
     const [status, setStatus] = useState('pending');
-
+     
+    const [isNotTourist, setIsNotTourist] = useState(true);
     const [restaurant, setRestaurant] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -34,6 +35,7 @@ const RestaurantReservationForm = () => {
         }
         
         if (isEditMode) {
+            fetchUsers();
             fetchReservation();
         }
         if (isAddMode) {
@@ -53,6 +55,16 @@ const RestaurantReservationForm = () => {
             }
         } catch (err) {
             setError('Failed to fetch restaurant');
+        }
+    };
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosInstance.get(`/users/${userId}`);
+            if(!response.data.role === 'tourist'){
+                setIsNotTourist(false);
+            }
+        } catch (err) {
+            setError('Failed to fetch user');
         }
     };
 
@@ -86,11 +98,12 @@ const RestaurantReservationForm = () => {
             status: status,
             user_id: parseInt(userId)
         };
-
+console.log(formData);
         try {
             if (isEditMode) {
                 await axiosInstance.put(`/restaurant_reservations/${id}`, formData);
                 alert('Restaurant reservation updated successfully!');
+                navigate('/tourist');
             } else {
                 await axiosInstance.post('/restaurant_reservations', formData);
                 alert('Restaurant reservation created successfully!');
@@ -104,11 +117,14 @@ const RestaurantReservationForm = () => {
                 setError('Please correct the validation errors below');
             } else {
                 setError(err.response?.data?.message || 'Failed to save reservation');
+                console.log(err.response?.data?.error);
             }
         } finally {
             setLoading(false);
         }
     };
+    // Get today's date in YYYY-MM-DD format for the date input min attribute
+    const today = new Date().toISOString().split('T')[0];
     return (
         <div className="reservation">
             <div className="reservation-header">
@@ -166,6 +182,7 @@ const RestaurantReservationForm = () => {
                             id="reservation_date"
                             value={reservationDate}
                             onChange={(e) => setReservationDate(e.target.value)}
+                            min={today}
                             required
                             className={validationErrors.date ? 'error' : ''}
                         />
@@ -189,7 +206,7 @@ const RestaurantReservationForm = () => {
                         )}
                     </div>
     
-                    {isEditMode && (
+                    {!isNotTourist && isEditMode && (
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
                             <select
@@ -207,7 +224,7 @@ const RestaurantReservationForm = () => {
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/restaurant')}
+                            onClick={() => navigate('/tourist')}
                             className="cancel-btn"
                         >
                             Cancel

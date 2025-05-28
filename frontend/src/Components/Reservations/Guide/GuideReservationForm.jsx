@@ -5,7 +5,7 @@ import axiosInstance from '../../../services/axiosConfig';
 import './GuideReservationForm.css';
 
 const GuideReservationForm = () => {
-    const { id } = useParams();
+    const { id, place_id } = useParams();
     const navigate = useNavigate();
     const isEditMode = Boolean(id);   
     const isAddMode = !isEditMode ? true : false;
@@ -21,7 +21,8 @@ const GuideReservationForm = () => {
     const [time, setTime] = useState('');
     const [location, setLocation] = useState('');
     const [status, setStatus] = useState('pending');
-
+     
+    const [isNotTourist, setIsNotTourist] = useState(true);
     const [guides, setGuides] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -33,19 +34,46 @@ const GuideReservationForm = () => {
             return;
         }
         if (isEditMode) {
+            fetchUsers();
             fetchReservation();
         }
         if (isAddMode) {
             fetchGuides();
+            fetchPlaces();
         }
     }, [id, userId, navigate, isEditMode, isAddMode]);
+
+    const fetchPlaces = async () => {
+        try {
+            const response = await axiosInstance.get(`/attractions/${place_id}`);
+            setLocation(response.data.location)
+        } catch (err) {
+            setError('Failed to fetch place');
+        }
+    };
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosInstance.get(`/users/${userId}`);
+            if(!response.data.role === 'tourist'){
+                setIsNotTourist(false);
+            }
+        } catch (err) {
+            setError('Failed to fetch user');
+        }
+    };
 
     const fetchGuides = async () => {
         try {
             const response = await axiosInstance.get('/guides');
             if (response.data) {
-                // Transform the data for react-select
-                const formattedGuides = response.data.map(guide => ({
+                const allGuides = response.data;
+                
+                const availableGuides = allGuides.filter(driver => {
+                    if (driver.status === 'pending' || driver.status === 'cancelled') return false;
+                    else return true;
+                });
+
+                const formattedGuides = availableGuides.map(guide => ({
                     value: guide.guide_id,
                     label: guide.full_name
                 }));
@@ -98,6 +126,7 @@ const GuideReservationForm = () => {
             if (isEditMode) {
                 await axiosInstance.put(`/guide_reservations/${id}`, formData);
                 alert('Guide reservation updated successfully!');
+                navigate('/tourist');
             } else {
                 await axiosInstance.post('/guide_reservations', formData);
                 alert('Guide reservation created successfully!');
@@ -135,6 +164,8 @@ const GuideReservationForm = () => {
             }
         })
     };
+    // Get today's date in YYYY-MM-DD format for the date input min attribute
+    const today = new Date().toISOString().split('T')[0];
 
     return (
         <div className="reservation">
@@ -206,6 +237,7 @@ const GuideReservationForm = () => {
                             id="start_date"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
+                            min={today}
                             required
                             className={validationErrors.start_date ? 'error' : ''}
                         />
@@ -259,7 +291,7 @@ const GuideReservationForm = () => {
                         )}
                     </div>
 
-                    {isEditMode && (
+                    {!isNotTourist && isEditMode && (
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
                             <select
@@ -277,7 +309,7 @@ const GuideReservationForm = () => {
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/guide')}
+                            onClick={() => navigate('/tourist')}
                             className="cancel-btn"
                         >
                             Cancel
