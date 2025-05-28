@@ -42,13 +42,6 @@ const DriverReservationForm = () => {
         }
     }, [id, userId, navigate, isEditMode, isAddMode]);
 
-    // Add new useEffect for date changes
-    useEffect(() => {
-        if (isAddMode && date) {
-            fetchDrivers();
-        }
-    }, [date, isAddMode]);
-
     const fetchDrivers = async () => {
         try {
             const response = await axiosInstance.get('/drivers');
@@ -56,23 +49,8 @@ const DriverReservationForm = () => {
                 const allDrivers = response.data;
                 
                 const availableDrivers = allDrivers.filter(driver => {
-                    // Filter out drivers with pending or cancelled status
-                    if (driver.status === 'pending' || driver.status === 'cancelled') {
-                        return false;
-                    }
-
-                    // If date is selected, also check reservations
-                    if (date && driver.reservations) {
-                        const hasUnavailableReservation = driver.reservations.some(reservation => 
-                            reservation.date === date && 
-                            (reservation.status === 'pending' || reservation.status === 'cancelled')
-                        );
-                        if (hasUnavailableReservation) {
-                            return false;
-                        }
-                    }
-
-                    return true;
+                    if (driver.status === 'pending' || driver.status === 'cancelled') return false;
+                    else return true;
                 });
 
                 const formattedDrivers = availableDrivers.map(driver => ({
