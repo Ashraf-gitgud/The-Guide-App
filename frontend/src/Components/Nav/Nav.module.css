@@ -149,7 +149,6 @@
   display: none;
 }
 
-/* Profile menu styles */
 .profileContainer {
   position: relative;
 }
@@ -201,7 +200,6 @@
   text-align: center;
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
   .nav {
     padding: 1rem;

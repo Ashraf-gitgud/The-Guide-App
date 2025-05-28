@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Nav.module.css';
 
@@ -8,30 +8,41 @@ const Nav = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [dashboardPath, setDashboardPath] = useState('/dashboard');
   const navigate = useNavigate();
+  const profileMenuRef = useRef(null);
 
   useEffect(() => {
-    // Check if user is logged in and set dashboard path based on role
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     setIsLoggedIn(!!token);
 
-    // Set dashboard path based on role
     switch (role) {
-      case 'admin':
+      case 'admin': 
         setDashboardPath('/dashboard');
         break;
-      case 'guide':
+      case 'guide': 
         setDashboardPath('/guide');
         break;
-      case 'tourist':
+      case 'tourist': 
         setDashboardPath('/tourist');
         break;
-      case 'transporter':
+      case 'transporter': 
         setDashboardPath('/driver');
         break;
-      default:
+      default: 
         setDashboardPath('/dashboard');
     }
+
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const toggleNav = () => setIsOpen(!isOpen);
@@ -63,7 +74,7 @@ const Nav = () => {
       </div>
       <div className={styles.navRight}>
         {isLoggedIn ? (
-          <div className={styles.profileContainer}>
+          <div className={styles.profileContainer} ref={profileMenuRef}>
             <button className={styles.profileButton} onClick={toggleProfileMenu}>
               <i className="fas fa-user-circle"></i>
             </button>
