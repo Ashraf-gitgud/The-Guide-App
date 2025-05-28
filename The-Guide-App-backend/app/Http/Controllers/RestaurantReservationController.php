@@ -144,7 +144,7 @@ class RestaurantReservationController extends Controller
             }
 
             $data = $request->validate([
-                'people_number' => 'sometimes|required|integer|min:1|max:8q',
+                'people_number' => 'sometimes|required|integer|min:1|max:8',
                 'date' => 'sometimes|required|date|after_or_equal:today',            
                 'time' => 'sometimes|required|date_format:H:i',
                 'status' => 'sometimes|required|in:pending,confirmed,cancelled'

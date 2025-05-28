@@ -5,7 +5,7 @@ import axiosInstance from '../../../services/axiosConfig';
 import './DriverReservationForm.css';
 
 const DriverReservationForm = () => {
-    const { id } = useParams();
+    const { id, place_id } = useParams();
     const navigate = useNavigate();
     const isEditMode = Boolean(id);   
     const isAddMode = !isEditMode ? true : false;
@@ -20,7 +20,8 @@ const DriverReservationForm = () => {
     const [endPlace, setEndPlace] = useState('');
     const [peopleNumber, setPeopleNumber] = useState('');
     const [status, setStatus] = useState('pending');
-
+     
+    const [isNotTourist, setIsNotTourist] = useState(true);
     const [drivers, setDrivers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -32,19 +33,49 @@ const DriverReservationForm = () => {
             return;
         }
         if (isEditMode) {
+            fetchUsers();
             fetchReservation();
         }
         if (isAddMode) {
+            fetchPlaces();
             fetchDrivers();
         }
     }, [id, userId, navigate, isEditMode, isAddMode]);
+
+    // Add new useEffect for date changes
+    useEffect(() => {
+        if (isAddMode && date) {
+            fetchDrivers();
+        }
+    }, [date, isAddMode]);
 
     const fetchDrivers = async () => {
         try {
             const response = await axiosInstance.get('/drivers');
             if (response.data) {
-                // Transform the data for react-select
-                const formattedDrivers = response.data.map(driver => ({
+                const allDrivers = response.data;
+                
+                const availableDrivers = allDrivers.filter(driver => {
+                    // Filter out drivers with pending or cancelled status
+                    if (driver.status === 'pending' || driver.status === 'cancelled') {
+                        return false;
+                    }
+
+                    // If date is selected, also check reservations
+                    if (date && driver.reservations) {
+                        const hasUnavailableReservation = driver.reservations.some(reservation => 
+                            reservation.date === date && 
+                            (reservation.status === 'pending' || reservation.status === 'cancelled')
+                        );
+                        if (hasUnavailableReservation) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                const formattedDrivers = availableDrivers.map(driver => ({
                     value: driver.driver_id,
                     label: driver.full_name
                 }));
@@ -54,6 +85,25 @@ const DriverReservationForm = () => {
             setError('Failed to fetch drivers');
         }
     };
+    const fetchPlaces = async () => {
+        try {
+            const response = await axiosInstance.get(`/attractions/${place_id}`);
+            setEndPlace(response.data.location)
+        } catch (err) {
+            setError('Failed to fetch place');
+        }
+    };
+    const fetchUsers = async () => {
+        try {
+            const response = await axiosInstance.get(`/users/${userId}`);
+            if(!response.data.role === 'tourist'){
+                setIsNotTourist(false);
+            }
+        } catch (err) {
+            setError('Failed to fetch user');
+        }
+    };
+
 
     const fetchReservation = useCallback(async () => {
         try {
@@ -95,6 +145,7 @@ const DriverReservationForm = () => {
             if (isEditMode) {
                 await axiosInstance.put(`/driver_reservations/${id}`, formData);
                 alert('Driver reservation updated successfully!');
+                navigate('/tourist');
             } else {
                 await axiosInstance.post('/driver_reservations', formData);
                 alert('Driver reservation created successfully!');
@@ -259,7 +310,7 @@ const DriverReservationForm = () => {
                         )}
                     </div>
 
-                    {isEditMode && (
+                    {!isNotTourist && isEditMode && (
                         <div className="form-group">
                             <label htmlFor="status">Status</label>
                             <select
@@ -277,7 +328,7 @@ const DriverReservationForm = () => {
                     <div className="form-actions">
                         <button 
                             type="button" 
-                            onClick={() => navigate('/reservations/driver')}
+                            onClick={() => navigate('/tourist')}
                             className="cancel-btn"
                         >
                             Cancel

@@ -4,7 +4,6 @@ import Attractiondetails from "./Pages/Attractiondetails/Attractiondetails";
 import Nav from "./Components/Nav/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Map from "./Components/Map/Map";
-import HotelReservationList from "./Components/Reservations/Hotel/HotelReservationList";
 import HotelReservationForm from "./Components/Reservations/Hotel/HotelReservationForm";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
@@ -23,6 +22,7 @@ import "./App.css";
 import RestaurantReservationForm from "./Components/Reservations/Restaurant/RestaurantReservationForm";
 import GuideReservationForm from "./Components/Reservations/Guide/GuideReservationForm";
 import DriverReservationForm from "./Components/Reservations/Driver/DriverReservationForm";
+import TouristDashboard from "./Pages/Dashboard/TouristDashboard";
 
 function App() {
   return (
@@ -45,16 +45,15 @@ function App() {
         <Route path="/attractions/:id" element={<Attractiondetails />} />
         <Route path="/hotels/:id" element={<Hotelpage />} />
         <Route path="/restaurants/:id" element={<Restaurantpage />} />
-        <Route path="/reservations/hotel" element={<HotelReservationList />} />
-        <Route  path="/reservations/hotel/new" element={<HotelReservationForm />} />
-        <Route  path="/reservations/hotel/:hotel_id/new" element={<HotelReservationForm />} />
+        <Route path="/reservations/hotel/:hotel_id/new" element={<HotelReservationForm />} />
         <Route path="/reservations/hotel/:id/edit" element={<HotelReservationForm />} />
         <Route path="/reservations/restaurant/:restaurant_id/new" element={<RestaurantReservationForm />} />
         <Route path="/reservations/restaurant/:id/edit" element={<RestaurantReservationForm />} />  
-        <Route path="/reservations/guide/new" element={<GuideReservationForm />} />
+        <Route path="/reservations/guide/:place_id/new" element={<GuideReservationForm />} />
         <Route path="/reservations/guide/:id/edit" element={<GuideReservationForm />} />
-        <Route path="/reservations/driver/new" element={<DriverReservationForm />} />
+        <Route path="/reservations/driver/:place_id/new" element={<DriverReservationForm />} />
         <Route path="/reservations/driver/:id/edit" element={<DriverReservationForm />} />
+        <Route path="/tourist" element={<TouristDashboard />} />
       </Routes>
       <Footer />
     </BrowserRouter>

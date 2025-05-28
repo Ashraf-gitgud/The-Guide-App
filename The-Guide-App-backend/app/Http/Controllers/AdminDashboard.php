@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{User, Driver, Hotel, Restaurant, Guide, Reviews};
-use Illuminate\Container\Attributes\DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdminDashboard extends Controller
 {
@@ -94,7 +95,7 @@ class AdminDashboard extends Controller
 
         // Log approval
         DB::table('approval_logs')->insert([
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
             'action' => 'approved',
             'type' => $request->type,
             'target_id' => $request->id,
@@ -110,7 +111,7 @@ class AdminDashboard extends Controller
 
         // Log removal
         DB::table('approval_logs')->insert([
-            'admin_id' => auth()->id(),
+            'admin_id' => Auth::id(),
             'action' => 'removed',
             'type' => $request->type,
             'target_id' => $request->id,
