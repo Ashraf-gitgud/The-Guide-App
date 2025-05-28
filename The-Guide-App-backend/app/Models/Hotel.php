@@ -21,6 +21,7 @@ class Hotel extends Model
         'rating',
         'position',
         'status',
+        'user_id',
     ];
 
     public function reviews()
