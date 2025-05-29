@@ -5,3 +5,7 @@
 [build.environment]
   CI = "false"
   REACT_APP_API_URL = "https://th3guide-c36720f070e9.herokuapp.com/api"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
