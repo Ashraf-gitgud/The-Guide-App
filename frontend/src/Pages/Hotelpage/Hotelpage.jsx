@@ -12,6 +12,7 @@ const HotelPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [touristId, setTouristId] = useState(null);
+  const [userRole, serRole] = useState(localStorage.getItem('role'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +23,6 @@ const HotelPage = () => {
         const userResponse = await axios.get(`http://127.0.0.1:8000/api/users/${hotelResponse.data.user_id}`);
         setUser(userResponse.data);
 
-        // Fetch tourist data only if not admin
-        const userRole = localStorage.getItem('role');
         if (userRole == 'tourist') {
           const userId = localStorage.getItem('user_id');
           if (userId) {
@@ -78,8 +77,8 @@ const HotelPage = () => {
             <img src={user.profile} alt={hotel.name} />
           ) : (
             <div className="image-placeholder">No Image Available</div>
-          )}
-          <Link to={`/reservations/hotel/${hotel.hotel_id}/new`} className="book-now-btn">Book Now</Link>
+          )}{userRole === 'tourist' &&
+          <Link to={`/reservations/hotel/${hotel.hotel_id}/new`} className="book-now-btn">Book Now</Link>}
         </div>
       </div>
       <Reviews target={user.user_id} touristId={touristId} />

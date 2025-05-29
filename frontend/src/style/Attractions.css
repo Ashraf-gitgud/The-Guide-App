@@ -234,6 +234,36 @@
         grid-row: span 1;
     }
 }
+.attractions-filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.filter-btn {
+    background-color: #002343;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: #f0f0f0;
+    color: #002343;
+}
+
+.filter-btn:hover {
+    background-color: #012f5a;
+    color: white;
+}
+
 
 @media (max-width: 480px) {
     .attractions-header {
