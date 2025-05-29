@@ -16,7 +16,7 @@ const RestaurantDashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/restaurant/dashboard", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/restaurant/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRestaurant(res.data.restaurant);
@@ -33,7 +33,7 @@ const RestaurantDashboard = () => {
   const handleAccept = async (id) => {
     try {
       await axios.post(
-        `http://localhost:8000/api/restaurant/reservations/${id}/accept`,
+        `${process.env.REACT_APP_API_URL}/restaurant/reservations/${id}/accept`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -49,7 +49,7 @@ const RestaurantDashboard = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/restaurant/reservations/${id}`,
+        `${process.env.REACT_APP_API_URL}/restaurant/reservations/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

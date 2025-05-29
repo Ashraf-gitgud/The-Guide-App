@@ -16,7 +16,7 @@ const HotelDashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/hotel/dashboard", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/hotel/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHotel(res.data.hotel);
@@ -33,7 +33,7 @@ const HotelDashboard = () => {
   const handleAccept = async (id) => {
     try {
       await axios.post(
-        `http://localhost:8000/api/hotel/reservations/${id}/accept`,
+        `${process.env.REACT_APP_API_URL}/hotel/reservations/${id}/accept`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -48,7 +48,7 @@ const HotelDashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/hotel/reservations/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/hotel/reservations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchDashboard();

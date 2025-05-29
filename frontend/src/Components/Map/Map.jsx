@@ -46,9 +46,9 @@ const Map = () => {
     const fetchLocations = async () => {
       try {
         const [hotelsRes, restaurantsRes, attractionsRes] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/hotels'),
-          axios.get('http://127.0.0.1:8000/api/restaurants'),
-          axios.get('http://127.0.0.1:8000/api/attractions'),
+          axios.get(`${process.env.REACT_APP_API_URL}/hotels`),
+          axios.get(`${process.env.REACT_APP_API_URL}/restaurants`),
+          axios.get(`${process.env.REACT_APP_API_URL}/attractions`),
         ]);
 
         const parsePosition = (position) => {

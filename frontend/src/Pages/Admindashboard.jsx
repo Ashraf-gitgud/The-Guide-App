@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import '../style/Admindashboard.css';
 
-const API = "http://localhost:8000/api";
+const API = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem('token');
 
 export default function Admindashboard() {

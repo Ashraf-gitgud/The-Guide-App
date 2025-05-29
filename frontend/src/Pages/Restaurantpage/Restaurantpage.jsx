@@ -17,17 +17,17 @@ const RestaurantPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const restaurantResponse = await axios.get(`http://127.0.0.1:8000/api/restaurants/${id}`);
+        const restaurantResponse = await axios.get(`${process.env.REACT_APP_API_URL}/restaurants/${id}`);
         setRestaurant(restaurantResponse.data);
 
-        const userResponse = await axios.get(`http://127.0.0.1:8000/api/users/${restaurantResponse.data.user_id}`);
+        const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/${restaurantResponse.data.user_id}`);
         setUser(userResponse.data);
 
         // Fetch tourist data only if not admin
         if (userRole === 'tourist') {
           const userId = localStorage.getItem('user_id');
           if (userId) {
-            const touristResponse = await axios.get(`http://127.0.0.1:8000/api/tourists/${userId}`);
+            const touristResponse = await axios.get(`${process.env.REACT_APP_API_URL}/tourists/${userId}`);
             setTouristId(touristResponse.data.tourist_id);
           }
         }

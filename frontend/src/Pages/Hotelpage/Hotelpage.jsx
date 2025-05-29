@@ -17,16 +17,16 @@ const HotelPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const hotelResponse = await axios.get(`http://127.0.0.1:8000/api/hotels/${id}`);
+        const hotelResponse = await axios.get(`${process.env.REACT_APP_API_URL}/hotels/${id}`);
         setHotel(hotelResponse.data);
 
-        const userResponse = await axios.get(`http://127.0.0.1:8000/api/users/${hotelResponse.data.user_id}`);
+        const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/${hotelResponse.data.user_id}`);
         setUser(userResponse.data);
 
         if (userRole == 'tourist') {
           const userId = localStorage.getItem('user_id');
           if (userId) {
-            const touristResponse = await axios.get(`http://127.0.0.1:8000/api/tourists/${userId}`);
+            const touristResponse = await axios.get(`${process.env.REACT_APP_API_URL}/tourists/${userId}`);
             setTouristId(touristResponse.data.tourist_id);
           }
         }

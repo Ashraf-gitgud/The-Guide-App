@@ -16,7 +16,7 @@ const GuideDashboard = () => {
 
     const fetchDashboard = async () => {
         try {
-            const res = await axios.get("http://localhost:8000/api/guide/dashboard", {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/guide/dashboard`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setGuide(res.data.guide);
@@ -32,7 +32,7 @@ const GuideDashboard = () => {
 
     const handleAccept = async (id) => {
         try {
-            await axios.post(`http://localhost:8000/api/guide/reservations/${id}/accept`, {}, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/guide/reservations/${id}/accept`, {}, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             fetchDashboard(); // Refresh
@@ -44,7 +44,7 @@ const GuideDashboard = () => {
 
     const handleRefuse = async (id) => {
         try {
-            await axios.post(`http://localhost:8000/api/guide/reservations/${id}/refuse`, {}, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/guide/reservations/${id}/refuse`, {}, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             fetchDashboard(); // Refresh
@@ -56,7 +56,7 @@ const GuideDashboard = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:8000/api/guide/reservations/${id}`, {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/guide/reservations/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             fetchDashboard(); // Refresh

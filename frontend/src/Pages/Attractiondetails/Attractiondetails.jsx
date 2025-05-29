@@ -14,7 +14,7 @@ const AttractionPage = () => {
   useEffect(() => {
     const fetchAttraction = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/attractions/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/attractions/${id}`);
         setAttraction(response.data);
         setLoading(false);
       } catch (err) {

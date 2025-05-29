@@ -16,7 +16,7 @@ const DriverDashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/driver/reservations", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/driver/reservations`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDriver(res.data.driver);
@@ -33,7 +33,7 @@ const DriverDashboard = () => {
   const handleAccept = async (id) => {
     try {
       await axios.post(
-        `http://localhost:8000/api/driver/reservations/${id}/accept`,
+        `${process.env.REACT_APP_API_URL}/driver/reservations/${id}/accept`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -48,7 +48,7 @@ const DriverDashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/driver/reservations/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/driver/reservations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchDashboard();

@@ -49,7 +49,7 @@ const CompleteProfile = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/me", {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -118,7 +118,7 @@ const CompleteProfile = () => {
       }
 
       await axios.post(
-        "http://localhost:8000/api/complete-registration",
+        `${process.env.REACT_APP_API_URL}/complete-registration`,
         formData,
         {
           headers: {

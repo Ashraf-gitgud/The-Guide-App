@@ -19,7 +19,7 @@ const Reviews = ({ target, touristId }) => {
 
     const fetchReviews = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/reviews/user/${target}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${target}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const result = await response.json();
@@ -47,7 +47,7 @@ const Reviews = ({ target, touristId }) => {
                 rating: formData.rating,
                 comment: formData.comment
             };
-            const response = await fetch('http://127.0.0.1:8000/api/reviews', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -72,7 +72,7 @@ const Reviews = ({ target, touristId }) => {
 
     const handleDelete = async (reviewId) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/reviews/${reviewId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/${reviewId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
