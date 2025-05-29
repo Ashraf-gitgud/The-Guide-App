@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 import "../style/HotelDashboard.css";
 
 const HotelDashboard = () => {
@@ -7,6 +8,7 @@ const HotelDashboard = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboard();
@@ -22,6 +24,7 @@ const HotelDashboard = () => {
     } catch (err) {
       console.error(err);
       alert("Failed to load hotel dashboard");
+      navigate("/");
     } finally {
       setLoading(false);
     }
