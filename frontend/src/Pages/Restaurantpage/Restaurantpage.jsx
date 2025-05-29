@@ -11,6 +11,8 @@ const RestaurantPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [touristId, setTouristId] = useState(null);
+  const [userRole, serRole] = useState(localStorage.getItem('role'));
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +24,6 @@ const RestaurantPage = () => {
         setUser(userResponse.data);
 
         // Fetch tourist data only if not admin
-        const userRole = localStorage.getItem('role');
         if (userRole === 'tourist') {
           const userId = localStorage.getItem('user_id');
           if (userId) {
@@ -77,8 +78,8 @@ const RestaurantPage = () => {
             <img src={user.profile} alt={restaurant.name} />
           ) : (
             <div className="image-placeholder">No Image Available</div>
-          )}
-          <Link to={`/reservations/restaurant/${restaurant.restaurant_id}/new`} className="book-now-btn">Book Now</Link>
+          )}{userRole === 'tourist' &&
+          <Link to={`/reservations/restaurant/${restaurant.restaurant_id}/new`} className="book-now-btn">Book Now</Link>}
         </div>
       </div>
       <Reviews target={user.user_id} touristId={touristId} />

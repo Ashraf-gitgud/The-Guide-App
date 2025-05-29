@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import styles from './Nav.module.css';
 
 const Nav = () => {
@@ -8,6 +8,7 @@ const Nav = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [dashboardPath, setDashboardPath] = useState('/dashboard');
   const navigate = useNavigate();
+  const location = useLocation();
   const profileMenuRef = useRef(null);
 
   useEffect(() => {
@@ -16,19 +17,25 @@ const Nav = () => {
     setIsLoggedIn(!!token);
 
     switch (role) {
-      case 'admin': 
+      case 'admin':
         setDashboardPath('/dashboard');
         break;
-      case 'guide': 
+      case 'guide':
         setDashboardPath('/guide');
         break;
-      case 'tourist': 
+      case 'tourist':
         setDashboardPath('/tourist');
         break;
-      case 'transporter': 
+      case 'transporter':
         setDashboardPath('/driver');
         break;
-      default: 
+      case 'hotel':
+        setDashboardPath('/hotel');
+        break;
+      case 'restaurant':
+        setDashboardPath('/restaurant');
+        break;
+      default:
         setDashboardPath('/dashboard');
     }
 
@@ -45,6 +52,12 @@ const Nav = () => {
     };
   }, []);
 
+  // Close menus when route changes
+  useEffect(() => {
+    setIsOpen(false);
+    setShowProfileMenu(false);
+  }, [location]);
+
   const toggleNav = () => setIsOpen(!isOpen);
   const toggleProfileMenu = () => setShowProfileMenu(!showProfileMenu);
 
@@ -57,6 +70,14 @@ const Nav = () => {
     navigate('/');
   };
 
+  const handleNavLinkClick = () => {
+    setIsOpen(false);
+  };
+
+  const handleProfileMenuItemClick = () => {
+    setShowProfileMenu(false);
+  };
+
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
@@ -66,11 +87,11 @@ const Nav = () => {
           </NavLink>
         </div>
         <ul className={`${styles.navMenu} ${isOpen ? styles.navMenuOpen : ''}`}>
-          <li><NavLink to="/" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-home"></i> Home</NavLink></li>
-          <li><NavLink to="/map" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-map-marked-alt"></i> Map</NavLink></li>
-          <li><NavLink to="/about" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-info-circle"></i> About</NavLink></li>
-          <li><NavLink to="/contact" className={styles.navLink} activeClassName={styles.active}><i className="fas fa-envelope"></i> Contact</NavLink></li>
-          <li><NavLink to="/faq" className={styles.navLink} activeClassName={styles.active}><i className="fa fa-question-circle"></i> F.A.Q</NavLink></li>
+          <li><NavLink to="/" className={styles.navLink} activeClassName={styles.active} onClick={handleNavLinkClick}><i className="fas fa-home"></i> Home</NavLink></li>
+          <li><NavLink to="/map" className={styles.navLink} activeClassName={styles.active} onClick={handleNavLinkClick}><i className="fas fa-map-marked-alt"></i> Map</NavLink></li>
+          <li><NavLink to="/about" className={styles.navLink} activeClassName={styles.active} onClick={handleNavLinkClick}><i className="fas fa-info-circle"></i> About</NavLink></li>
+          <li><NavLink to="/contact" className={styles.navLink} activeClassName={styles.active} onClick={handleNavLinkClick}><i className="fas fa-envelope"></i> Contact</NavLink></li>
+          <li><NavLink to="/faq" className={styles.navLink} activeClassName={styles.active} onClick={handleNavLinkClick}><i className="fa fa-question-circle"></i> F.A.Q</NavLink></li>
         </ul>
       </div>
       <div className={styles.navRight}>
@@ -82,7 +103,7 @@ const Nav = () => {
             {showProfileMenu && (
               <ul className={styles.profileMenu}>
                 <li>
-                  <NavLink to={dashboardPath} className={styles.profileMenuItem}>
+                  <NavLink to={dashboardPath} className={styles.profileMenuItem} onClick={handleProfileMenuItemClick}>
                     <i className="fas fa-tachometer-alt"></i> Dashboard
                   </NavLink>
                 </li>
@@ -95,7 +116,7 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          <NavLink to="/login" className={`${styles.navLink} ${styles.navSignUp}`} activeClassName={styles.active}>
+          <NavLink to="/login" className={`${styles.navLink} ${styles.navSignUp}`} activeClassName={styles.active} onClick={handleNavLinkClick}>
             <i className="fas fa-sign-in-alt"></i> Login / Sign Up
           </NavLink>
         )}

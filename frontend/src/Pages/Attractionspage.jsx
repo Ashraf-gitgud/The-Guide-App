@@ -5,12 +5,15 @@ import "../style/Attractions.css";
 
 const Attractionspage = () => {
     const [attractions, setAttractions] = useState([]);
+    const [filteredAttractions, setFilteredAttractions] = useState([]);
+    const [activeFilter, setActiveFilter] = useState("All");
     
     useEffect(() => {
         const fetchAttractions = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/api/attractions');
                 setAttractions(response.data);
+                setFilteredAttractions(response.data);
             } catch (err) {
                 console.error(err);
                 alert('Failed to load attractions');
@@ -18,6 +21,16 @@ const Attractionspage = () => {
         };
         fetchAttractions();
     }, []);
+
+    const filterAttractions = (city) => {
+        setActiveFilter(city);
+        if (city === "All") {
+            setFilteredAttractions(attractions);
+        } else {
+            const filtered = attractions.filter(attraction => attraction.city === city);
+            setFilteredAttractions(filtered);
+        }
+    };
 
     return (
         <div className="attractions-page-container">
@@ -39,9 +52,49 @@ const Attractionspage = () => {
                 </div>
             </div>
 
+            {/* Filter Buttons */}
+            <div className="attractions-filter-buttons">
+                <button 
+                    className={`filter-btn ${activeFilter === "All" ? "active" : ""}`}
+                    onClick={() => filterAttractions("All")}
+                >
+                    All
+                </button>
+                <button 
+                    className={`filter-btn ${activeFilter === "Tangier" ? "active" : ""}`}
+                    onClick={() => filterAttractions("Tangier")}
+                >
+                    Tangier
+                </button>
+                <button 
+                    className={`filter-btn ${activeFilter === "Al Hoceima" ? "active" : ""}`}
+                    onClick={() => filterAttractions("Al Hoceima")}
+                >
+                    Al Hoceima
+                </button>
+                <button 
+                    className={`filter-btn ${activeFilter === "Chefchaouen" ? "active" : ""}`}
+                    onClick={() => filterAttractions("Chefchaouen")}
+                >
+                    Chefchaouen
+                </button>
+                <button 
+                    className={`filter-btn ${activeFilter === "Asilah" ? "active" : ""}`}
+                    onClick={() => filterAttractions("Asilah")}
+                >
+                    Asilah
+                </button>
+                <button 
+                    className={`filter-btn ${activeFilter === "Tetouan" ? "active" : ""}`}
+                    onClick={() => filterAttractions("Tetouan")}
+                >
+                    Tetouan
+                </button>
+            </div>
+
             {/* Attractions Grid */}
             <div className="attractions-container">
-                {attractions.map((attraction, index) => (
+                {filteredAttractions.map((attraction, index) => (
                     <div
                         className={`attractions-card ${index % 5 === 0 ? 'attractions-card-vertical' : index % 8 === 0 ? 'attractions-card-horizontal' : ''}`}
                         key={attraction.id}

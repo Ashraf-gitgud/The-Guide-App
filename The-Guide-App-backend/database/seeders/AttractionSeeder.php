@@ -29,7 +29,7 @@ class AttractionSeeder extends Seeder
                 'description' => 'Scenic cape with lighthouse and panoramic views of the Strait of Gibraltar.',
                 'location' => 'Tangier',
                 'category' => 'Viewpoint',
-                'image' => 'https://imgs.search.brave.com/JwUyZddvGznXlGSOmRkwdt3fkZRJtDTq_VyhRay5x7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YmFyY2Vsby5jb20v/Z3VpYS10dXJpc21v/L3dpLWNvbnRlbnQv/dXBsb2Fkcy8yMDIy/LzAxL3Rhbmdlci1t/YWxhYmF0YS04ODgu/anBn',
+                'image' => 'https://www.barcelo.com/guia-turismo/wp-content/uploads/2022/01/tanger-malabata-pal-2.jpg',
                 'city' => 'Tangier',
                 'social_hours' => '24/7',
                 'position' => json_encode([35.816895,-5.749098])
@@ -139,20 +139,20 @@ class AttractionSeeder extends Seeder
                 'description' => 'Historic mosque in the medina with beautiful architecture.',
                 'location' => 'Tangier',
                 'category' => 'Religious Site',
-                'image' => 'https://imgs.search.brave.com/cHpQn5MHTjZW4kt3T8P0rPU04sy39eiV0hzfX709fLU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YmFyY2Vsby5jb20v/Z3VpYS10dXJpc21v/L3dpLWNvbnRlbnQv/dXBsb2Fkcy8yMDI0/LzA5L29rLWdyYW4t/bWV6cXVpdGEtdGFu/Z2VyLmpwZw',
+                'image' => 'https://www.islamicarchitecturalheritage.com/wp-content/uploads/2020/07/grand-mosque-of-tangier.jpg',
                 'city' => 'Tangier',
                 'social_hours' => 'Outside prayer times',
                 'position' => json_encode([35.78130268794569, -5.819667289840672])
             ],
             [
-                'name' => 'Fondation Lorin',
-                'description' => 'Small gallery of old Tangier photos & history.',
+                'name' => 'Dar d\'art Gallery',
+                'description' => 'A town centre gallery featuring both modern and contemporary artworks.',
                 'location' => 'Tangier',
-                'category' => 'Museum',
-                'image' => 'https://imgs.search.brave.com/dO0MmxCBE6CZFZDZC-W5-PKPnLeBJfC-BFna5a8mwNI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2FlL0ZvbmRhdGlv/bl9Mb3Jpbl9UYW5n/ZXJfQXVzc3RlbGx1/bmdzcmF1bV8yLmpw/Zw',
+                'category' => 'Gallery',
+                'image' => 'https://dardart.com/wp-content/uploads/2023/02/DSC04522-e1678384455882.jpg',
                 'city' => 'Tangier',
                 'social_hours' => '10:00 AM - 6:00 PM',
-                'position' => json_encode([35.784681147589474, -5.811794698246621])
+                'position' => json_encode([35.7797442901598, -5.812065834346048])
             ],
             [
                 'name' => 'Parc Perdicaris',
