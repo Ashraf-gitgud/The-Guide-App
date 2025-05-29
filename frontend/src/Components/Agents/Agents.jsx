@@ -27,9 +27,9 @@ const Agents = () => {
     const fetchData = async () => {
       try {
         const [driversRes, guidesRes, usersRes] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/drivers'),
-          axios.get('http://127.0.0.1:8000/api/guides'),
-          axios.get('http://127.0.0.1:8000/api/users')
+          axios.get(`${process.env.REACT_APP_API_URL}/drivers`),
+          axios.get(`${process.env.REACT_APP_API_URL}/guides`),
+          axios.get(`${process.env.REACT_APP_API_URL}/users`)
         ]);
 
         setDrivers(driversRes.data);

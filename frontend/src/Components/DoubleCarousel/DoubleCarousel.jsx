@@ -15,9 +15,9 @@ const DoubleCarousel = () => {
     const fetchData = async () => {
       try {
         const [hotelsResponse, restaurantsResponse, usersResponse] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/hotels'),
-          axios.get('http://127.0.0.1:8000/api/restaurants'),
-          axios.get('http://127.0.0.1:8000/api/users'),
+          axios.get(`${process.env.REACT_APP_API_URL}/api/hotels`),
+          axios.get(`${process.env.REACT_APP_API_URL}/restaurants`),
+          axios.get(`${process.env.REACT_APP_API_URL}/users`),
         ]);
 
         setHotels(hotelsResponse.data);
