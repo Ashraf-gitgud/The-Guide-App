@@ -9,6 +9,7 @@ const AttractionPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { id } = useParams();
+  const [userRole, serRole] = useState(localStorage.getItem('role'));
 
   useEffect(() => {
     const fetchAttraction = async () => {
@@ -57,8 +58,8 @@ const AttractionPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Link to={`/reservations/guide/${attraction.id}/new`} className={styles.bookButton}>Book a Tour</Link>
-          <Link to={`/reservations/driver/${attraction.id}/new`} className={styles.rideButton}>Get a Ride</Link>
+        {userRole === 'tourist' && <Link to={`/reservations/guide/${attraction.id}/new`} className={styles.bookButton}>Book a Tour</Link>}
+        {userRole === 'tourist' &&<Link to={`/reservations/driver/${attraction.id}/new`} className={styles.rideButton}>Get a Ride</Link>}
         </div>
       </div>
     </div>
