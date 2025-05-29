@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import "../style/DriverDashboard.css"
 
@@ -7,6 +8,7 @@ const DriverDashboard = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboard();
@@ -22,6 +24,7 @@ const DriverDashboard = () => {
     } catch (err) {
       console.log(err);
       alert("Failed to load dashboard");
+      navigate("/");
     } finally {
       setLoading(false);
     }
