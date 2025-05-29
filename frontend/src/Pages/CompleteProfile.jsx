@@ -7,6 +7,7 @@ const CompleteProfile = () => {
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
 
   // Form states for different roles
@@ -73,11 +74,19 @@ const CompleteProfile = () => {
   };
 
   const handleHotelChange = (e) => {
-    setHotelForm({ ...hotelForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setHotelForm(prev => {
+      const newValue = name === 'position' ? `[${value}]` : value;
+      return { ...prev, [name]: newValue };
+    });
   };
 
   const handleRestaurantChange = (e) => {
-    setRestaurantForm({ ...restaurantForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setRestaurantForm(prev => {
+      const newValue = name === 'position' ? `[${value}]` : value;
+      return { ...prev, [name]: newValue };
+    });
   };
 
   const handleGuideChange = (e) => {
@@ -221,12 +230,19 @@ const CompleteProfile = () => {
               onChange={handleHotelChange}
               placeholder="Rating (1-5)"
             />
-            <input
-              name="position"
-              value={hotelForm.position}
-              onChange={handleHotelChange}
-              placeholder="Position (JSON format)"
-            />
+            <div className="input-with-hint">
+              <input
+                name="position"
+                value={hotelForm.position}
+                onChange={handleHotelChange}
+                onFocus={() => setShowHint(true)}
+                onBlur={() => setShowHint(false)}
+                placeholder="Position"
+              />
+              {showHint && (
+                <small className="hint-text">Enter GPS coordinates like <code>35.6895, -0.1234</code> u can copy them from google maps</small>
+              )}
+            </div>
           </div>
         )}
 
@@ -266,12 +282,19 @@ const CompleteProfile = () => {
               onChange={handleRestaurantChange}
               placeholder="Rating (1-5)"
             />
-            <input
-              name="position"
-              value={restaurantForm.position}
-              onChange={handleRestaurantChange}
-              placeholder="Position (JSON format)"
-            />
+           <div className="input-with-hint">
+              <input
+                name="position"
+                value={restaurantForm.position}
+                onChange={handleRestaurantChange}
+                onFocus={() => setShowHint(true)}
+                onBlur={() => setShowHint(false)}
+                placeholder="Position"
+              />
+              {showHint && (
+                <small className="hint-text">Enter GPS coordinates like <code>35.6895, -0.1234</code>  u can copy them from google maps</small>
+              )}
+            </div>
           </div>
         )}
 

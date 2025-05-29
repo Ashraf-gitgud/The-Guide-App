@@ -1,4 +1,3 @@
-/* CompleteProfile.css */
 .profile-completion-container {
     display: flex;
     flex-direction: column;
@@ -130,11 +129,29 @@
     margin-bottom: 20px;
 }
 
-/* Add some spacing between form sections */
 .driver-form > *:not(h3),
 .hotel-form > *:not(h3),
 .restaurant-form > *:not(h3),
 .guide-form > *:not(h3),
 .tourist-form > *:not(h3) {
     margin-bottom: 15px;
+}
+
+.input-with-hint {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.hint-text {
+  font-size: 0.75rem;
+  color: #c5c5c5;
+  margin-top: 5px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
