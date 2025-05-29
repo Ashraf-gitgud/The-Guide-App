@@ -10,7 +10,7 @@ const Attractions = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/attractions');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/attractions`);
         const allItems = response.data;
         setTotalAttractions(allItems.length);
         const randomItems = getRandomItems(allItems, 8);
