@@ -12,7 +12,7 @@ const HotelPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [touristId, setTouristId] = useState(null);
-  const [userRole, serRole] = useState(localStorage.getItem('role'));
+  const [userRole, setRole] = useState(localStorage.getItem('role'));
 
   useEffect(() => {
     const fetchData = async () => {

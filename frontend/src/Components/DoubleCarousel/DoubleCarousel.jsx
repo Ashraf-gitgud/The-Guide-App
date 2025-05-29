@@ -15,7 +15,7 @@ const DoubleCarousel = () => {
     const fetchData = async () => {
       try {
         const [hotelsResponse, restaurantsResponse, usersResponse] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_API_URL}/api/hotels`),
+          axios.get(`${process.env.REACT_APP_API_URL}/hotels`),
           axios.get(`${process.env.REACT_APP_API_URL}/restaurants`),
           axios.get(`${process.env.REACT_APP_API_URL}/users`),
         ]);
