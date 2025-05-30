@@ -19,7 +19,7 @@ const Reviews = ({ target, touristId }) => {
 
     const fetchReviews = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${target}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/reviews/users/${target}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const result = await response.json();
