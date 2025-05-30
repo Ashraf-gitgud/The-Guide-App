@@ -99,7 +99,11 @@ const TouristDashboard = () => {
         }
     };
 
-    if (loading) return <div className="loading">Loading...</div>;
+    if (loading) return <div className="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>;
     if (error) return <div className="error">{error}</div>;
     return (
         <div className="touristdashboard">

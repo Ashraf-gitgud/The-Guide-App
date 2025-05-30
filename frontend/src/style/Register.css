@@ -71,40 +71,6 @@
     color: #e6f1ff;
 }
 
-.file-upload-wrapper {
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.file-upload-label {
-    display: block;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 15px;
-    border: 1px solid #64ffda;
-    border-radius: 4px;
-    background-color: transparent;
-    color: #e6f1ff;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.file-upload-label:hover {
-    background-color: rgba(100, 255, 218, 0.1);
-}
-
-.file-upload-label span {
-    display: block;
-    margin-bottom: 5px;
-    color: #64ffda;
-}
-
-.file-upload-input {
-    display: none;
-}
-
 .form-button {
     width: 100%;
     padding: 12px;

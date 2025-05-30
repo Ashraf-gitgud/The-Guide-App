@@ -26,7 +26,11 @@ const AttractionPage = () => {
     fetchAttraction();
   }, [id]);
 
-  if (loading) return <div className={styles.loading}>Loading...</div>;
+  if (loading) return <div className="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (!attraction) return <div className={styles.error}>No attraction found</div>;
 

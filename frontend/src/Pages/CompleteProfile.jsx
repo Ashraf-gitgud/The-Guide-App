@@ -10,7 +10,6 @@ const CompleteProfile = () => {
   const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
 
-  // Form states for different roles
   const [touristForm, setTourisForm] = useState({
     phone_number: "",
 
@@ -135,7 +134,11 @@ const CompleteProfile = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="loading-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>;
   if (error) return <div>{error}</div>;
 
   return (

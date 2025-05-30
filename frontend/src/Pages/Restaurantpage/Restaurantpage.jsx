@@ -48,7 +48,11 @@ const RestaurantPage = () => {
     return `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>;
   if (error) return <div className="error">{error}</div>;
   if (!restaurant || !user) return <div className="error">No data available</div>;
 

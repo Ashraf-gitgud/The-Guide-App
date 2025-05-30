@@ -41,7 +41,11 @@ export default function Admindashboard() {
     }
   };
 
-  if (loading || !data) return <div className="dashboard-container">Loading...</div>;
+  if (loading || !data) return <div className="dashboard-container"><p className="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div></p>
+        </div>;
 
   const renderList = (list, type) => (
     <div className="list-section">

@@ -77,7 +77,11 @@ const RestaurantDashboard = () => {
   if (loading)
     return (
       <div className="loading-container">
-        <p className="loading-text">Loading dashboard...</p>
+        <p className="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </p>
       </div>
     );
 

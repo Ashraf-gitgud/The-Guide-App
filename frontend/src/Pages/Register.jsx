@@ -96,18 +96,14 @@ const Register = () => {
                     <option value="restaurant">Restaurant</option>
                 </select>
                 
-                <div className="file-upload-wrapper">
-                    <label className="file-upload-label">
-                        <span>Profile Picture</span>
-                        <input 
-                            type="file" 
-                            name="profile" 
-                            onChange={handleChange} 
-                            className="file-upload-input"
-                            required
-                        />
-                    </label>
-                </div>
+                <input 
+                    type="name" 
+                    name="profile" 
+                    onChange={handleChange} 
+                    className="form-input"
+                    required
+                    placeholder="Please parse your profile picture url"
+                />
                 
                 <button type="submit" className="form-button">
                     Create Account

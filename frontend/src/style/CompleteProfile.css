@@ -92,7 +92,6 @@
     transform: translateY(-2px);
 }
 
-/* Loading and error states */
 .loading-message,
 .error-message {
     color: #ccd6f6;
@@ -105,7 +104,6 @@
     color: #ff6b6b;
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
     .profile-completion-container form {
         padding: 20px;
@@ -120,7 +118,6 @@
     }
 }
 
-/* Role-specific form styling */
 .driver-form,
 .hotel-form,
 .restaurant-form,
@@ -154,4 +151,35 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.loading-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: #777;
+  border-radius: 50%;
+  animation: bounce 1s infinite alternate;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  to {
+    transform: translateY(-10px);
+    background: #3498db;
+  }
 }
