@@ -53,12 +53,15 @@
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 12px #002343;
+  overflow-x: auto; /* Enable horizontal scrolling for overflow */
+  max-width: 100%; /* Ensure it stays within viewport */
 }
 
 .restaurant-details {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 100%; /* Prevent overflow */
 }
 
 .detail-card {
@@ -68,6 +71,9 @@
   border-radius: 8px;
   border: 1px solid #e0e6ef;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow-x: auto; /* Enable horizontal scrolling for overflow content */
+  white-space: normal; /* Ensure text wraps */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .detail-card:hover {
@@ -90,6 +96,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  white-space: normal; /* Ensure text wraps */
 }
 
 .detail-card i {
@@ -100,6 +107,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  max-width: 100%; /* Prevent image from overflowing */
 }
 
 .restaurant-image img {
@@ -127,6 +135,7 @@
   font-size: 1.2rem;
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 35, 67, 0.1);
+  max-width: 100%; /* Prevent overflow */
 }
 
 .book-now-btn {
@@ -168,6 +177,7 @@
   .restaurant-content {
     grid-template-columns: 1fr;
     padding: 20px;
+    overflow-x: auto; /* Ensure scrolling at smaller screens */
   }
 
   .restaurant-header h1 {
@@ -177,6 +187,7 @@
 
   .restaurant-image img, .image-placeholder {
     height: 200px;
+    max-width: 100%; /* Constrain image width */
   }
 
   .book-now-btn {
@@ -185,25 +196,50 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
   .restaurant-page {
     padding: 20px 10px;
   }
 
+  .restaurant-content {
+    padding: 15px;
+    overflow-x: auto; /* Reinforce scrolling */
+  }
+
   .detail-card {
     padding: 15px;
+    overflow-x: auto; /* Ensure scrolling for text overflow */
+    white-space: normal;
+    max-width: 100%; /* Constrain width */
   }
 
   .detail-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .detail-card p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    white-space: normal; /* Ensure text wraps */
+  }
+
+  .restaurant-image img, .image-placeholder {
+    height: 150px; /* Reduce height for smaller screens */
+    max-width: 100%; /* Constrain width */
   }
 
   .restaurant-header {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .restaurant-header h1 {
+    font-size: 1.5rem;
+    padding: 6px 12px;
+  }
+
+  .book-now-btn {
+    text-align: center;
+    padding: 8px;
+    font-size: 1rem;
   }
 }
