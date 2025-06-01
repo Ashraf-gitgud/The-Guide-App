@@ -117,7 +117,7 @@ const Nav = () => {
           </div>
         ) : (
           <NavLink to="/login" className={`${styles.navLink} ${styles.navSignUp}`} activeClassName={styles.active} onClick={handleNavLinkClick}>
-            <i className="fas fa-sign-in-alt"></i> Login / Sign Up
+            <i className="fas fa-sign-in-alt"></i> Login
           </NavLink>
         )}
       </div>
